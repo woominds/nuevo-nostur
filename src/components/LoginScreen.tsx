@@ -77,7 +77,7 @@ export function LoginScreen() {
       setLocalLoading(true);
 
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
-        redirectTo: "https://nostur.com.ar/auth/reset-password.html"
+        redirectTo: `${window.location.origin}/auth/reset-password`
       });
 
       if (resetError) {
