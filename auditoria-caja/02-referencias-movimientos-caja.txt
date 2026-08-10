@@ -1,0 +1,22 @@
+src/components/carritos/hooks/useCarritoEditor.ts:443:  function selectMovimientoCaja(
+src/components/carritos/hooks/useCarritoEditor.ts:762:    selectMovimientoCaja,
+src/components/carritos/CarritoEditModal.tsx:70:    selectMovimientoCaja,
+src/components/carritos/CarritoEditModal.tsx:707:                              selectMovimientoCaja(
+src/store/cashflowStore.ts:1013:    let movimientoCajaId: string | null = null;
+src/store/cashflowStore.ts:1036:    .from("caja_movimientos")
+src/store/cashflowStore.ts:1060:  movimientoCajaId = movimientoData.id;
+src/store/cashflowStore.ts:1076:        movimiento_caja_id: movimientoCajaId,
+src/store/cajaStore.ts:448:  .from("vw_caja_movimientos")
+src/store/cajaStore.ts:573:    const { error } = await supabase.from("caja_movimientos").insert({
+src/store/cajaStore.ts:743:        .from("caja_movimientos")
+src/store/cajaStore.ts:753:        .from("caja_movimientos")
+src/store/cajaStore.ts:888:      .from("caja_movimientos")
+src/store/filesStore.ts:1027:        .from("caja_movimientos")
+src/store/facturasPagarStore.ts:116:  movimiento_caja_id: string | null;
+src/store/facturasPagarStore.ts:1032:    let movimientoCajaId: string | null = null;
+src/store/facturasPagarStore.ts:1036:        .from("caja_movimientos")
+src/store/facturasPagarStore.ts:1060:      movimientoCajaId = movimientoData.id;
+src/store/facturasPagarStore.ts:1076:        movimiento_caja_id: movimientoCajaId,
+src/store/facturasPagarStore.ts:1129:    if (pago.movimiento_caja_id) {
+src/store/facturasPagarStore.ts:1131:        .from("caja_movimientos")
+src/store/facturasPagarStore.ts:1137:        .eq("id", pago.movimiento_caja_id);

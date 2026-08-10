@@ -1,0 +1,13 @@
+src/components/caja/CajaPanel.tsx
+src/components/carritos/wizard/WizardPagosComerciales.tsx
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx
+src/components/facturas-pagar/FacturasPagarPanel.tsx
+src/components/files/components/FileWizardPagos.tsx
+src/components/pagos-operadores/PagosOperadoresPanel.tsx
+src/components/riesgos/RiesgosPanel.tsx
+src/store/cajaStore.ts
+src/store/facturasCobrarStore.ts
+src/store/facturasPagarStore.ts
+src/store/pagosOperadoresStore.ts
+src/store/riesgosStore.ts
+supabase/migrations/20260731_carritos_pago_oficina_markup.sql

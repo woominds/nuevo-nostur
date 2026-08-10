@@ -1,0 +1,89 @@
+# Dependencias
+node_modules/
+
+# Builds
+dist/
+build/
+coverage/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Vite
+.vite/
+*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Supabase local y temporal
+supabase/.temp/
+supabase/.branches/
+supabase/.env
+.supabase/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+__MACOSX/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editores
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporales y respaldos
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*~
+*.swp
+*.swo
+
+# Archivos comprimidos y respaldos locales
+*.zip
+*.tar
+*.tar.gz
+*.7z
+Archivo*.zip
+
+# Certificados y claves privadas
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Reportes locales de auditoría
+.nostur-orphan-files-report.txt
+
+# Copias antiguas/manuales de código
+*.save
+*.legacy
+
+# Backups con sufijos adicionales
+*.backup-*
+*.bak-*

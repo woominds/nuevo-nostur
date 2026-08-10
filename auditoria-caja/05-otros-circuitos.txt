@@ -1,0 +1,1381 @@
+src/config/tenantConfig.ts:49:  tenantDisplayName: "NOSSIX / ALMUNDO Franquicia Córdoba",
+src/utils/url.ts:46:      Íconos locales forzados para apps de ALMUNDO.
+src/utils/url.ts:51:      public/brand/almundo-isotipo.png
+src/utils/url.ts:53:    const almundoDomains = [
+src/utils/url.ts:54:      "almundo.com",
+src/utils/url.ts:55:      "experts.almundo.com",
+src/utils/url.ts:56:      "abaco.almundo.com",
+src/utils/url.ts:57:      "krooze.almundo.com"
+src/utils/url.ts:60:    const isAlmundoDomain = almundoDomains.some(
+src/utils/url.ts:66:    if (isAlmundoDomain) {
+src/utils/url.ts:67:      return "/brand/almundo-isotipo.png";
+src/components/Shell.tsx:58:  PagosOperadoresPanel,
+src/components/Shell.tsx:61:  RiesgosPanel,
+src/components/Shell.tsx:132:  "pagos-operadores",
+src/components/Shell.tsx:133:  "riesgos"
+src/components/Shell.tsx:189:    "pagos-operadores",
+src/components/Shell.tsx:190:    "riesgos",
+src/components/Shell.tsx:287:    "pagos-operadores"
+src/components/Shell.tsx:289:    return <PagosOperadoresPanel />;
+src/components/Shell.tsx:292:  if (section === "riesgos") {
+src/components/Shell.tsx:293:    return <RiesgosPanel />;
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:405:    razon_social: "ALMUNDO.COM",
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:550:              Facturas, postventa, notas de crédito y notas de débito para Almundo.
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:599:                  placeholder="ALMUNDO.COM"
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1729:                Almundo
+src/components/config/ConfigPanel.tsx:45:  type Operador,
+src/components/config/ConfigPanel.tsx:65:  | "operadores"
+src/components/config/ConfigPanel.tsx:98:  { id: "operadores", label: "Operadores", icon: BriefcaseBusiness },
+src/components/config/ConfigPanel.tsx:124:  { value: "ALMUNDO", label: "Almundo" },
+src/components/config/ConfigPanel.tsx:203:  if (tab === "operadores") {
+src/components/config/ConfigPanel.tsx:316:  if (tab === "operadores") {
+src/components/config/ConfigPanel.tsx:788:  const operadores = useConfigStore((state) => state.operadores);
+src/components/config/ConfigPanel.tsx:801:  const upsertOperador = useConfigStore((state) => state.upsertOperador);
+src/components/config/ConfigPanel.tsx:814:  const toggleOperador = useConfigStore((state) => state.toggleOperador);
+src/components/config/ConfigPanel.tsx:861:    if (activeTab === "operadores") return operadores;
+src/components/config/ConfigPanel.tsx:877:    operadores,
+src/components/config/ConfigPanel.tsx:1029:    if (activeTab === "operadores") await toggleOperador(item as Operador);
+src/components/config/ConfigPanel.tsx:1279:    if (activeTab === "operadores") {
+src/components/config/ConfigPanel.tsx:1280:      ok = await upsertOperador({
+src/components/config/ConfigPanel.tsx:1646:    if (activeTab === "operadores") {
+src/components/config/ConfigPanel.tsx:1675:            label="Operador activo"
+src/components/config/ImportadorCatalogosPanel.tsx:35:  { value: "operadores", label: "Operadores" },
+src/components/config/ImportadorCatalogosPanel.tsx:161:  if (catalogType === "operadores") {
+src/components/config/ImportadorCatalogosPanel.tsx:162:    return `Ejemplo para operadores:
+src/components/Home.tsx:70:type HomeMetaAlmundo = {
+src/components/Home.tsx:98:  deudaOperadores: {
+src/components/Home.tsx:516:function MetaAlmundoContent({ data }: { data: HomeMetaAlmundo[] }) {
+src/components/Home.tsx:520:    return <EmptyMiniState text="Sin meta Almundo cargada para este período." />;
+src/components/Home.tsx:884:  const metasAlmundo = useTableroDeControlStore((state) => state.metasAlmundo) as HomeMetaAlmundo[];
+src/components/Home.tsx:958:        "pagos-operadores",
+src/components/Home.tsx:959:        "riesgos"
+src/components/Home.tsx:1836:          Resumen operativo de pagos, cobros, operadores y cajas.
+src/components/Home.tsx:1843:        title="Deuda operadores"
+src/components/Home.tsx:1844:        value={formatAdminDualMonto(adminResumen.deudaOperadores.total)}
+src/components/Home.tsx:1845:        detail={`${adminResumen.deudaOperadores.vencida.cantidad} vencidas · ${adminResumen.deudaOperadores.proximos5Dias.cantidad} próximos 5 días`}
+src/components/Home.tsx:1846:        tone={adminResumen.deudaOperadores.vencida.cantidad > 0 ? "red" : "slate"}
+src/components/Home.tsx:1889:                title="Meta Almundo"
+src/components/Home.tsx:1892:                <MetaAlmundoContent data={metasAlmundo} />
+src/components/DashboardHome.tsx:31:  type MetaAlmundoResumen,
+src/components/DashboardHome.tsx:1065:  type: "almundo" | "branch";
+src/components/DashboardHome.tsx:1082:            "almundo" ? (
+src/components/DashboardHome.tsx:1092:              "almundo"
+src/components/DashboardHome.tsx:1093:                ? "Meta ALMUNDO"
+src/components/DashboardHome.tsx:1181:      label: "Deuda operadores",
+src/components/DashboardHome.tsx:1183:        summary.deudaOperadores
+src/components/DashboardHome.tsx:1187:        summary.deudaOperadores
+src/components/DashboardHome.tsx:1536:  const metasAlmundo =
+src/components/DashboardHome.tsx:1539:        state.metasAlmundo
+src/components/DashboardHome.tsx:1582:  const almundoGoals =
+src/components/DashboardHome.tsx:1585:        [...metasAlmundo].sort(
+src/components/DashboardHome.tsx:1596:      [metasAlmundo]
+src/components/DashboardHome.tsx:1798:              {almundoGoals.length ===
+src/components/DashboardHome.tsx:1801:                  type="almundo"
+src/components/DashboardHome.tsx:1809:                almundoGoals.map(
+src/components/DashboardHome.tsx:1812:                      MetaAlmundoResumen
+src/components/DashboardHome.tsx:1819:                      type="almundo"
+src/components/navigation/MobileMoreMenu.tsx:59:        description: "Ventas realizadas por ALMUNDO",
+src/components/navigation/MobileMoreMenu.tsx:66:        description: "Ventas por operadores externos",
+src/components/navigation/MobileMoreMenu.tsx:86:        id: "riesgos",
+src/components/navigation/MobileMoreMenu.tsx:87:        label: "Riesgos",
+src/components/navigation/MobileMoreMenu.tsx:89:        appId: "riesgos",
+src/components/navigation/MobileMoreMenu.tsx:113:        id: "pagos-operadores",
+src/components/navigation/MobileMoreMenu.tsx:114:        label: "Pagos a operadores",
+src/components/navigation/MobileMoreMenu.tsx:115:        appId: "pagos-operadores",
+src/components/carritos/carritosModel.ts:62:  riesgo: boolean;
+src/components/carritos/carritosModel.ts:63:  importe_riesgo: string;
+src/components/carritos/carritosModel.ts:64:  riesgo_motivo: string;
+src/components/carritos/carritosModel.ts:352:    riesgo: false,
+src/components/carritos/carritosModel.ts:353:    importe_riesgo: "",
+src/components/carritos/carritosModel.ts:354:    riesgo_motivo: "",
+src/components/carritos/carritosModel.ts:436:    riesgo: boolean;
+src/components/carritos/carritosModel.ts:437:    importe_riesgo: string;
+src/components/carritos/carritosModel.ts:438:    riesgo_motivo: string;
+src/components/carritos/carritosModel.ts:471:      riesgo: Boolean(carrito.riesgo),
+src/components/carritos/carritosModel.ts:472:      importe_riesgo: String(carrito.importe_riesgo ?? 0).replace(".", ","),
+src/components/carritos/carritosModel.ts:473:      riesgo_motivo: carrito.riesgo_motivo || "",
+src/components/carritos/wizard/wizardReadiness.ts:15:  importeRiesgo: number;
+src/components/carritos/wizard/wizardReadiness.ts:28:  importeRiesgo
+src/components/carritos/wizard/wizardReadiness.ts:105:    issues.push("Falta registrar el pago informado en ALMUNDO.");
+src/components/carritos/wizard/wizardReadiness.ts:115:    issues.push("Hay pagos de ALMUNDO incompletos.");
+src/components/carritos/wizard/wizardReadiness.ts:131:  if (draft.riesgo) {
+src/components/carritos/wizard/wizardReadiness.ts:132:    if (importeRiesgo <= 0) {
+src/components/carritos/wizard/wizardReadiness.ts:133:      issues.push("Falta el importe imputado a riesgo.");
+src/components/carritos/wizard/wizardReadiness.ts:136:    if (!draft.riesgo_motivo.trim()) {
+src/components/carritos/wizard/wizardReadiness.ts:137:      issues.push("Falta el motivo del riesgo.");
+src/components/carritos/wizard/WizardConfirmacion.tsx:19:  importeRiesgo: number;
+src/components/carritos/wizard/WizardConfirmacion.tsx:34:  importeRiesgo,
+src/components/carritos/wizard/WizardConfirmacion.tsx:176:            Riesgo Almundo:{" "}
+src/components/carritos/wizard/WizardConfirmacion.tsx:177:            {draft.riesgo ? "SÍ" : "NO"}
+src/components/carritos/wizard/WizardConfirmacion.tsx:180:          {draft.riesgo ? (
+src/components/carritos/wizard/WizardConfirmacion.tsx:182:              Importe riesgo:{" "}
+src/components/carritos/wizard/WizardConfirmacion.tsx:184:                importeRiesgo,
+src/components/carritos/wizard/WizardSummary.tsx:81:  const importeRiesgo =
+src/components/carritos/wizard/WizardSummary.tsx:82:    draft.riesgo
+src/components/carritos/wizard/WizardSummary.tsx:84:          draft.importe_riesgo
+src/components/carritos/wizard/WizardSummary.tsx:94:      importeRiesgo
+src/components/carritos/wizard/WizardSummary.tsx:97:  const pagosAlmundo =
+src/components/carritos/wizard/WizardSummary.tsx:247:                Imputación ALMUNDO
+src/components/carritos/wizard/WizardSummary.tsx:292:        {(pagosAlmundo.length > 0 ||
+src/components/carritos/wizard/WizardSummary.tsx:298:                <SummaryLabel>ALMUNDO</SummaryLabel>
+src/components/carritos/wizard/WizardSummary.tsx:302:                {pagosAlmundo.length > 0 ? (
+src/components/carritos/wizard/WizardSummary.tsx:303:                  pagosAlmundo.map(
+src/components/carritos/wizard/WizardSummary.tsx:306:                        key={`summary-almundo-${index}`}
+src/components/carritos/wizard/WizardSummary.tsx:421:            active={draft.riesgo}
+src/components/carritos/wizard/WizardSummary.tsx:422:            activeLabel="A riesgo"
+src/components/carritos/wizard/WizardSummary.tsx:423:            inactiveLabel="Sin riesgo"
+src/components/carritos/wizard/WizardPagosComerciales.tsx:31:  importeRiesgo: number;
+src/components/carritos/wizard/WizardPagosComerciales.tsx:85:  onRiesgoChange: (
+src/components/carritos/wizard/WizardPagosComerciales.tsx:89:  onImporteRiesgoChange: (
+src/components/carritos/wizard/WizardPagosComerciales.tsx:93:  onRiesgoMotivoChange: (
+src/components/carritos/wizard/WizardPagosComerciales.tsx:215:  importeRiesgo,
+src/components/carritos/wizard/WizardPagosComerciales.tsx:240:  onRiesgoChange,
+src/components/carritos/wizard/WizardPagosComerciales.tsx:241:  onImporteRiesgoChange,
+src/components/carritos/wizard/WizardPagosComerciales.tsx:242:  onRiesgoMotivoChange
+src/components/carritos/wizard/WizardPagosComerciales.tsx:255:          Registrá lo informado en ALMUNDO y el pago efectivamente recibido por la oficina.
+src/components/carritos/wizard/WizardPagosComerciales.tsx:276:              Pago informado en ALMUNDO
+src/components/carritos/wizard/WizardPagosComerciales.tsx:340:                      Forma en ALMUNDO
+src/components/carritos/wizard/WizardPagosComerciales.tsx:396:              Total informado en ALMUNDO
+src/components/carritos/wizard/WizardPagosComerciales.tsx:435:                aunque no coincida con lo informado en ALMUNDO.
+src/components/carritos/wizard/WizardPagosComerciales.tsx:441:                El pago real coincide con lo informado en ALMUNDO. Completá igualmente
+src/components/carritos/wizard/WizardPagosComerciales.tsx:764:                draft.riesgo
+src/components/carritos/wizard/WizardPagosComerciales.tsx:767:                onRiesgoChange
+src/components/carritos/wizard/WizardPagosComerciales.tsx:769:              label="Imputar a riesgo ALMUNDO"
+src/components/carritos/wizard/WizardPagosComerciales.tsx:790:          {draft.riesgo ? (
+src/components/carritos/wizard/WizardPagosComerciales.tsx:794:                  Importe de riesgo
+src/components/carritos/wizard/WizardPagosComerciales.tsx:799:                    draft.importe_riesgo
+src/components/carritos/wizard/WizardPagosComerciales.tsx:802:                    onImporteRiesgoChange
+src/components/carritos/wizard/WizardPagosComerciales.tsx:816:                    draft.riesgo_motivo
+src/components/carritos/wizard/WizardPagosComerciales.tsx:819:                    onRiesgoMotivoChange
+src/components/carritos/wizard/WizardPagosComerciales.tsx:821:                  placeholder="Motivo del riesgo ALMUNDO"
+src/components/carritos/wizard/WizardPagosComerciales.tsx:842:          {draft.riesgo ? (
+src/components/carritos/wizard/WizardPagosComerciales.tsx:845:                Riesgo ALMUNDO
+src/components/carritos/wizard/WizardPagosComerciales.tsx:850:                  importeRiesgo,
+src/components/carritos/CarritoDetailModal.tsx:41:    `https://abaco.almundo.com/bo/cart/${carrito.numero_carrito}`;
+src/components/carritos/CarritoDetailModal.tsx:123:            {carrito.riesgo ? (
+src/components/carritos/CarritoDetailModal.tsx:125:                Riesgo
+src/components/carritos/CarritoDetailModal.tsx:170:              Riesgo:{" "}
+src/components/carritos/CarritoDetailModal.tsx:172:                {carrito.riesgo ? "SÍ" : "NO"}
+src/components/carritos/CarritoDetailModal.tsx:241:        {carrito.riesgo ? (
+src/components/carritos/CarritoDetailModal.tsx:244:              Motivo riesgo:
+src/components/carritos/CarritoDetailModal.tsx:246:            {carrito.riesgo_motivo || "Sin motivo cargado"}
+src/components/carritos/components/CarritosMetrics.tsx:16:  riesgos: number;
+src/components/carritos/components/CarritosMetrics.tsx:56:        label="Riesgos"
+src/components/carritos/components/CarritosMetrics.tsx:57:        value={metrics.riesgos}
+src/components/carritos/components/CarritosList.tsx:257:                  {carrito.riesgo ? (
+src/components/carritos/components/CarritosList.tsx:259:                      Riesgo
+src/components/carritos/components/CarritosList.tsx:306:                        `https://abaco.almundo.com/bo/cart/${carrito.numero_carrito}`,
+src/components/carritos/components/CarritosHeader.tsx:27:              Almundo
+src/components/carritos/components/CarritosHeader.tsx:32:            Carga de ventas Almundo. Por defecto cada vendedor ve sus
+src/components/carritos/components/CarritoSideDetail.tsx:91:        {carrito.riesgo ? (
+src/components/carritos/components/CarritoSideDetail.tsx:93:            Riesgo
+src/components/carritos/components/CarritoSideDetail.tsx:239:                `https://abaco.almundo.com/bo/cart/${carrito.numero_carrito}`,
+src/components/carritos/CarritosPanel.tsx:50:    riesgoOptions,
+src/components/carritos/CarritosPanel.tsx:153:                · Riesgo:{" "}
+src/components/carritos/CarritosPanel.tsx:154:                {filters.riesgo}
+src/components/carritos/CarritosPanel.tsx:320:                    Riesgo
+src/components/carritos/CarritosPanel.tsx:325:                      filters.riesgo
+src/components/carritos/CarritosPanel.tsx:329:                        "riesgo",
+src/components/carritos/CarritosPanel.tsx:330:                        value as typeof filters.riesgo
+src/components/carritos/CarritosPanel.tsx:334:                      riesgoOptions
+src/components/carritos/hooks/useCarritoEditor.ts:562:      draft.carrito.riesgo &&
+src/components/carritos/hooks/useCarritoEditor.ts:564:        draft.carrito.importe_riesgo
+src/components/carritos/hooks/useCarritoEditor.ts:568:        "Indicá el importe de riesgo."
+src/components/carritos/hooks/useCarritoEditor.ts:660:          riesgo:
+src/components/carritos/hooks/useCarritoEditor.ts:661:            draft.carrito.riesgo,
+src/components/carritos/hooks/useCarritoEditor.ts:663:          importe_riesgo:
+src/components/carritos/hooks/useCarritoEditor.ts:664:            draft.carrito.riesgo
+src/components/carritos/hooks/useCarritoEditor.ts:667:                    .importe_riesgo
+src/components/carritos/hooks/useCarritoEditor.ts:671:          riesgo_motivo:
+src/components/carritos/hooks/useCarritoEditor.ts:672:            draft.carrito.riesgo
+src/components/carritos/hooks/useCarritoEditor.ts:674:                  .riesgo_motivo ||
+src/components/carritos/hooks/useCarritoWizard.ts:248:  const importeRiesgo = draft.riesgo
+src/components/carritos/hooks/useCarritoWizard.ts:249:    ? parseMoney(draft.importe_riesgo)
+src/components/carritos/hooks/useCarritoWizard.ts:253:    totalPagosComerciales + importeRiesgo;
+src/components/carritos/hooks/useCarritoWizard.ts:395:   * Cuando el pago real coincide con ALMUNDO, mantenemos
+src/components/carritos/hooks/useCarritoWizard.ts:849:  function setRiesgo(value: boolean) {
+src/components/carritos/hooks/useCarritoWizard.ts:854:      riesgo: value,
+src/components/carritos/hooks/useCarritoWizard.ts:855:      importe_riesgo: value
+src/components/carritos/hooks/useCarritoWizard.ts:856:        ? current.importe_riesgo ||
+src/components/carritos/hooks/useCarritoWizard.ts:865:      riesgo_motivo: value
+src/components/carritos/hooks/useCarritoWizard.ts:866:        ? current.riesgo_motivo
+src/components/carritos/hooks/useCarritoWizard.ts:871:  function setImporteRiesgo(
+src/components/carritos/hooks/useCarritoWizard.ts:878:      importe_riesgo: value
+src/components/carritos/hooks/useCarritoWizard.ts:882:  function setRiesgoMotivo(
+src/components/carritos/hooks/useCarritoWizard.ts:889:      riesgo_motivo: value
+src/components/carritos/hooks/useCarritoWizard.ts:1170:      if (draft.riesgo) {
+src/components/carritos/hooks/useCarritoWizard.ts:1171:        if (importeRiesgo <= 0) {
+src/components/carritos/hooks/useCarritoWizard.ts:1172:          return "Indicá el importe imputado a riesgo Almundo.";
+src/components/carritos/hooks/useCarritoWizard.ts:1176:          !draft.riesgo_motivo.trim()
+src/components/carritos/hooks/useCarritoWizard.ts:1178:          return "Indicá el motivo u observación del riesgo Almundo.";
+src/components/carritos/hooks/useCarritoWizard.ts:1183:        return "Completá al menos un pago comercial o un importe imputado a riesgo Almundo.";
+src/components/carritos/hooks/useCarritoWizard.ts:1426:        riesgo: draft.riesgo,
+src/components/carritos/hooks/useCarritoWizard.ts:1427:        importe_riesgo:
+src/components/carritos/hooks/useCarritoWizard.ts:1428:          importeRiesgo,
+src/components/carritos/hooks/useCarritoWizard.ts:1429:        riesgo_motivo:
+src/components/carritos/hooks/useCarritoWizard.ts:1430:          draft.riesgo_motivo,
+src/components/carritos/hooks/useCarritoWizard.ts:1485:    importeRiesgo,
+src/components/carritos/hooks/useCarritoWizard.ts:1515:    setRiesgo,
+src/components/carritos/hooks/useCarritoWizard.ts:1516:    setImporteRiesgo,
+src/components/carritos/hooks/useCarritoWizard.ts:1517:    setRiesgoMotivo,
+src/components/carritos/hooks/useCarritosPanel.ts:304:  const riesgoOptions =
+src/components/carritos/hooks/useCarritosPanel.ts:312:          value: "riesgo",
+src/components/carritos/hooks/useCarritosPanel.ts:313:          label: "Con riesgo"
+src/components/carritos/hooks/useCarritosPanel.ts:317:          label: "Sin riesgo"
+src/components/carritos/hooks/useCarritosPanel.ts:369:    riesgoOptions,
+src/components/carritos/CarritoWizard.tsx:41:    subtitle: "Venta ALMUNDO"
+src/components/carritos/CarritoWizard.tsx:75:    importeRiesgo,
+src/components/carritos/CarritoWizard.tsx:106:    setRiesgo,
+src/components/carritos/CarritoWizard.tsx:107:    setImporteRiesgo,
+src/components/carritos/CarritoWizard.tsx:108:    setRiesgoMotivo,
+src/components/carritos/CarritoWizard.tsx:142:                  Cliente → Venta ALMUNDO → Pagos → Confirmación
+src/components/carritos/CarritoWizard.tsx:349:                    importeRiesgo={
+src/components/carritos/CarritoWizard.tsx:350:                      importeRiesgo
+src/components/carritos/CarritoWizard.tsx:404:                    onRiesgoChange={
+src/components/carritos/CarritoWizard.tsx:405:                      setRiesgo
+src/components/carritos/CarritoWizard.tsx:407:                    onImporteRiesgoChange={
+src/components/carritos/CarritoWizard.tsx:408:                      setImporteRiesgo
+src/components/carritos/CarritoWizard.tsx:410:                    onRiesgoMotivoChange={
+src/components/carritos/CarritoWizard.tsx:411:                      setRiesgoMotivo
+src/components/carritos/CarritoWizard.tsx:433:                    importeRiesgo={
+src/components/carritos/CarritoWizard.tsx:434:                      importeRiesgo
+src/components/carritos/CarritoEditModal.tsx:855:                  Riesgo y notas
+src/components/carritos/CarritoEditModal.tsx:861:                      Riesgo
+src/components/carritos/CarritoEditModal.tsx:866:                        draft.carrito.riesgo
+src/components/carritos/CarritoEditModal.tsx:870:                          "riesgo",
+src/components/carritos/CarritoEditModal.tsx:874:                      label="Riesgo Almundo"
+src/components/carritos/CarritoEditModal.tsx:880:                      Importe riesgo
+src/components/carritos/CarritoEditModal.tsx:886:                          .importe_riesgo
+src/components/carritos/CarritoEditModal.tsx:890:                          "importe_riesgo",
+src/components/carritos/CarritoEditModal.tsx:900:                      Motivo riesgo
+src/components/carritos/CarritoEditModal.tsx:906:                          .riesgo_motivo
+src/components/carritos/CarritoEditModal.tsx:910:                          "riesgo_motivo",
+src/components/dashboard/TableroControlPanel.tsx:23:  type MetaAlmundoResumen,
+src/components/dashboard/TableroControlPanel.tsx:544:function MetaAlmundoPanel({ data }: { data: MetaAlmundoResumen[] }) {
+src/components/dashboard/TableroControlPanel.tsx:551:        title="Meta Almundo"
+src/components/dashboard/TableroControlPanel.tsx:557:          Sin meta Almundo cargada para este período.
+src/components/dashboard/TableroControlPanel.tsx:870:  const metasAlmundo = useTableroDeControlStore((state) => state.metasAlmundo);
+src/components/dashboard/TableroControlPanel.tsx:1068:          <MetaAlmundoPanel data={metasAlmundo} />
+src/components/lazySections.tsx:67:export const PagosOperadoresPanel = lazy(
+src/components/lazySections.tsx:70:      "./pagos-operadores/PagosOperadoresPanel"
+src/components/lazySections.tsx:74:          module.PagosOperadoresPanel
+src/components/lazySections.tsx:79:export const RiesgosPanel = lazy(
+src/components/lazySections.tsx:82:      "./riesgos/RiesgosPanel"
+src/components/lazySections.tsx:86:          module.RiesgosPanel
+src/components/riesgos/RiesgosPanel.tsx:1:// src/components/riesgos/RiesgosPanel.tsx
+src/components/riesgos/RiesgosPanel.tsx:23:  createInitialPagoRiesgoDraft,
+src/components/riesgos/RiesgosPanel.tsx:26:  getRiesgoEstadoLabel,
+src/components/riesgos/RiesgosPanel.tsx:27:  getRiesgoEstadoTone,
+src/components/riesgos/RiesgosPanel.tsx:28:  useRiesgosStore,
+src/components/riesgos/RiesgosPanel.tsx:30:  type PagoRiesgoDraft,
+src/components/riesgos/RiesgosPanel.tsx:32:  type RiesgoAlmundo,
+src/components/riesgos/RiesgosPanel.tsx:33:  type RiesgoPago
+src/components/riesgos/RiesgosPanel.tsx:34:} from "../../store/riesgosStore";
+src/components/riesgos/RiesgosPanel.tsx:326:  const tone = getRiesgoEstadoTone(estado);
+src/components/riesgos/RiesgosPanel.tsx:337:      {getRiesgoEstadoLabel(estado)}
+src/components/riesgos/RiesgosPanel.tsx:342:function RiesgoCard({
+src/components/riesgos/RiesgosPanel.tsx:343:  riesgo,
+src/components/riesgos/RiesgosPanel.tsx:348:  riesgo: RiesgoAlmundo;
+src/components/riesgos/RiesgosPanel.tsx:353:  const hours = getHoursToDue(riesgo.vencimiento_at);
+src/components/riesgos/RiesgosPanel.tsx:354:  const saldo = parseMoney(riesgo.saldo_riesgo);
+src/components/riesgos/RiesgosPanel.tsx:364:          : riesgo.estado_riesgo === "VENCIDO"
+src/components/riesgos/RiesgosPanel.tsx:371:          {riesgo.numero_carrito}
+src/components/riesgos/RiesgosPanel.tsx:374:          {riesgo.pasajero || "Sin pasajero"}
+src/components/riesgos/RiesgosPanel.tsx:377:          {riesgo.destino || "Sin destino"}
+src/components/riesgos/RiesgosPanel.tsx:383:          {formatMoneyAR(riesgo.importe_riesgo, riesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:385:        <div className="text-[11px] font-normal text-[#64748b]">Importe riesgo</div>
+src/components/riesgos/RiesgosPanel.tsx:387:          Venta: {formatDate(riesgo.fecha_venta)}
+src/components/riesgos/RiesgosPanel.tsx:393:          {formatMoneyAR(riesgo.total_pagado_riesgo, riesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:395:        <div className="text-[11px] font-normal text-[#64748b]">Pagado a Almundo</div>
+src/components/riesgos/RiesgosPanel.tsx:397:          Pagos: {riesgo.cantidad_pagos}
+src/components/riesgos/RiesgosPanel.tsx:403:          {formatMoneyAR(riesgo.saldo_riesgo, riesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:407:          Últ. pago: {formatDate(riesgo.ultimo_pago_fecha)}
+src/components/riesgos/RiesgosPanel.tsx:412:        <EstadoBadge estado={riesgo.estado_riesgo} />
+src/components/riesgos/RiesgosPanel.tsx:415:          Vence: {formatDateTime(riesgo.vencimiento_at)}
+src/components/riesgos/RiesgosPanel.tsx:461:function PagoRiesgoModal({
+src/components/riesgos/RiesgosPanel.tsx:462:  riesgo,
+src/components/riesgos/RiesgosPanel.tsx:468:  riesgo: RiesgoAlmundo | null;
+src/components/riesgos/RiesgosPanel.tsx:472:  onSave: (draft: PagoRiesgoDraft) => Promise<void>;
+src/components/riesgos/RiesgosPanel.tsx:474:  const cajaCompatible = riesgo ? cajas.find((item) => item.moneda === riesgo.moneda) || null : null;
+src/components/riesgos/RiesgosPanel.tsx:476:  const [draft, setDraft] = useState<PagoRiesgoDraft>(() =>
+src/components/riesgos/RiesgosPanel.tsx:477:    createInitialPagoRiesgoDraft(riesgo, cajaCompatible)
+src/components/riesgos/RiesgosPanel.tsx:481:    setDraft(createInitialPagoRiesgoDraft(riesgo, cajaCompatible));
+src/components/riesgos/RiesgosPanel.tsx:482:  }, [riesgo?.carrito_id, cajaCompatible?.id]);
+src/components/riesgos/RiesgosPanel.tsx:484:  function setField<K extends keyof PagoRiesgoDraft>(key: K, value: PagoRiesgoDraft[K]) {
+src/components/riesgos/RiesgosPanel.tsx:489:    .filter((caja) => !riesgo || caja.moneda === riesgo.moneda)
+src/components/riesgos/RiesgosPanel.tsx:496:  const saldo = parseMoney(riesgo?.saldo_riesgo);
+src/components/riesgos/RiesgosPanel.tsx:503:            <h2 className="text-[17px] font-semibold text-[#172033]">Registrar pago a Almundo</h2>
+src/components/riesgos/RiesgosPanel.tsx:505:              {riesgo
+src/components/riesgos/RiesgosPanel.tsx:506:                ? `Carrito ${riesgo.numero_carrito} · ${riesgo.pasajero || "Sin pasajero"}`
+src/components/riesgos/RiesgosPanel.tsx:507:                : "Seleccioná un riesgo"}
+src/components/riesgos/RiesgosPanel.tsx:520:        {!riesgo ? (
+src/components/riesgos/RiesgosPanel.tsx:522:            No hay riesgo seleccionado.
+src/components/riesgos/RiesgosPanel.tsx:530:                  {formatMoneyAR(riesgo.importe_riesgo, riesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:537:                  {formatMoneyAR(riesgo.total_pagado_riesgo, riesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:544:                  {formatMoneyAR(riesgo.saldo_riesgo, riesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:593:                  placeholder="Detalle del pago realizado a Almundo..."
+src/components/riesgos/RiesgosPanel.tsx:602:                  {formatMoneyAR(Math.max(saldo - importe, 0), riesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:607:                Este pago genera un egreso en Caja porque es dinero que NOSSIX le paga a Almundo.
+src/components/riesgos/RiesgosPanel.tsx:624:            disabled={saving || !riesgo}
+src/components/riesgos/RiesgosPanel.tsx:637:  riesgo,
+src/components/riesgos/RiesgosPanel.tsx:642:  riesgo: RiesgoAlmundo | null;
+src/components/riesgos/RiesgosPanel.tsx:648:    createInitialResolverSinPagoDraft(riesgo)
+src/components/riesgos/RiesgosPanel.tsx:652:    setDraft(createInitialResolverSinPagoDraft(riesgo));
+src/components/riesgos/RiesgosPanel.tsx:653:  }, [riesgo?.carrito_id]);
+src/components/riesgos/RiesgosPanel.tsx:662:              {riesgo ? `Carrito ${riesgo.numero_carrito}` : "Seleccioná un riesgo"}
+src/components/riesgos/RiesgosPanel.tsx:697:            disabled={saving || !riesgo}
+src/components/riesgos/RiesgosPanel.tsx:715:  pago: RiesgoPago | null;
+src/components/riesgos/RiesgosPanel.tsx:718:  onSave: (pago: RiesgoPago, motivo: string) => Promise<void>;
+src/components/riesgos/RiesgosPanel.tsx:731:            <h2 className="text-[17px] font-semibold text-[#172033]">Anular pago de riesgo</h2>
+src/components/riesgos/RiesgosPanel.tsx:784:export function RiesgosPanel() {
+src/components/riesgos/RiesgosPanel.tsx:785:  const loading = useRiesgosStore((state) => state.loading);
+src/components/riesgos/RiesgosPanel.tsx:786:  const saving = useRiesgosStore((state) => state.saving);
+src/components/riesgos/RiesgosPanel.tsx:787:  const error = useRiesgosStore((state) => state.error);
+src/components/riesgos/RiesgosPanel.tsx:788:  const currentProfile = useRiesgosStore((state) => state.currentProfile);
+src/components/riesgos/RiesgosPanel.tsx:789:  const canManageRiesgos = useRiesgosStore((state) => state.canManageRiesgos);
+src/components/riesgos/RiesgosPanel.tsx:790:  const filters = useRiesgosStore((state) => state.filters);
+src/components/riesgos/RiesgosPanel.tsx:791:  const catalogos = useRiesgosStore((state) => state.catalogos);
+src/components/riesgos/RiesgosPanel.tsx:792:  const selectedRiesgoId = useRiesgosStore((state) => state.selectedRiesgoId);
+src/components/riesgos/RiesgosPanel.tsx:794:  const loadRiesgos = useRiesgosStore((state) => state.loadRiesgos);
+src/components/riesgos/RiesgosPanel.tsx:795:  const registrarPago = useRiesgosStore((state) => state.registrarPago);
+src/components/riesgos/RiesgosPanel.tsx:796:  const anularPago = useRiesgosStore((state) => state.anularPago);
+src/components/riesgos/RiesgosPanel.tsx:797:  const resolverSinPago = useRiesgosStore((state) => state.resolverSinPago);
+src/components/riesgos/RiesgosPanel.tsx:798:  const setFilter = useRiesgosStore((state) => state.setFilter);
+src/components/riesgos/RiesgosPanel.tsx:799:  const resetFilters = useRiesgosStore((state) => state.resetFilters);
+src/components/riesgos/RiesgosPanel.tsx:800:  const selectRiesgo = useRiesgosStore((state) => state.selectRiesgo);
+src/components/riesgos/RiesgosPanel.tsx:801:  const clearError = useRiesgosStore((state) => state.clearError);
+src/components/riesgos/RiesgosPanel.tsx:803:  const getFilteredRiesgos = useRiesgosStore((state) => state.getFilteredRiesgos);
+src/components/riesgos/RiesgosPanel.tsx:804:  const getSelectedRiesgo = useRiesgosStore((state) => state.getSelectedRiesgo);
+src/components/riesgos/RiesgosPanel.tsx:805:  const getPagosBySelected = useRiesgosStore((state) => state.getPagosBySelected);
+src/components/riesgos/RiesgosPanel.tsx:806:  const getMetrics = useRiesgosStore((state) => state.getMetrics);
+src/components/riesgos/RiesgosPanel.tsx:808:  const riesgos = getFilteredRiesgos();
+src/components/riesgos/RiesgosPanel.tsx:810:  const selectedRiesgo = useMemo(
+src/components/riesgos/RiesgosPanel.tsx:811:    () => getSelectedRiesgo(),
+src/components/riesgos/RiesgosPanel.tsx:812:    [riesgos, selectedRiesgoId, getSelectedRiesgo]
+src/components/riesgos/RiesgosPanel.tsx:820:  const [pagoToAnular, setPagoToAnular] = useState<RiesgoPago | null>(null);
+src/components/riesgos/RiesgosPanel.tsx:824:    loadRiesgos();
+src/components/riesgos/RiesgosPanel.tsx:825:  }, [loadRiesgos]);
+src/components/riesgos/RiesgosPanel.tsx:831:  async function handleRegistrarPago(draft: PagoRiesgoDraft) {
+src/components/riesgos/RiesgosPanel.tsx:836:      showToast("Pago a Almundo registrado. Se generó egreso en Caja.");
+src/components/riesgos/RiesgosPanel.tsx:845:      showToast("Riesgo resuelto sin movimiento de Caja.");
+src/components/riesgos/RiesgosPanel.tsx:849:  async function handleAnularPago(pago: RiesgoPago, motivo: string) {
+src/components/riesgos/RiesgosPanel.tsx:882:                Riesgos Almundo
+src/components/riesgos/RiesgosPanel.tsx:886:                Deuda con Almundo
+src/components/riesgos/RiesgosPanel.tsx:891:              {canManageRiesgos
+src/components/riesgos/RiesgosPanel.tsx:892:                ? "Control de pagos a Almundo por carritos impactados a riesgo."
+src/components/riesgos/RiesgosPanel.tsx:893:                : `Riesgos de ${currentProfile?.nombre || "tu usuario"}.`}
+src/components/riesgos/RiesgosPanel.tsx:900:              onClick={loadRiesgos}
+src/components/riesgos/RiesgosPanel.tsx:1052:                  onClick={loadRiesgos}
+src/components/riesgos/RiesgosPanel.tsx:1083:                <h2 className="text-[14px] font-semibold text-[#172033]">Riesgos activos</h2>
+src/components/riesgos/RiesgosPanel.tsx:1085:                  {loading ? "Cargando..." : `${riesgos.length} riesgos encontrados`}
+src/components/riesgos/RiesgosPanel.tsx:1092:                Cargando riesgos...
+src/components/riesgos/RiesgosPanel.tsx:1094:            ) : riesgos.length === 0 ? (
+src/components/riesgos/RiesgosPanel.tsx:1096:                No hay riesgos para los filtros seleccionados.
+src/components/riesgos/RiesgosPanel.tsx:1100:                {riesgos.map((riesgo) => (
+src/components/riesgos/RiesgosPanel.tsx:1101:                  <RiesgoCard
+src/components/riesgos/RiesgosPanel.tsx:1102:                    key={riesgo.carrito_id}
+src/components/riesgos/RiesgosPanel.tsx:1103:                    riesgo={riesgo}
+src/components/riesgos/RiesgosPanel.tsx:1104:                    selected={selectedRiesgo?.carrito_id === riesgo.carrito_id}
+src/components/riesgos/RiesgosPanel.tsx:1105:                    onSelect={() => selectRiesgo(riesgo.carrito_id)}
+src/components/riesgos/RiesgosPanel.tsx:1107:                      selectRiesgo(riesgo.carrito_id);
+src/components/riesgos/RiesgosPanel.tsx:1117:            {!selectedRiesgo ? (
+src/components/riesgos/RiesgosPanel.tsx:1119:                Seleccioná un riesgo.
+src/components/riesgos/RiesgosPanel.tsx:1126:                      {selectedRiesgo.numero_carrito}
+src/components/riesgos/RiesgosPanel.tsx:1129:                      {selectedRiesgo.pasajero || "Sin pasajero"}
+src/components/riesgos/RiesgosPanel.tsx:1133:                  <EstadoBadge estado={selectedRiesgo.estado_riesgo} />
+src/components/riesgos/RiesgosPanel.tsx:1138:                    <FieldLabel>Deuda con Almundo</FieldLabel>
+src/components/riesgos/RiesgosPanel.tsx:1141:                      <span>Importe riesgo</span>
+src/components/riesgos/RiesgosPanel.tsx:1143:                        {formatMoneyAR(selectedRiesgo.importe_riesgo, selectedRiesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:1150:                        {formatMoneyAR(selectedRiesgo.total_pagado_riesgo, selectedRiesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:1159:                          parseMoney(selectedRiesgo.saldo_riesgo) > 0
+src/components/riesgos/RiesgosPanel.tsx:1164:                        {formatMoneyAR(selectedRiesgo.saldo_riesgo, selectedRiesgo.moneda)}
+src/components/riesgos/RiesgosPanel.tsx:1174:                      <strong className="font-semibold">{formatDateTime(selectedRiesgo.carrito_created_at)}</strong>
+src/components/riesgos/RiesgosPanel.tsx:1179:                      <strong className="font-semibold">{formatDateTime(selectedRiesgo.vencimiento_at)}</strong>
+src/components/riesgos/RiesgosPanel.tsx:1184:                      <strong className="font-semibold">{formatDate(selectedRiesgo.ultimo_pago_fecha)}</strong>
+src/components/riesgos/RiesgosPanel.tsx:1192:                      {selectedRiesgo.destino || "Sin destino"}
+src/components/riesgos/RiesgosPanel.tsx:1196:                      {formatDate(selectedRiesgo.fecha_in)} →{" "}
+src/components/riesgos/RiesgosPanel.tsx:1197:                      {selectedRiesgo.solo_ida ? "Solo ida" : formatDate(selectedRiesgo.fecha_out)}
+src/components/riesgos/RiesgosPanel.tsx:1201:                      {selectedRiesgo.servicio || "Sin servicio"}
+src/components/riesgos/RiesgosPanel.tsx:1205:                  {selectedRiesgo.riesgo_motivo ? (
+src/components/riesgos/RiesgosPanel.tsx:1207:                      {selectedRiesgo.riesgo_motivo}
+src/components/riesgos/RiesgosPanel.tsx:1212:                    {parseMoney(selectedRiesgo.saldo_riesgo) > 0 ? (
+src/components/riesgos/RiesgosPanel.tsx:1218:                        Registrar pago a Almundo
+src/components/riesgos/RiesgosPanel.tsx:1222:                    {selectedRiesgo.estado_riesgo !== "RESUELTO" ? (
+src/components/riesgos/RiesgosPanel.tsx:1299:                    El carrito sigue visible en Carritos. Esta pantalla controla la deuda de NOSSIX con Almundo.
+src/components/riesgos/RiesgosPanel.tsx:1309:        <PagoRiesgoModal
+src/components/riesgos/RiesgosPanel.tsx:1310:          riesgo={selectedRiesgo}
+src/components/riesgos/RiesgosPanel.tsx:1320:          riesgo={selectedRiesgo}
+src/components/riesgos/RiesgosPanel.tsx:1344:export default RiesgosPanel;
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1:// src/components/pagos-operadores/PagosOperadoresPanel.tsx
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:23:  usePagosOperadoresStore,
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:25:  type FileOperador,
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:26:  type PagoOperador
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:27:} from "../../store/pagosOperadoresStore";
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:627:function PagoOperadorForm({
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:629:  saldoOperador,
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:634:  file: FileOperador;
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:635:  saldoOperador: number;
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:662:        Registrar pago al operador
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:698:              placeholder={String(saldoOperador).replace(".", ",")}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:735:function PagosList({ pagos, moneda }: { pagos: PagoOperador[]; moneda: string }) {
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:739:        Todavía no se registraron pagos al operador.
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:773:export function PagosOperadoresPanel() {
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:774:  const loading = usePagosOperadoresStore((state) => state.loading);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:775:  const saving = usePagosOperadoresStore((state) => state.saving);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:776:  const error = usePagosOperadoresStore((state) => state.error);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:777:  const currentProfile = usePagosOperadoresStore((state) => state.currentProfile);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:778:  const canManagePagosOperadores = usePagosOperadoresStore(
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:779:    (state) => state.canManagePagosOperadores
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:781:  const filters = usePagosOperadoresStore((state) => state.filters);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:782:  const catalogos = usePagosOperadoresStore((state) => state.catalogos);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:783:  const selectedFileId = usePagosOperadoresStore((state) => state.selectedFileId);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:785:  const loadPagosOperadores = usePagosOperadoresStore((state) => state.loadPagosOperadores);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:786:  const savePagoOperador = usePagosOperadoresStore((state) => state.savePagoOperador);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:787:  const setFilter = usePagosOperadoresStore((state) => state.setFilter);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:788:  const clearError = usePagosOperadoresStore((state) => state.clearError);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:789:  const selectFile = usePagosOperadoresStore((state) => state.selectFile);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:791:  const getResumen = usePagosOperadoresStore((state) => state.getResumen);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:792:  const getSelectedResumen = usePagosOperadoresStore((state) => state.getSelectedResumen);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:793:  const getMetrics = usePagosOperadoresStore((state) => state.getMetrics);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:817:      loadPagosOperadores();
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:834:    loadPagosOperadores();
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:835:  }, [loadPagosOperadores]);
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:851:    const ok = await savePagoOperador({
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:853:      operador_id: selectedResumen.file.operador_id,
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:863:      showToast("Pago al operador registrado correctamente.");
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:867:  const operadorOptions: SelectOption[] = [
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:869:    ...catalogos.operadores.map((item) => ({
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:904:                Pagos a operadores
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:913:              {canManagePagosOperadores
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:914:                ? "Liquidaciones, pagos y saldos pendientes de operadores."
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:955:              onClick={loadPagosOperadores}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:996:                Operador: {filters.operadorId}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1051:                  <FieldLabel>Operador</FieldLabel>
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1053:                    value={filters.operadorId}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1054:                    onChange={(value) => setFilter("operadorId", value)}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1055:                    options={operadorOptions}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1059:                {canManagePagosOperadores ? (
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1096:                    placeholder="Buscar por cliente, teléfono, file, operador, destino..."
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1103:                  onClick={loadPagosOperadores}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1125:            label="Neto operador"
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1126:            value={formatMoneyAR(metrics.netoOperador)}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1137:            label="Pagado operador"
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1138:            value={formatMoneyAR(metrics.pagadoOperador)}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1143:            label="Saldo operador"
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1144:            value={formatMoneyAR(metrics.saldoOperador)}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1205:                          {file.operador || "Sin operador"}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1232:                          {formatMoneyAR(file.neto_operador, file.moneda)}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1236:                          Pagado {formatMoneyAR(item.totalPagadoOperador, file.moneda)}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1240:                          Saldo {formatMoneyAR(item.saldoOperador, file.moneda)}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1258:                          label="Ver y pagar operador"
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1287:                        {selectedResumen.file.operador || "Sin operador"}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1335:                      <span>Neto operador</span>
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1338:                          selectedResumen.file.neto_operador,
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1353:                        <span>Pagado operador</span>
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1356:                            selectedResumen.totalPagadoOperador,
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1363:                        <span>Saldo operador</span>
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1367:                            selectedResumen.saldoOperador > 0 ? "text-red-600" : "text-emerald-700"
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1371:                            selectedResumen.saldoOperador,
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1409:                  {selectedResumen.saldoOperador > 0 ? (
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1410:                    <PagoOperadorForm
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1412:                      saldoOperador={selectedResumen.saldoOperador}
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1419:                      Operador pagado completamente.
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1426:                Seleccioná un file para ver la liquidación del operador.
+src/components/pagos-operadores/PagosOperadoresPanel.tsx:1438:export default PagosOperadoresPanel;
+src/components/files/filesModel.ts:45:    operador_id: string;
+src/components/files/filesModel.ts:46:    operador: string;
+src/components/files/filesModel.ts:58:    neto_operador: string;
+src/components/files/filesModel.ts:104:      value: "PENDIENTE_OPERADOR",
+src/components/files/filesModel.ts:105:      label: "Pendiente operador"
+src/components/files/filesModel.ts:318:  netoOperador:
+src/components/files/filesModel.ts:326:    parseMoney(netoOperador)
+src/components/files/filesModel.ts:350:      operador_id: "",
+src/components/files/filesModel.ts:351:      operador: "",
+src/components/files/filesModel.ts:363:      neto_operador: "",
+src/components/files/filesModel.ts:532:  operador_id: string;
+src/components/files/filesModel.ts:533:  operador: string;
+src/components/files/filesModel.ts:543:  neto_operador: string;
+src/components/files/filesModel.ts:549:  fecha_vencimiento_operador:
+src/components/files/filesModel.ts:552:  saldo_pendiente_operador:
+src/components/files/filesModel.ts:555:  estado_pago_operador:
+src/components/files/filesModel.ts:563:    operador_id:
+src/components/files/filesModel.ts:564:      file.operador_id || "",
+src/components/files/filesModel.ts:566:    operador:
+src/components/files/filesModel.ts:567:      file.operador || "",
+src/components/files/filesModel.ts:590:    neto_operador: String(
+src/components/files/filesModel.ts:591:      file.neto_operador ?? ""
+src/components/files/filesModel.ts:603:    fecha_vencimiento_operador:
+src/components/files/filesModel.ts:604:      file.fecha_vencimiento_operador ||
+src/components/files/filesModel.ts:607:    saldo_pendiente_operador:
+src/components/files/filesModel.ts:609:        file.saldo_pendiente_operador ??
+src/components/files/filesModel.ts:613:    estado_pago_operador:
+src/components/files/filesModel.ts:614:      file.estado_pago_operador || ""
+src/components/files/FilesPanel.tsx:38:  { value: "PENDIENTE_OPERADOR", label: "Pendiente operador" },
+src/components/files/FilesPanel.tsx:324:  const operadorOptions: SelectOption[] = [
+src/components/files/FilesPanel.tsx:326:    ...catalogos.operadores.map((item) => ({
+src/components/files/FilesPanel.tsx:369:          operadorId={filters.operadorId}
+src/components/files/FilesPanel.tsx:376:          operadorOptions={operadorOptions}
+src/components/files/FilesPanel.tsx:397:          onOperadorChange={(value) =>
+src/components/files/FilesPanel.tsx:398:            setFilter("operadorId", value)
+src/components/files/FilesPanel.tsx:446:                  const margen = parseMoney(file.importe_final) - parseMoney(file.neto_operador);
+src/components/files/FilesPanel.tsx:500:                        {file.riesgo ? (
+src/components/files/FilesPanel.tsx:502:                            Riesgo
+src/components/files/FilesPanel.tsx:506:                        {parseMoney(file.neto_operador) <= 0 ? (
+src/components/files/FilesPanel.tsx:558:                  {selectedFile.riesgo ? (
+src/components/files/FilesPanel.tsx:560:                      Riesgo
+src/components/files/FilesPanel.tsx:593:                    <FieldLabel>Operador</FieldLabel>
+src/components/files/FilesPanel.tsx:595:                      {selectedFile.operador || "Sin operador"}
+src/components/files/FilesPanel.tsx:611:                      <span>Neto operador</span>
+src/components/files/FilesPanel.tsx:613:                        {formatMoneyAR(selectedFile.neto_operador, selectedFile.moneda)}
+src/components/files/FilesPanel.tsx:626:                          parseMoney(selectedFile.importe_final) - parseMoney(selectedFile.neto_operador),
+src/components/files/FilesPanel.tsx:647:                      Operador
+src/components/files/components/FileWizardVenta.tsx:32:  operadorOptions: SelectOption[];
+src/components/files/components/FileWizardVenta.tsx:37:  netoOperador: number;
+src/components/files/components/FileWizardVenta.tsx:47:  onSelectOperador: (
+src/components/files/components/FileWizardVenta.tsx:48:    operadorId: string
+src/components/files/components/FileWizardVenta.tsx:84:  operadorOptions,
+src/components/files/components/FileWizardVenta.tsx:89:  onSelectOperador,
+src/components/files/components/FileWizardVenta.tsx:130:            Operador *
+src/components/files/components/FileWizardVenta.tsx:135:              draft.venta.operador_id
+src/components/files/components/FileWizardVenta.tsx:138:              operadorOptions
+src/components/files/components/FileWizardVenta.tsx:141:              onSelectOperador
+src/components/files/components/FileWizardVenta.tsx:143:            placeholder="Seleccionar operador"
+src/components/files/components/FileWizardVenta.tsx:329:            Neto operador
+src/components/files/components/FileWizardVenta.tsx:334:              draft.venta.neto_operador
+src/components/files/components/FileWizardVenta.tsx:338:                "neto_operador",
+src/components/files/components/FilesFilters.tsx:30:  operadorId: string;
+src/components/files/components/FilesFilters.tsx:39:  operadorOptions: SelectOption[];
+src/components/files/components/FilesFilters.tsx:61:  onOperadorChange: (
+src/components/files/components/FilesFilters.tsx:94:  operadorId,
+src/components/files/components/FilesFilters.tsx:103:  operadorOptions,
+src/components/files/components/FilesFilters.tsx:116:  onOperadorChange,
+src/components/files/components/FilesFilters.tsx:271:                Operador
+src/components/files/components/FilesFilters.tsx:275:                value={operadorId}
+src/components/files/components/FilesFilters.tsx:277:                  onOperadorChange
+src/components/files/components/FilesFilters.tsx:280:                  operadorOptions
+src/components/files/components/FilesWizardModal.tsx:181:                    operadorOptions={
+src/components/files/components/FilesWizardModal.tsx:182:                      wizard.operadorOptions
+src/components/files/components/FilesWizardModal.tsx:191:                    netoOperador={
+src/components/files/components/FilesWizardModal.tsx:192:                      wizard.netoOperador
+src/components/files/components/FilesWizardModal.tsx:200:                    onSelectOperador={
+src/components/files/components/FilesWizardModal.tsx:201:                      wizard.selectOperador
+src/components/files/components/FilesWizardModal.tsx:293:                    netoOperador={
+src/components/files/components/FilesWizardModal.tsx:294:                      wizard.netoOperador
+src/components/files/components/FilesWizardModal.tsx:319:                netoOperador={
+src/components/files/components/FilesWizardModal.tsx:320:                  wizard.netoOperador
+src/components/files/components/FilesHeader.tsx:32:            Carga de files y operadores. Cada vendedor puede consultar sus operaciones y aplicar filtros.
+src/components/files/components/FileWizardConfirmacion.tsx:18:  netoOperador: number;
+src/components/files/components/FileWizardConfirmacion.tsx:33:  netoOperador,
+src/components/files/components/FileWizardConfirmacion.tsx:80:            {draft.venta.operador ||
+src/components/files/components/FileWizardConfirmacion.tsx:81:              "Sin operador"}
+src/components/files/components/FileWizardConfirmacion.tsx:123:            Operador
+src/components/files/components/FileWizardConfirmacion.tsx:146:                netoOperador,
+src/components/files/components/SelectedFileSidebar.tsx:84:            {file.riesgo ? (
+src/components/files/components/SelectedFileSidebar.tsx:86:                Riesgo
+src/components/files/components/SelectedFileSidebar.tsx:144:                Operador
+src/components/files/components/SelectedFileSidebar.tsx:148:                {file.operador ||
+src/components/files/components/SelectedFileSidebar.tsx:149:                  "Sin operador"}
+src/components/files/components/SelectedFileSidebar.tsx:178:                  Neto operador
+src/components/files/components/SelectedFileSidebar.tsx:183:                    file.neto_operador,
+src/components/files/components/SelectedFileSidebar.tsx:213:                        file.neto_operador
+src/components/files/components/SelectedFileSidebar.tsx:239:                Operador
+src/components/files/components/FilesList.tsx:88:                file.neto_operador
+src/components/files/components/FilesList.tsx:172:                  {file.riesgo ? (
+src/components/files/components/FilesList.tsx:174:                      Riesgo
+src/components/files/components/FilesList.tsx:179:                    file.neto_operador
+src/components/files/components/FileWizardSummary.tsx:10:  netoOperador: number;
+src/components/files/components/FileWizardSummary.tsx:20:  netoOperador,
+src/components/files/components/FileWizardSummary.tsx:58:            {draft.venta.operador || "Sin operador"}
+src/components/files/components/FileWizardSummary.tsx:79:              Neto operador
+src/components/files/components/FileWizardSummary.tsx:84:                netoOperador,
+src/components/files/components/FileWizardStepper.tsx:18:    subtitle: "Operador y File",
+src/components/files/components/FilesMetrics.tsx:15:  netoOperador: number;
+src/components/files/components/FilesMetrics.tsx:105:        label="Neto operador"
+src/components/files/components/FilesMetrics.tsx:107:          metrics.netoOperador
+src/components/files/components/FileDetailMainInfo.tsx:28:  operador_id: string;
+src/components/files/components/FileDetailMainInfo.tsx:29:  operador: string;
+src/components/files/components/FileDetailMainInfo.tsx:41:  neto_operador: string;
+src/components/files/components/FileDetailMainInfo.tsx:46:  riesgo: boolean;
+src/components/files/components/FileDetailMainInfo.tsx:47:  importe_riesgo: string;
+src/components/files/components/FileDetailMainInfo.tsx:48:  riesgo_motivo: string;
+src/components/files/components/FileDetailMainInfo.tsx:50:  fecha_vencimiento_operador:
+src/components/files/components/FileDetailMainInfo.tsx:53:  saldo_pendiente_operador:
+src/components/files/components/FileDetailMainInfo.tsx:56:  estado_pago_operador:
+src/components/files/components/FileDetailMainInfo.tsx:67:  operadorOptions:
+src/components/files/components/FileDetailMainInfo.tsx:76:  estadoPagoOperadorOptions:
+src/components/files/components/FileDetailMainInfo.tsx:91:  operadorOptions,
+src/components/files/components/FileDetailMainInfo.tsx:94:  estadoPagoOperadorOptions,
+src/components/files/components/FileDetailMainInfo.tsx:243:                  Operador
+src/components/files/components/FileDetailMainInfo.tsx:248:                    draft.operador_id
+src/components/files/components/FileDetailMainInfo.tsx:252:                      operadorOptions.find(
+src/components/files/components/FileDetailMainInfo.tsx:259:                      "operador_id",
+src/components/files/components/FileDetailMainInfo.tsx:264:                      "operador",
+src/components/files/components/FileDetailMainInfo.tsx:270:                    operadorOptions
+src/components/files/components/FileDetailMainInfo.tsx:272:                  placeholder="Seleccionar operador"
+src/components/files/components/FileDetailMainInfo.tsx:396:                Operador:{" "}
+src/components/files/components/FileDetailMainInfo.tsx:398:                  {file.operador ||
+src/components/files/components/FileDetailMainInfo.tsx:412:                Riesgo:{" "}
+src/components/files/components/FileDetailMainInfo.tsx:414:                  {file.riesgo
+src/components/files/components/FileDetailMainInfo.tsx:449:                    Neto operador
+src/components/files/components/FileDetailMainInfo.tsx:454:                      draft.neto_operador
+src/components/files/components/FileDetailMainInfo.tsx:458:                        "neto_operador",
+src/components/files/components/FileDetailMainInfo.tsx:464:                          .saldo_pendiente_operador ||
+src/components/files/components/FileDetailMainInfo.tsx:467:                            .saldo_pendiente_operador
+src/components/files/components/FileDetailMainInfo.tsx:471:                          "saldo_pendiente_operador",
+src/components/files/components/FileDetailMainInfo.tsx:485:                    Vencimiento operador
+src/components/files/components/FileDetailMainInfo.tsx:491:                        .fecha_vencimiento_operador
+src/components/files/components/FileDetailMainInfo.tsx:495:                        "fecha_vencimiento_operador",
+src/components/files/components/FileDetailMainInfo.tsx:504:                    Saldo operador
+src/components/files/components/FileDetailMainInfo.tsx:510:                        .saldo_pendiente_operador
+src/components/files/components/FileDetailMainInfo.tsx:514:                        "saldo_pendiente_operador",
+src/components/files/components/FileDetailMainInfo.tsx:526:                  Estado pago operador
+src/components/files/components/FileDetailMainInfo.tsx:532:                      .estado_pago_operador
+src/components/files/components/FileDetailMainInfo.tsx:536:                      "estado_pago_operador",
+src/components/files/components/FileDetailMainInfo.tsx:541:                    estadoPagoOperadorOptions
+src/components/files/components/FileDetailMainInfo.tsx:548:                  draft.riesgo
+src/components/files/components/FileDetailMainInfo.tsx:552:                    "riesgo",
+src/components/files/components/FileDetailMainInfo.tsx:558:                      "importe_riesgo",
+src/components/files/components/FileDetailMainInfo.tsx:563:                      "riesgo_motivo",
+src/components/files/components/FileDetailMainInfo.tsx:568:                label="Riesgo operador"
+src/components/files/components/FileDetailMainInfo.tsx:571:              {draft.riesgo ? (
+src/components/files/components/FileDetailMainInfo.tsx:575:                      Importe riesgo
+src/components/files/components/FileDetailMainInfo.tsx:581:                          .importe_riesgo
+src/components/files/components/FileDetailMainInfo.tsx:585:                          "importe_riesgo",
+src/components/files/components/FileDetailMainInfo.tsx:596:                      Motivo riesgo
+src/components/files/components/FileDetailMainInfo.tsx:602:                          .riesgo_motivo
+src/components/files/components/FileDetailMainInfo.tsx:606:                          "riesgo_motivo",
+src/components/files/components/FileDetailMainInfo.tsx:629:                Neto operador:{" "}
+src/components/files/components/FileDetailMainInfo.tsx:632:                    file.neto_operador,
+src/components/files/components/FileDetailMainInfo.tsx:659:                Saldo operador:{" "}
+src/components/files/components/FileDetailMainInfo.tsx:663:                      .saldo_pendiente_operador ||
+src/components/files/components/FileDetailMainInfo.tsx:671:                Estado operador:{" "}
+src/components/files/components/FileDetailMainInfo.tsx:674:                    .estado_pago_operador ||
+src/components/files/components/FileDetailModal.tsx:59:    operador_id: file.operador_id || "",
+src/components/files/components/FileDetailModal.tsx:60:    operador: file.operador || "",
+src/components/files/components/FileDetailModal.tsx:69:    neto_operador: String(file.neto_operador ?? "").replace(".", ","),
+src/components/files/components/FileDetailModal.tsx:72:    riesgo: Boolean(file.riesgo),
+src/components/files/components/FileDetailModal.tsx:73:    importe_riesgo: String(file.importe_riesgo ?? "").replace(".", ","),
+src/components/files/components/FileDetailModal.tsx:74:    riesgo_motivo: file.riesgo_motivo || "",
+src/components/files/components/FileDetailModal.tsx:75:    fecha_vencimiento_operador: file.fecha_vencimiento_operador || "",
+src/components/files/components/FileDetailModal.tsx:76:    saldo_pendiente_operador: String(file.saldo_pendiente_operador ?? "").replace(".", ","),
+src/components/files/components/FileDetailModal.tsx:77:    estado_pago_operador: file.estado_pago_operador || ""
+src/components/files/components/FileDetailModal.tsx:80:  const operadorOptions: SelectOption[] = [
+src/components/files/components/FileDetailModal.tsx:81:    { value: "", label: "Sin operador" },
+src/components/files/components/FileDetailModal.tsx:82:    ...catalogos.operadores.map((item) => ({
+src/components/files/components/FileDetailModal.tsx:98:  const estadoPagoOperadorOptions: SelectOption[] = [
+src/components/files/components/FileDetailModal.tsx:108:  const neto = parseMoney(draft.neto_operador);
+src/components/files/components/FileDetailModal.tsx:110:  const saldoOperador = parseMoney(draft.saldo_pendiente_operador);
+src/components/files/components/FileDetailModal.tsx:128:    const selectedOperador = catalogos.operadores.find((item) => item.id === draft.operador_id);
+src/components/files/components/FileDetailModal.tsx:131:      operador_id: draft.operador_id || null,
+src/components/files/components/FileDetailModal.tsx:132:      operador: selectedOperador?.nombre || draft.operador || null,
+src/components/files/components/FileDetailModal.tsx:141:      neto_operador: neto,
+src/components/files/components/FileDetailModal.tsx:144:      riesgo: draft.riesgo,
+src/components/files/components/FileDetailModal.tsx:145:      importe_riesgo: draft.riesgo ? parseMoney(draft.importe_riesgo) : 0,
+src/components/files/components/FileDetailModal.tsx:146:      riesgo_motivo: draft.riesgo ? draft.riesgo_motivo || null : null,
+src/components/files/components/FileDetailModal.tsx:147:      fecha_vencimiento_operador: draft.fecha_vencimiento_operador || null,
+src/components/files/components/FileDetailModal.tsx:148:      saldo_pendiente_operador: saldoOperador,
+src/components/files/components/FileDetailModal.tsx:149:      estado_pago_operador: draft.estado_pago_operador || null
+src/components/files/components/FileDetailModal.tsx:254:                  <FieldLabel>Operador</FieldLabel>
+src/components/files/components/FileDetailModal.tsx:256:                    value={draft.operador_id}
+src/components/files/components/FileDetailModal.tsx:258:                      const selected = catalogos.operadores.find((item) => item.id === value);
+src/components/files/components/FileDetailModal.tsx:259:                      setField("operador_id", value);
+src/components/files/components/FileDetailModal.tsx:260:                      setField("operador", selected?.nombre || "");
+src/components/files/components/FileDetailModal.tsx:262:                    options={operadorOptions}
+src/components/files/components/FileDetailModal.tsx:263:                    placeholder="Seleccionar operador"
+src/components/files/components/FileDetailModal.tsx:325:                  Operador: <strong className="font-semibold">{file.operador || "—"}</strong>
+src/components/files/components/FileDetailModal.tsx:331:                  Riesgo: <strong className="font-semibold">{file.riesgo ? "SÍ" : "NO"}</strong>
+src/components/files/components/FileDetailModal.tsx:352:                    <FieldLabel>Neto operador</FieldLabel>
+src/components/files/components/FileDetailModal.tsx:354:                      value={draft.neto_operador}
+src/components/files/components/FileDetailModal.tsx:356:                        setField("neto_operador", value);
+src/components/files/components/FileDetailModal.tsx:359:                          !draft.saldo_pendiente_operador ||
+src/components/files/components/FileDetailModal.tsx:360:                          parseMoney(draft.saldo_pendiente_operador) === 0
+src/components/files/components/FileDetailModal.tsx:362:                          setField("saldo_pendiente_operador", value);
+src/components/files/components/FileDetailModal.tsx:373:                    <FieldLabel>Vencimiento operador</FieldLabel>
+src/components/files/components/FileDetailModal.tsx:375:                      value={draft.fecha_vencimiento_operador}
+src/components/files/components/FileDetailModal.tsx:376:                      onChange={(value) => setField("fecha_vencimiento_operador", value)}
+src/components/files/components/FileDetailModal.tsx:381:                    <FieldLabel>Saldo operador</FieldLabel>
+src/components/files/components/FileDetailModal.tsx:383:                      value={draft.saldo_pendiente_operador}
+src/components/files/components/FileDetailModal.tsx:384:                      onChange={(value) => setField("saldo_pendiente_operador", value)}
+src/components/files/components/FileDetailModal.tsx:392:                  <FieldLabel>Estado pago operador</FieldLabel>
+src/components/files/components/FileDetailModal.tsx:394:                    value={draft.estado_pago_operador}
+src/components/files/components/FileDetailModal.tsx:395:                    onChange={(value) => setField("estado_pago_operador", value)}
+src/components/files/components/FileDetailModal.tsx:396:                    options={estadoPagoOperadorOptions}
+src/components/files/components/FileDetailModal.tsx:401:                  checked={draft.riesgo}
+src/components/files/components/FileDetailModal.tsx:403:                    setField("riesgo", value);
+src/components/files/components/FileDetailModal.tsx:405:                      setField("importe_riesgo", "");
+src/components/files/components/FileDetailModal.tsx:406:                      setField("riesgo_motivo", "");
+src/components/files/components/FileDetailModal.tsx:409:                  label="Riesgo operador"
+src/components/files/components/FileDetailModal.tsx:412:                {draft.riesgo ? (
+src/components/files/components/FileDetailModal.tsx:415:                      <FieldLabel>Importe riesgo</FieldLabel>
+src/components/files/components/FileDetailModal.tsx:417:                        value={draft.importe_riesgo}
+src/components/files/components/FileDetailModal.tsx:418:                        onChange={(value) => setField("importe_riesgo", value)}
+src/components/files/components/FileDetailModal.tsx:425:                      <FieldLabel>Motivo riesgo</FieldLabel>
+src/components/files/components/FileDetailModal.tsx:427:                        value={draft.riesgo_motivo}
+src/components/files/components/FileDetailModal.tsx:428:                        onChange={(value) => setField("riesgo_motivo", value)}
+src/components/files/components/FileDetailModal.tsx:444:                  Neto operador:{" "}
+src/components/files/components/FileDetailModal.tsx:446:                    {formatMoneyAR(file.neto_operador, file.moneda)}
+src/components/files/components/FileDetailModal.tsx:462:                  Saldo operador:{" "}
+src/components/files/components/FileDetailModal.tsx:464:                    {formatMoneyAR(file.saldo_pendiente_operador || 0, file.moneda)}
+src/components/files/components/FileDetailModal.tsx:468:                  Estado operador:{" "}
+src/components/files/components/FileDetailModal.tsx:469:                  <strong className="font-semibold">{file.estado_pago_operador || "—"}</strong>
+src/components/files/components/FileDetailModal.tsx:483:            <span className="text-[#64748b]">Neto operador</span>
+src/components/files/components/FileDetailModal.tsx:510:        {file.riesgo && !editing ? (
+src/components/files/components/FileDetailModal.tsx:512:            <strong>Motivo riesgo:</strong> {file.riesgo_motivo || "Sin motivo cargado"}
+src/components/files/components/FileDetailFinancialSummary.tsx:46:    draft.neto_operador
+src/components/files/components/FileDetailFinancialSummary.tsx:70:            Neto operador
+src/components/files/components/FileDetailFinancialSummary.tsx:129:      {file.riesgo &&
+src/components/files/components/FileDetailFinancialSummary.tsx:133:            Motivo riesgo:
+src/components/files/components/FileDetailFinancialSummary.tsx:135:          {file.riesgo_motivo ||
+src/components/files/hooks/useFileWizard.ts:328:  const netoOperador =
+src/components/files/hooks/useFileWizard.ts:330:      draft.venta.neto_operador
+src/components/files/hooks/useFileWizard.ts:336:      netoOperador
+src/components/files/hooks/useFileWizard.ts:392:  const operadorOptions:
+src/components/files/hooks/useFileWizard.ts:394:    catalogos.operadores.map(
+src/components/files/hooks/useFileWizard.ts:896:  function selectOperador(
+src/components/files/hooks/useFileWizard.ts:897:    operadorId: string
+src/components/files/hooks/useFileWizard.ts:901:    const operador =
+src/components/files/hooks/useFileWizard.ts:902:      catalogos.operadores.find(
+src/components/files/hooks/useFileWizard.ts:904:          item.id === operadorId
+src/components/files/hooks/useFileWizard.ts:913:        operador_id:
+src/components/files/hooks/useFileWizard.ts:914:          operador?.id || "",
+src/components/files/hooks/useFileWizard.ts:916:        operador:
+src/components/files/hooks/useFileWizard.ts:917:          operador?.nombre || ""
+src/components/files/hooks/useFileWizard.ts:1604:          .operador_id
+src/components/files/hooks/useFileWizard.ts:1607:          "Seleccioná el operador."
+src/components/files/hooks/useFileWizard.ts:1665:        netoOperador <= 0
+src/components/files/hooks/useFileWizard.ts:1668:          "El neto del operador debe ser mayor a cero."
+src/components/files/hooks/useFileWizard.ts:1674:          "El neto del operador no puede superar la venta."
+src/components/files/hooks/useFileWizard.ts:1938:      netoOperador,
+src/components/files/hooks/useFileWizard.ts:2096:        operador_id:
+src/components/files/hooks/useFileWizard.ts:2098:            .operador_id ||
+src/components/files/hooks/useFileWizard.ts:2101:        operador:
+src/components/files/hooks/useFileWizard.ts:2103:            .operador ||
+src/components/files/hooks/useFileWizard.ts:2143:        neto_operador:
+src/components/files/hooks/useFileWizard.ts:2144:          netoOperador,
+src/components/files/hooks/useFileWizard.ts:2158:        riesgo: false,
+src/components/files/hooks/useFileWizard.ts:2160:        importe_riesgo: 0,
+src/components/files/hooks/useFileWizard.ts:2162:        riesgo_motivo:
+src/components/files/hooks/useFileWizard.ts:2297:    netoOperador,
+src/components/files/hooks/useFileWizard.ts:2306:    operadorOptions,
+src/components/files/hooks/useFileWizard.ts:2320:    selectOperador,
+src/components/metas/MetasPanel.tsx:68:  { value: "ALMUNDO_MENSUAL", label: "Meta Almundo" }
+src/components/metas/MetasPanel.tsx:72:  { value: "ALMUNDO_MENSUAL", label: "Meta Almundo por sucursal" },
+src/components/metas/MetasPanel.tsx:137:    ALMUNDO_MENSUAL: "Meta Almundo"
+src/components/metas/MetasPanel.tsx:144:  if (tipo === "ALMUNDO_MENSUAL") return "Facturación total Almundo · Carritos";
+src/components/metas/MetasPanel.tsx:433:    tipo: "ALMUNDO_MENSUAL",
+src/components/metas/MetasPanel.tsx:473:  const isSucursal = draft.tipo === "SUCURSAL_MENSUAL" || draft.tipo === "ALMUNDO_MENSUAL";
+src/components/metas/MetasPanel.tsx:475:  const isAlmundo = draft.tipo === "ALMUNDO_MENSUAL";
+src/components/metas/MetasPanel.tsx:680:              {isWeekly || isAlmundo ? (
+src/components/metas/MetasPanel.tsx:682:                  <FieldLabel>{isAlmundo ? "Meta facturación Almundo USD" : "Meta semanal USD"}</FieldLabel>
+src/components/metas/MetasPanel.tsx:812:                  {isWeekly || isAlmundo
+src/components/metas/MetasPanel.tsx:882:  const isAlmundo = meta.tipo === "ALMUNDO_MENSUAL";
+src/components/metas/MetasPanel.tsx:885:  const isSucursal = meta.tipo === "SUCURSAL_MENSUAL" || meta.tipo === "ALMUNDO_MENSUAL";
+src/components/metas/MetasPanel.tsx:1025:        {isWeekly || isAlmundo ? (
+src/components/metas/MetasPanel.tsx:1027:            <FieldLabel>{isAlmundo ? "Meta facturación Almundo USD" : "Meta semanal USD"}</FieldLabel>
+src/components/metas/MetasPanel.tsx:1428:          <MetricCard label="Almundo" value={metrics.almundo} icon={Trophy} tone="amber" />
+src/components/metas/MetasPanel.tsx:1462:                  const isAlmundo = meta.tipo === "ALMUNDO_MENSUAL";
+src/components/metas/MetasPanel.tsx:1513:                        {isWeekly || isAlmundo ? (
+src/components/metas/MetasPanel.tsx:1520:                              {isAlmundo ? "Meta facturación" : "Meta semanal única"}
+src/components/metas/MetasPanel.tsx:1561:                        ) : meta.tipo === "ALMUNDO_MENSUAL" ? (
+src/components/metas/MetasPanel.tsx:1564:                              Almundo
+src/components/control-ventas/ControlVentasPanel.tsx:166:function calculatePreview(utilidadAlmundo: string, importeRegalia: string) {
+src/components/control-ventas/ControlVentasPanel.tsx:167:  const utilidad = parseMoney(utilidadAlmundo);
+src/components/control-ventas/ControlVentasPanel.tsx:465:  const utilidad = parseMoney(control?.utilidad_almundo || 0);
+src/components/control-ventas/ControlVentasPanel.tsx:472:    utilidad_almundo: control?.utilidad_almundo ? String(control.utilidad_almundo).replace(".", ",") : "",
+src/components/control-ventas/ControlVentasPanel.tsx:648:  const preview = calculatePreview(draft.utilidad_almundo, draft.importe_regalia);
+src/components/control-ventas/ControlVentasPanel.tsx:741:                  value={draft.utilidad_almundo}
+src/components/control-ventas/ControlVentasPanel.tsx:743:                    const utilidadAnterior = parseMoney(draft.utilidad_almundo);
+src/components/control-ventas/ControlVentasPanel.tsx:754:                    setField("utilidad_almundo", value);
+src/components/control-ventas/ControlVentasPanel.tsx:773:                    const utilidad = parseMoney(draft.utilidad_almundo);
+src/components/control-ventas/ControlVentasPanel.tsx:1035:                Almundo
+src/components/control-ventas/ControlVentasPanel.tsx:1411:                          {formatMoneyAR(item.utilidadAlmundo, carrito.moneda)}
+src/components/Sidebar.tsx:74:  | "pagos-operadores"
+src/components/Sidebar.tsx:75:  | "riesgos"
+src/components/Sidebar.tsx:248:    id: "pagos-operadores",
+src/components/Sidebar.tsx:249:    label: "Pago a operadores",
+src/components/Sidebar.tsx:253:    id: "riesgos",
+src/components/Sidebar.tsx:254:    label: "Riesgos",
+src/components/clientes/ClientesPanel.tsx:928:  const abacoUrl = `https://abaco.almundo.com/bo/cart/${carrito.numero_carrito}`;
+src/components/ctas-ctes/CtasCtesPanel.tsx:196:  return `https://abaco.almundo.com/bo/cart/${numero}`;
+src/components/ctas-ctes/CtasCtesPanel.tsx:883:              No hay pagos registrados para esta cuenta corriente.
+src/registry/appRegistry.ts:116:    id: "pagos-operadores",
+src/registry/appRegistry.ts:117:    name: "Pago a Operadores",
+src/registry/appRegistry.ts:118:    url: "internal://pagos-operadores"
+src/registry/appRegistry.ts:121:    id: "riesgos",
+src/registry/appRegistry.ts:122:    name: "Riesgos",
+src/registry/appRegistry.ts:123:    url: "internal://riesgos"
+src/lib/liveConnectHtmlParser.ts:131:    "nossix sas - franquicias de almundo",
+src/lib/liveConnectHtmlParser.ts:132:    "almundo - nossix",
+src/lib/liveConnectHtmlParser.ts:202:    sender.includes("almundo") ||
+src/lib/liveConnectHtmlParser.ts:206:    sender.includes("operador") ||
+src/modules/perfil/MiPerfilPanel.tsx:131:  { key: "almundo", label: "Almundo" },
+src/modules/comunicaciones/OportunidadDetalleModal.tsx:325:        datos.riesgos ||
+src/modules/comunicaciones/OportunidadDetalleModal.tsx:1126:  const objeciones = getListFromDatos(datos, ["objeciones", "riesgos", "alertas", "observaciones_ia"]);
+src/modules/comunicaciones/CandePanel.tsx:543:        cleanText(configDraft.marca_visible) || "ALMUNDO Franquicia Córdoba",
+src/modules/comunicaciones/CandePanel.tsx:1120:                        placeholder="ALMUNDO Franquicia Córdoba"
+src/store/importadorCatalogosStore.ts:10:  | "operadores"
+src/store/importadorCatalogosStore.ts:111:  operadores: "Operadores",
+src/store/importadorCatalogosStore.ts:128:  operadores: ["nombre"],
+src/store/importadorCatalogosStore.ts:150:  operadores: ["nombre", "color", "razon_social", "cuit", "activo"],
+src/store/importadorCatalogosStore.ts:197:    "es_almundo",
+src/store/importadorCatalogosStore.ts:229:    "operador_id",
+src/store/importadorCatalogosStore.ts:230:    "operador_mayorista",
+src/store/importadorCatalogosStore.ts:231:    "neto_operador",
+src/store/importadorCatalogosStore.ts:232:    "fecha_vencimiento_operador",
+src/store/importadorCatalogosStore.ts:233:    "saldo_pendiente_operador",
+src/store/importadorCatalogosStore.ts:234:    "estado_pago_operador",
+src/store/importadorCatalogosStore.ts:235:    "impacto_riesgo",
+src/store/importadorCatalogosStore.ts:236:    "riesgo_resuelto",
+src/store/importadorCatalogosStore.ts:237:    "riesgo_resuelto_at",
+src/store/importadorCatalogosStore.ts:238:    "riesgo_resuelto_por",
+src/store/importadorCatalogosStore.ts:457:  if (normalized === "ALMUNDO") return "ALMUNDO";
+src/store/importadorCatalogosStore.ts:871:  if (catalogType === "operadores") {
+src/store/importadorCatalogosStore.ts:872:    map.nombre = guessColumn(columns, ["nombre", "operador", "mayorista"]);
+src/store/importadorCatalogosStore.ts:964:    map.es_almundo = guessColumn(columns, ["es_almundo", "es almundo", "almundo"]);
+src/store/importadorCatalogosStore.ts:1005:    map.operador_id = guessColumn(columns, ["operador_id"]);
+src/store/importadorCatalogosStore.ts:1006:    map.operador_mayorista = guessColumn(columns, ["operador_mayorista", "operador mayorista", "operador", "mayorista"]);
+src/store/importadorCatalogosStore.ts:1007:    map.neto_operador = guessColumn(columns, ["neto_operador", "neto operador", "neto"]);
+src/store/importadorCatalogosStore.ts:1009:    map.fecha_vencimiento_operador = guessColumn(columns, [
+src/store/importadorCatalogosStore.ts:1010:      "fecha_vencimiento_operador",
+src/store/importadorCatalogosStore.ts:1011:      "fecha vencimiento operador",
+src/store/importadorCatalogosStore.ts:1012:      "vencimiento operador"
+src/store/importadorCatalogosStore.ts:1014:    map.saldo_pendiente_operador = guessColumn(columns, [
+src/store/importadorCatalogosStore.ts:1015:      "saldo_pendiente_operador",
+src/store/importadorCatalogosStore.ts:1016:      "saldo pendiente operador",
+src/store/importadorCatalogosStore.ts:1017:      "saldo operador"
+src/store/importadorCatalogosStore.ts:1019:    map.estado_pago_operador = guessColumn(columns, [
+src/store/importadorCatalogosStore.ts:1020:      "estado_pago_operador",
+src/store/importadorCatalogosStore.ts:1021:      "estado pago operador",
+src/store/importadorCatalogosStore.ts:1022:      "pago operador"
+src/store/importadorCatalogosStore.ts:1025:    map.impacto_riesgo = guessColumn(columns, ["impacto_riesgo", "impacto riesgo", "riesgo"]);
+src/store/importadorCatalogosStore.ts:1026:    map.riesgo_resuelto = guessColumn(columns, ["riesgo_resuelto", "riesgo resuelto"]);
+src/store/importadorCatalogosStore.ts:1027:    map.riesgo_resuelto_at = guessColumn(columns, ["riesgo_resuelto_at", "riesgo resuelto at"]);
+src/store/importadorCatalogosStore.ts:1028:    map.riesgo_resuelto_por = guessColumn(columns, ["riesgo_resuelto_por", "riesgo resuelto por"]);
+src/store/importadorCatalogosStore.ts:1136:  if (catalogType === "operadores") return "operadores";
+src/store/importadorCatalogosStore.ts:1202:  const esAlmundoRaw = cleanText(mapped.es_almundo);
+src/store/importadorCatalogosStore.ts:1204:  if (esAlmundoRaw) {
+src/store/importadorCatalogosStore.ts:1205:    return !parseBoolean(esAlmundoRaw, true);
+src/store/importadorCatalogosStore.ts:1210:    Boolean(cleanText(mapped.operador)) ||
+src/store/importadorCatalogosStore.ts:1211:    parseMoney(mapped.neto_operador, 0) > 0
+src/store/importadorCatalogosStore.ts:1267:  if (catalogType === "operadores") {
+src/store/importadorCatalogosStore.ts:1372:  const impactoRiesgo = parseMoney(getMappedValue(row, columnMap.impacto_riesgo), 0);
+src/store/importadorCatalogosStore.ts:1373:  const riesgo = impactoRiesgo !== 0 || parseBoolean(getMappedValue(row, columnMap.impacto_riesgo), false);
+src/store/importadorCatalogosStore.ts:1375:  const esAlmundoRaw = cleanText(getMappedValue(row, columnMap.es_almundo));
+src/store/importadorCatalogosStore.ts:1376:  const esAlmundo = esAlmundoRaw ? parseBoolean(esAlmundoRaw, true) : true;
+src/store/importadorCatalogosStore.ts:1379:  const operadorRaw = nullableText(getMappedValue(row, columnMap.operador_mayorista));
+src/store/importadorCatalogosStore.ts:1380:  const netoOperador = parseMoney(getMappedValue(row, columnMap.neto_operador), 0);
+src/store/importadorCatalogosStore.ts:1383:    !esAlmundo ||
+src/store/importadorCatalogosStore.ts:1385:    Boolean(operadorRaw) ||
+src/store/importadorCatalogosStore.ts:1386:    netoOperador > 0;
+src/store/importadorCatalogosStore.ts:1409:    es_almundo: esAlmundoRaw,
+src/store/importadorCatalogosStore.ts:1450:    operador_id: null,
+src/store/importadorCatalogosStore.ts:1451:    operador: operadorRaw,
+src/store/importadorCatalogosStore.ts:1452:    neto_operador: netoOperador,
+src/store/importadorCatalogosStore.ts:1454:    fecha_vencimiento_operador: parseDate(getMappedValue(row, columnMap.fecha_vencimiento_operador)),
+src/store/importadorCatalogosStore.ts:1455:    saldo_pendiente_operador: parseMoney(getMappedValue(row, columnMap.saldo_pendiente_operador), 0),
+src/store/importadorCatalogosStore.ts:1456:    estado_pago_operador: nullableText(getMappedValue(row, columnMap.estado_pago_operador)),
+src/store/importadorCatalogosStore.ts:1458:    riesgo,
+src/store/importadorCatalogosStore.ts:1459:    riesgo_motivo: riesgo ? "Importado desde histórico con impacto de riesgo." : null,
+src/store/importadorCatalogosStore.ts:1460:    importe_riesgo: impactoRiesgo,
+src/store/importadorCatalogosStore.ts:1461:    riesgo_resuelto: parseBoolean(getMappedValue(row, columnMap.riesgo_resuelto), false),
+src/store/importadorCatalogosStore.ts:1462:    riesgo_resuelto_at: parseDateTime(getMappedValue(row, columnMap.riesgo_resuelto_at)),
+src/store/importadorCatalogosStore.ts:1463:    riesgo_resuelto_by: null,
+src/store/importadorCatalogosStore.ts:1900:    riesgo: mapped.riesgo,
+src/store/importadorCatalogosStore.ts:1901:    riesgo_motivo: mapped.riesgo_motivo,
+src/store/importadorCatalogosStore.ts:1902:    importe_riesgo: mapped.importe_riesgo,
+src/store/importadorCatalogosStore.ts:1903:    riesgo_resuelto: mapped.riesgo_resuelto,
+src/store/importadorCatalogosStore.ts:1904:    riesgo_resuelto_at: mapped.riesgo_resuelto_at,
+src/store/importadorCatalogosStore.ts:1905:    riesgo_resuelto_by: mapped.riesgo_resuelto_by,
+src/store/importadorCatalogosStore.ts:1906:    riesgo_observaciones: null,
+src/store/importadorCatalogosStore.ts:1949:    operador_id: mapped.operador_id,
+src/store/importadorCatalogosStore.ts:1950:    operador: mapped.operador,
+src/store/importadorCatalogosStore.ts:1967:    neto_operador: mapped.neto_operador,
+src/store/importadorCatalogosStore.ts:1976:    riesgo: mapped.riesgo,
+src/store/importadorCatalogosStore.ts:1977:    riesgo_motivo: mapped.riesgo_motivo,
+src/store/importadorCatalogosStore.ts:1978:    importe_riesgo: mapped.importe_riesgo,
+src/store/importadorCatalogosStore.ts:2007:    fecha_vencimiento_operador: mapped.fecha_vencimiento_operador,
+src/store/importadorCatalogosStore.ts:2008:    saldo_pendiente_operador: mapped.saldo_pendiente_operador,
+src/store/importadorCatalogosStore.ts:2009:    estado_pago_operador: mapped.estado_pago_operador,
+src/store/importadorCatalogosStore.ts:2171:    riesgo: false,
+src/store/importadorCatalogosStore.ts:2172:    importe_riesgo: 0,
+src/store/importadorCatalogosStore.ts:2173:    riesgo_resuelto: false,
+src/store/importadorCatalogosStore.ts:2761:    es_almundo: "Es ALMUNDO",
+src/store/importadorCatalogosStore.ts:2793:    operador_id: "Operador ID",
+src/store/importadorCatalogosStore.ts:2794:    operador_mayorista: "Operador mayorista",
+src/store/importadorCatalogosStore.ts:2795:    neto_operador: "Neto operador",
+src/store/importadorCatalogosStore.ts:2796:    fecha_vencimiento_operador: "Fecha vencimiento operador",
+src/store/importadorCatalogosStore.ts:2797:    saldo_pendiente_operador: "Saldo pendiente operador",
+src/store/importadorCatalogosStore.ts:2798:    estado_pago_operador: "Estado pago operador",
+src/store/importadorCatalogosStore.ts:2800:    impacto_riesgo: "Impacto riesgo",
+src/store/importadorCatalogosStore.ts:2801:    riesgo_resuelto: "Riesgo resuelto",
+src/store/importadorCatalogosStore.ts:2802:    riesgo_resuelto_at: "Riesgo resuelto fecha",
+src/store/importadorCatalogosStore.ts:2803:    riesgo_resuelto_por: "Riesgo resuelto por",
+src/store/ctasCtesStore.ts:244:      return "No se pudo registrar el pago en cuenta corriente.";
+src/store/tableroDeControlStore.ts:42:  facturacionAlmundoUsd: number;
+src/store/tableroDeControlStore.ts:43:  facturacionAlmundoArs: number;
+src/store/tableroDeControlStore.ts:116:export type MetaAlmundoResumen = {
+src/store/tableroDeControlStore.ts:154:  deudaOperadores: {
+src/store/tableroDeControlStore.ts:258:  es_meta_almundo: boolean;
+src/store/tableroDeControlStore.ts:296:  metasAlmundo: MetaAlmundoResumen[];
+src/store/tableroDeControlStore.ts:322:  deudaOperadores: {
+src/store/tableroDeControlStore.ts:351:  facturacionAlmundoUsd: 0,
+src/store/tableroDeControlStore.ts:352:  facturacionAlmundoArs: 0,
+src/store/tableroDeControlStore.ts:835:function getMetaAlmundoSucursal(
+src/store/tableroDeControlStore.ts:844:        meta.tipo === "ALMUNDO_MENSUAL" &&
+src/store/tableroDeControlStore.ts:869:function getMetaAlmundoObjetivo(meta: MetaRow | null): number {
+src/store/tableroDeControlStore.ts:886:  metasAlmundo: MetaAlmundoResumen[],
+src/store/tableroDeControlStore.ts:899:  const almundoSinAvance = metasAlmundo.filter(
+src/store/tableroDeControlStore.ts:903:  if (almundoSinAvance.length > 0) {
+src/store/tableroDeControlStore.ts:906:      titulo: "Meta Almundo con avance bajo",
+src/store/tableroDeControlStore.ts:907:      detalle: `${almundoSinAvance.length} sucursal/es están por debajo del 50% de avance.`,
+src/store/tableroDeControlStore.ts:908:      valor: `${Math.round(Math.min(...almundoSinAvance.map((item) => item.avancePct)))}%`
+src/store/tableroDeControlStore.ts:939:  metasAlmundo: [],
+src/store/tableroDeControlStore.ts:1002:  deudaOperadoresRes,
+src/store/tableroDeControlStore.ts:1072:        .gt("saldo_pendiente_operador", 0)
+src/store/tableroDeControlStore.ts:1104:  deudaOperadoresRes.error ||
+src/store/tableroDeControlStore.ts:1135:const deudaOperadoresRows = (deudaOperadoresRes.data || []) as Record<string, unknown>[];
+src/store/tableroDeControlStore.ts:1141:  deudaOperadores: {
+src/store/tableroDeControlStore.ts:1163:  deudaOperadoresRows.forEach((row) => {
+src/store/tableroDeControlStore.ts:1165:    const importe = getRecordNumber(row, ["saldo_pendiente_operador", "neto_operador"]);
+src/store/tableroDeControlStore.ts:1166:    const vencimiento = getRecordDate(row, ["fecha_vencimiento_operador", "fecha_out", "fecha_in"]);
+src/store/tableroDeControlStore.ts:1168:    adminResumen.deudaOperadores.total = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1169:      adminResumen.deudaOperadores.total,
+src/store/tableroDeControlStore.ts:1175:      adminResumen.deudaOperadores.vencida = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1176:        adminResumen.deudaOperadores.vencida,
+src/store/tableroDeControlStore.ts:1183:      adminResumen.deudaOperadores.proximos5Dias = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1184:        adminResumen.deudaOperadores.proximos5Dias,
+src/store/tableroDeControlStore.ts:1279:    if (tipo === "almundo") return;
+src/store/tableroDeControlStore.ts:1392:  facturacionAlmundoUsd: facturacionCarritosMesUsd,
+src/store/tableroDeControlStore.ts:1393:  facturacionAlmundoArs: facturacionCarritosMesArs,
+src/store/tableroDeControlStore.ts:1617:    const metasAlmundo: MetaAlmundoResumen[] = sucursales.map((sucursal) => {
+src/store/tableroDeControlStore.ts:1622:      const meta = getMetaAlmundoSucursal(metasRows, sucursal.id, mesNumber, anioNumber);
+src/store/tableroDeControlStore.ts:1623:      const objetivo = getMetaAlmundoObjetivo(meta);
+src/store/tableroDeControlStore.ts:1696:  metasAlmundo,
+src/store/tableroDeControlStore.ts:1712:  alertas: buildAlertas(kpis, metasAlmundo, metasSucursal),
+src/store/cajaStore.ts:6:export type CajaTipo = "CAJA" | "BANCO" | "BILLETERA" | "TARJETA" | "ALMUNDO" | "OTRA";
+src/store/cajaStore.ts:306:  return tipo !== "ALMUNDO";
+src/store/cajaStore.ts:452:  .neq("caja_tipo", "ALMUNDO")
+src/store/cajaStore.ts:480:  .neq("tipo", "ALMUNDO")
+src/store/cajaStore.ts:487:  .neq("caja_tipo", "ALMUNDO")
+src/store/cajaStore.ts:568:    error: "Las cajas Almundo son externas y no generan movimientos en caja NOSSIX."
+src/store/cajaStore.ts:633:    error: "Las cajas Almundo son externas y no participan en pases de caja NOSSIX."
+src/store/cajaStore.ts:694:    error: "Las cajas Almundo son externas y no se concilian en caja NOSSIX."
+src/store/metasStore.ts:9:  | "ALMUNDO_MENSUAL";
+src/store/metasStore.ts:49:  es_meta_almundo: boolean;
+src/store/metasStore.ts:119:  almundo: number;
+src/store/metasStore.ts:138:  es_meta_almundo: boolean;
+src/store/metasStore.ts:399:  if (tipo === "ALMUNDO_MENSUAL" || tipo === "SUCURSAL_MENSUAL") {
+src/store/metasStore.ts:408:  if (tipo === "ALMUNDO_MENSUAL") {
+src/store/metasStore.ts:410:      return "Completá la meta Almundo en USD.";
+src/store/metasStore.ts:431:  const isAlmundo = tipo === "ALMUNDO_MENSUAL";
+src/store/metasStore.ts:447:    sucursal_id: tipo === "ALMUNDO_MENSUAL" || tipo === "SUCURSAL_MENSUAL" ? draft.sucursal_id || null : null,
+src/store/metasStore.ts:450:    meta_unica_usd: isWeekly || isAlmundo ? metaPrincipal : 0,
+src/store/metasStore.ts:451:    meta_piso_usd: isAlmundo || isWeekly ? 0 : parsedPiso,
+src/store/metasStore.ts:452:    meta_medio_usd: isAlmundo || isWeekly ? 0 : parsedMedio,
+src/store/metasStore.ts:453:    meta_logrado_usd: isAlmundo ? metaPrincipal : isWeekly ? 0 : parsedLogrado,
+src/store/metasStore.ts:457:    es_meta_almundo: isAlmundo,
+src/store/metasStore.ts:471:  const isAlmundo = tipo === "ALMUNDO_MENSUAL";
+src/store/metasStore.ts:487:    sucursal_id: tipo === "ALMUNDO_MENSUAL" || tipo === "SUCURSAL_MENSUAL" ? draft.sucursal_id || null : null,
+src/store/metasStore.ts:490:    meta_unica_usd: isWeekly || isAlmundo ? metaPrincipal : 0,
+src/store/metasStore.ts:491:    meta_piso_usd: isAlmundo || isWeekly ? 0 : parsedPiso,
+src/store/metasStore.ts:492:    meta_medio_usd: isAlmundo || isWeekly ? 0 : parsedMedio,
+src/store/metasStore.ts:493:    meta_logrado_usd: isAlmundo ? metaPrincipal : isWeekly ? 0 : parsedLogrado,
+src/store/metasStore.ts:497:    es_meta_almundo: isAlmundo,
+src/store/metasStore.ts:871:          es_meta_almundo: meta.tipo === "ALMUNDO_MENSUAL",
+src/store/metasStore.ts:1031:      almundo: resumen.filter((item) => item.meta.tipo === "ALMUNDO_MENSUAL").length
+src/store/carritos/carritosUtils.ts:124:    riesgo: "todos",
+src/store/carritos/carritosSelectors.ts:75:    riesgos: carritos.filter(
+src/store/carritos/carritosSelectors.ts:76:      (carrito) => Boolean(carrito.riesgo)
+src/store/carritos/carritosApi.ts:221:  if (filters.riesgo === "riesgo") {
+src/store/carritos/carritosApi.ts:223:      "riesgo",
+src/store/carritos/carritosApi.ts:228:  if (filters.riesgo === "normal") {
+src/store/carritos/carritosApi.ts:230:      "riesgo",
+src/store/carritos/carritosApi.ts:474:  const importeRiesgo = getNumber(
+src/store/carritos/carritosApi.ts:475:    input.carrito.importe_riesgo
+src/store/carritos/carritosApi.ts:569:    pago_parcial: vaACuentaCorriente,
+src/store/carritos/carritosApi.ts:589:    riesgo: Boolean(
+src/store/carritos/carritosApi.ts:590:      input.carrito.riesgo
+src/store/carritos/carritosApi.ts:592:    importe_riesgo:
+src/store/carritos/carritosApi.ts:593:      input.carrito.riesgo
+src/store/carritos/carritosApi.ts:594:        ? importeRiesgo
+src/store/carritos/carritosApi.ts:596:    riesgo_motivo: nullableText(
+src/store/carritos/carritosApi.ts:597:      input.carrito.riesgo_motivo
+src/store/carritos/carritosApi.ts:599:    riesgo_resuelto: false,
+src/store/carritos/carritosApi.ts:600:    riesgo_observaciones: null,
+src/store/carritos/carritosApi.ts:724:  if (input.carrito.riesgo) {
+src/store/carritos/carritosApi.ts:726:      .from("carrito_riesgos")
+src/store/carritos/carritosApi.ts:729:        importe_riesgo:
+src/store/carritos/carritosApi.ts:730:          importeRiesgo,
+src/store/carritos/carritosApi.ts:735:          input.carrito.riesgo_motivo
+src/store/carritos/carritosApi.ts:870:  const riesgo =
+src/store/carritos/carritosApi.ts:871:    input.carrito.riesgo !== undefined
+src/store/carritos/carritosApi.ts:872:      ? Boolean(input.carrito.riesgo)
+src/store/carritos/carritosApi.ts:873:      : Boolean(carritoActual.riesgo);
+src/store/carritos/carritosApi.ts:973:    riesgo,
+src/store/carritos/carritosApi.ts:975:    importe_riesgo: riesgo
+src/store/carritos/carritosApi.ts:977:          input.carrito.importe_riesgo !==
+src/store/carritos/carritosApi.ts:979:            ? input.carrito.importe_riesgo
+src/store/carritos/carritosApi.ts:980:            : carritoActual.importe_riesgo
+src/store/carritos/carritosApi.ts:984:    riesgo_motivo: riesgo
+src/store/carritos/carritosApi.ts:986:          input.carrito.riesgo_motivo !==
+src/store/carritos/carritosApi.ts:988:            ? input.carrito.riesgo_motivo
+src/store/carritos/carritosApi.ts:989:            : carritoActual.riesgo_motivo
+src/store/carritos/carritosTypes.ts:96:  riesgo?: boolean;
+src/store/carritos/carritosTypes.ts:97:  importe_riesgo?: string | number;
+src/store/carritos/carritosTypes.ts:98:  riesgo_motivo?: string | null;
+src/store/carritos/carritosTypes.ts:99:  riesgo_resuelto?: boolean;
+src/store/carritos/carritosTypes.ts:100:  riesgo_resuelto_at?: string | null;
+src/store/carritos/carritosTypes.ts:101:  riesgo_resuelto_by?: string | null;
+src/store/carritos/carritosTypes.ts:102:  riesgo_observaciones?: string | null;
+src/store/carritos/carritosTypes.ts:188:    riesgo: boolean;
+src/store/carritos/carritosTypes.ts:189:    importe_riesgo?: number;
+src/store/carritos/carritosTypes.ts:190:    riesgo_motivo?: string | null;
+src/store/carritos/carritosTypes.ts:245:    riesgo?: boolean;
+src/store/carritos/carritosTypes.ts:246:    importe_riesgo?: number;
+src/store/carritos/carritosTypes.ts:247:    riesgo_motivo?: string | null;
+src/store/carritos/carritosTypes.ts:268:  riesgo: "todos" | "riesgo" | "normal";
+src/store/carritos/carritosTypes.ts:278:  riesgos: number;
+src/store/controlVentasStore.ts:64:  riesgo: boolean;
+src/store/controlVentasStore.ts:65:  riesgo_motivo: string | null;
+src/store/controlVentasStore.ts:91:  utilidad_almundo: string | number;
+src/store/controlVentasStore.ts:130:  utilidad_almundo: string;
+src/store/controlVentasStore.ts:141:  utilidadAlmundo: number;
+src/store/controlVentasStore.ts:158:  utilidadAlmundo: number;
+src/store/controlVentasStore.ts:338: * Regla de negocio Control de Ventas ALMUNDO:
+src/store/controlVentasStore.ts:345: * Los nombres utilidadAlmundo/utilidadNossix vienen heredados del panel.
+src/store/controlVentasStore.ts:428:    riesgo: Boolean(raw.riesgo ?? raw.impacto_riesgo),
+src/store/controlVentasStore.ts:429:    riesgo_motivo: raw.riesgo_motivo || null,
+src/store/controlVentasStore.ts:476:    utilidad_almundo: utilidadNeta,
+src/store/controlVentasStore.ts:508:      ? getNumber(control.utilidad_almundo)
+src/store/controlVentasStore.ts:528:  utilidadAlmundo: utilidadNeta,
+src/store/controlVentasStore.ts:715:    const utilidadNeta = parseMoney(draft.utilidad_almundo);
+src/store/controlVentasStore.ts:924:      utilidadAlmundo: 0,
+src/store/controlVentasStore.ts:939:      utilidadAlmundo: items.reduce((total, item) => total + item.utilidadAlmundo, 0),
+src/store/configStore.ts:7:export type CajaTipo = "CAJA" | "BANCO" | "BILLETERA" | "TARJETA" | "ALMUNDO" | "OTRA";
+src/store/configStore.ts:84:export type Operador = {
+src/store/configStore.ts:167:  operadores: Operador[];
+src/store/configStore.ts:195:  upsertOperador: (input: Partial<Operador> & { nombre: string }) => Promise<boolean>;
+src/store/configStore.ts:214:  toggleOperador: (item: Operador) => Promise<boolean>;
+src/store/configStore.ts:304:  if (clean === "ALMUNDO") return "ALMUNDO";
+src/store/configStore.ts:373:  operadores: [],
+src/store/configStore.ts:446:        operadores: [],
+src/store/configStore.ts:464:      operadoresRes,
+src/store/configStore.ts:477:      supabase.from("operadores").select("*").order("nombre", { ascending: true }),
+src/store/configStore.ts:492:      operadoresRes.error ||
+src/store/configStore.ts:521:      operadores: (operadoresRes.data || []) as Operador[],
+src/store/configStore.ts:694:  upsertOperador: async (input) => {
+src/store/configStore.ts:706:    const { error } = await supabase.from("operadores").upsert(payload);
+src/store/configStore.ts:894:  toggleOperador: async (item) => {
+src/store/configStore.ts:895:    return get().upsertOperador({
+src/store/facturasCobrarStore.ts:68:  utilidad_almundo: string | number;
+src/store/facturasCobrarStore.ts:489:    utilidad_almundo: utilidadNeta,
+src/store/facturasCobrarStore.ts:821:      razon_social: draft.razon_social.trim() || "ALMUNDO.COM",
+src/store/pagosOperadoresStore.ts:28:export type FileOperador = {
+src/store/pagosOperadoresStore.ts:32:  operador_id: string | null;
+src/store/pagosOperadoresStore.ts:33:  operador: string | null;
+src/store/pagosOperadoresStore.ts:44:  neto_operador: string | number;
+src/store/pagosOperadoresStore.ts:63:export type PagoOperador = {
+src/store/pagosOperadoresStore.ts:66:  operador_id: string | null;
+src/store/pagosOperadoresStore.ts:85:export type Operador = {
+src/store/pagosOperadoresStore.ts:94:export type PagoOperadorInput = {
+src/store/pagosOperadoresStore.ts:96:  operador_id?: string | null;
+src/store/pagosOperadoresStore.ts:105:export type PagosOperadoresFilters = {
+src/store/pagosOperadoresStore.ts:110:  operadorId: string;
+src/store/pagosOperadoresStore.ts:118:  file: FileOperador;
+src/store/pagosOperadoresStore.ts:119:  pagos: PagoOperador[];
+src/store/pagosOperadoresStore.ts:120:  totalPagadoOperador: number;
+src/store/pagosOperadoresStore.ts:121:  saldoOperador: number;
+src/store/pagosOperadoresStore.ts:126:type PagosOperadoresMetrics = {
+src/store/pagosOperadoresStore.ts:129:  netoOperador: number;
+src/store/pagosOperadoresStore.ts:131:  pagadoOperador: number;
+src/store/pagosOperadoresStore.ts:132:  saldoOperador: number;
+src/store/pagosOperadoresStore.ts:138:type PagosOperadoresState = {
+src/store/pagosOperadoresStore.ts:144:  canManagePagosOperadores: boolean;
+src/store/pagosOperadoresStore.ts:146:  files: FileOperador[];
+src/store/pagosOperadoresStore.ts:147:  pagos: PagoOperador[];
+src/store/pagosOperadoresStore.ts:151:    operadores: Operador[];
+src/store/pagosOperadoresStore.ts:156:  filters: PagosOperadoresFilters;
+src/store/pagosOperadoresStore.ts:159:  loadPagosOperadores: () => Promise<void>;
+src/store/pagosOperadoresStore.ts:160:  savePagoOperador: (input: PagoOperadorInput) => Promise<boolean>;
+src/store/pagosOperadoresStore.ts:162:  setFilter: <K extends keyof PagosOperadoresFilters>(
+src/store/pagosOperadoresStore.ts:164:    value: PagosOperadoresFilters[K]
+src/store/pagosOperadoresStore.ts:172:  getMetrics: () => PagosOperadoresMetrics;
+src/store/pagosOperadoresStore.ts:210:function getDefaultFilters(): PagosOperadoresFilters {
+src/store/pagosOperadoresStore.ts:219:    operadorId: "todos",
+src/store/pagosOperadoresStore.ts:284:function buildResumen(files: FileOperador[], pagos: PagoOperador[]): FilePagoResumen[] {
+src/store/pagosOperadoresStore.ts:288:    const totalPagadoOperador = filePagos.reduce(
+src/store/pagosOperadoresStore.ts:293:    const netoOperador = getNumber(file.neto_operador);
+src/store/pagosOperadoresStore.ts:295:    const saldoOperador = Math.max(0, netoOperador - totalPagadoOperador);
+src/store/pagosOperadoresStore.ts:296:    const utilidad = importeVenta - netoOperador;
+src/store/pagosOperadoresStore.ts:300:    if (totalPagadoOperador >= netoOperador && netoOperador > 0) {
+src/store/pagosOperadoresStore.ts:302:    } else if (totalPagadoOperador > 0) {
+src/store/pagosOperadoresStore.ts:311:      totalPagadoOperador,
+src/store/pagosOperadoresStore.ts:312:      saldoOperador,
+src/store/pagosOperadoresStore.ts:319:export const usePagosOperadoresStore = create<PagosOperadoresState>((set, get) => ({
+src/store/pagosOperadoresStore.ts:325:  canManagePagosOperadores: false,
+src/store/pagosOperadoresStore.ts:332:    operadores: [],
+src/store/pagosOperadoresStore.ts:340:  loadPagosOperadores: async () => {
+src/store/pagosOperadoresStore.ts:349:        canManagePagosOperadores: false,
+src/store/pagosOperadoresStore.ts:372:    const canManagePagosOperadores = canProfileManage(currentProfile);
+src/store/pagosOperadoresStore.ts:378:        canManagePagosOperadores,
+src/store/pagosOperadoresStore.ts:381:        error: "Tu usuario no tiene acceso al módulo Pago a Operadores."
+src/store/pagosOperadoresStore.ts:397:    if (!canManagePagosOperadores) {
+src/store/pagosOperadoresStore.ts:401:    if (filters.operadorId !== "todos") {
+src/store/pagosOperadoresStore.ts:402:      filesQuery = filesQuery.eq("operador_id", filters.operadorId);
+src/store/pagosOperadoresStore.ts:405:    if (filters.vendedorId !== "todos" && canManagePagosOperadores) {
+src/store/pagosOperadoresStore.ts:421:    const [filesRes, cajasRes, operadoresRes, vendedoresRes, sucursalesRes] =
+src/store/pagosOperadoresStore.ts:425:        supabase.from("operadores").select("*").eq("activo", true).order("nombre"),
+src/store/pagosOperadoresStore.ts:438:      operadoresRes.error ||
+src/store/pagosOperadoresStore.ts:446:        canManagePagosOperadores,
+src/store/pagosOperadoresStore.ts:452:    const files = (filesRes.data || []) as FileOperador[];
+src/store/pagosOperadoresStore.ts:455:    let pagos: PagoOperador[] = [];
+src/store/pagosOperadoresStore.ts:459:        .from("file_pagos_operadores")
+src/store/pagosOperadoresStore.ts:468:          canManagePagosOperadores,
+src/store/pagosOperadoresStore.ts:474:      pagos = (pagosRes.data || []) as PagoOperador[];
+src/store/pagosOperadoresStore.ts:481:      canManagePagosOperadores,
+src/store/pagosOperadoresStore.ts:486:        operadores: (operadoresRes.data || []) as Operador[],
+src/store/pagosOperadoresStore.ts:498:  savePagoOperador: async (input) => {
+src/store/pagosOperadoresStore.ts:523:    const { error } = await supabase.from("file_pagos_operadores").insert({
+src/store/pagosOperadoresStore.ts:525:      operador_id: input.operador_id || null,
+src/store/pagosOperadoresStore.ts:543:    await get().loadPagosOperadores();
+src/store/pagosOperadoresStore.ts:608:            file.operador,
+src/store/pagosOperadoresStore.ts:644:      netoOperador: resumen.reduce(
+src/store/pagosOperadoresStore.ts:645:        (total, item) => total + getNumber(item.file.neto_operador),
+src/store/pagosOperadoresStore.ts:649:      pagadoOperador: resumen.reduce(
+src/store/pagosOperadoresStore.ts:650:        (total, item) => total + item.totalPagadoOperador,
+src/store/pagosOperadoresStore.ts:653:      saldoOperador: resumen.reduce(
+src/store/pagosOperadoresStore.ts:654:        (total, item) => total + item.saldoOperador,
+src/store/riesgosStore.ts:5:export type RiesgoEstado = "EN_PLAZO" | "PROXIMO" | "VENCIDO" | "RESUELTO";
+src/store/riesgosStore.ts:48:export type RiesgoAlmundo = {
+src/store/riesgosStore.ts:72:  importe_riesgo: string | number;
+src/store/riesgosStore.ts:73:  total_pagado_riesgo: string | number;
+src/store/riesgosStore.ts:74:  saldo_riesgo: string | number;
+src/store/riesgosStore.ts:79:  riesgo: boolean;
+src/store/riesgosStore.ts:80:  riesgo_motivo: string | null;
+src/store/riesgosStore.ts:81:  riesgo_resuelto: boolean;
+src/store/riesgosStore.ts:82:  riesgo_resuelto_at: string | null;
+src/store/riesgosStore.ts:83:  riesgo_resuelto_by: string | null;
+src/store/riesgosStore.ts:84:  riesgo_observaciones: string | null;
+src/store/riesgosStore.ts:86:  estado_riesgo: RiesgoEstado | string;
+src/store/riesgosStore.ts:95:export type RiesgoPago = {
+src/store/riesgosStore.ts:127:export type RiesgosFilters = {
+src/store/riesgosStore.ts:130:  estado: "todos" | RiesgoEstado;
+src/store/riesgosStore.ts:138:export type PagoRiesgoDraft = {
+src/store/riesgosStore.ts:152:type RiesgosMetrics = {
+src/store/riesgosStore.ts:165:type RiesgosState = {
+src/store/riesgosStore.ts:171:  canManageRiesgos: boolean;
+src/store/riesgosStore.ts:173:  riesgos: RiesgoAlmundo[];
+src/store/riesgosStore.ts:174:  pagos: RiesgoPago[];
+src/store/riesgosStore.ts:182:  filters: RiesgosFilters;
+src/store/riesgosStore.ts:183:  selectedRiesgoId: string | null;
+src/store/riesgosStore.ts:185:  loadRiesgos: () => Promise<void>;
+src/store/riesgosStore.ts:186:  registrarPago: (draft: PagoRiesgoDraft) => Promise<boolean>;
+src/store/riesgosStore.ts:187:  anularPago: (pago: RiesgoPago, motivo: string) => Promise<boolean>;
+src/store/riesgosStore.ts:190:  setFilter: <K extends keyof RiesgosFilters>(key: K, value: RiesgosFilters[K]) => void;
+src/store/riesgosStore.ts:192:  selectRiesgo: (carritoId: string | null) => void;
+src/store/riesgosStore.ts:195:  getFilteredRiesgos: () => RiesgoAlmundo[];
+src/store/riesgosStore.ts:196:  getSelectedRiesgo: () => RiesgoAlmundo | null;
+src/store/riesgosStore.ts:197:  getPagosBySelected: () => RiesgoPago[];
+src/store/riesgosStore.ts:198:  getMetrics: () => RiesgosMetrics;
+src/store/riesgosStore.ts:215:function getDefaultFilters(): RiesgosFilters {
+src/store/riesgosStore.ts:258:    if (message.toLowerCase().includes("riesgo ya está cancelado")) return message;
+src/store/riesgosStore.ts:284:async function marcarCarritoRiesgoResuelto(params: {
+src/store/riesgosStore.ts:294:      riesgo: false,
+src/store/riesgosStore.ts:295:      importe_riesgo: 0,
+src/store/riesgosStore.ts:296:      riesgo_resuelto: true,
+src/store/riesgosStore.ts:297:      riesgo_resuelto_at: new Date().toISOString(),
+src/store/riesgosStore.ts:298:      riesgo_resuelto_by: userId,
+src/store/riesgosStore.ts:299:      riesgo_observaciones: observaciones || null
+src/store/riesgosStore.ts:306:async function reabrirCarritoRiesgo(params: {
+src/store/riesgosStore.ts:316:      riesgo: true,
+src/store/riesgosStore.ts:317:      riesgo_resuelto: false,
+src/store/riesgosStore.ts:318:      riesgo_resuelto_at: null,
+src/store/riesgosStore.ts:319:      riesgo_resuelto_by: null,
+src/store/riesgosStore.ts:320:      riesgo_observaciones: observaciones || `Riesgo reabierto por anulación de pago. Usuario: ${userId}`
+src/store/riesgosStore.ts:327:export const useRiesgosStore = create<RiesgosState>((set, get) => ({
+src/store/riesgosStore.ts:333:  canManageRiesgos: false,
+src/store/riesgosStore.ts:335:  riesgos: [],
+src/store/riesgosStore.ts:345:  selectedRiesgoId: null,
+src/store/riesgosStore.ts:347:  loadRiesgos: async () => {
+src/store/riesgosStore.ts:356:        canManageRiesgos: false,
+src/store/riesgosStore.ts:357:        riesgos: [],
+src/store/riesgosStore.ts:376:    const canManageRiesgos = canProfileManage(currentProfile);
+src/store/riesgosStore.ts:378:    if (!canManageRiesgos) {
+src/store/riesgosStore.ts:382:        canManageRiesgos,
+src/store/riesgosStore.ts:383:        riesgos: [],
+src/store/riesgosStore.ts:385:        error: "Tu usuario no tiene acceso al módulo Riesgos."
+src/store/riesgosStore.ts:392:    let riesgosQuery = supabase
+src/store/riesgosStore.ts:393:  .from("vw_riesgos_almundo")
+src/store/riesgosStore.ts:399:  riesgosQuery = riesgosQuery.gte("fecha_venta", filters.desde);
+src/store/riesgosStore.ts:403:  riesgosQuery = riesgosQuery.lte("fecha_venta", filters.hasta);
+src/store/riesgosStore.ts:406:    if (filters.estado !== "todos") riesgosQuery = riesgosQuery.eq("estado_riesgo", filters.estado);
+src/store/riesgosStore.ts:407:    if (filters.moneda !== "todos") riesgosQuery = riesgosQuery.eq("moneda", filters.moneda);
+src/store/riesgosStore.ts:408:    if (filters.vendedorId !== "todos") riesgosQuery = riesgosQuery.eq("vendedor_id", filters.vendedorId);
+src/store/riesgosStore.ts:409:    if (filters.sucursalId !== "todos") riesgosQuery = riesgosQuery.eq("sucursal_id", filters.sucursalId);
+src/store/riesgosStore.ts:410:    if (!filters.incluirResueltos) riesgosQuery = riesgosQuery.neq("estado_riesgo", "RESUELTO");
+src/store/riesgosStore.ts:412:    const [riesgosRes, pagosRes, cajasRes, vendedoresRes, sucursalesRes] = await Promise.all([
+src/store/riesgosStore.ts:413:      riesgosQuery,
+src/store/riesgosStore.ts:415:        .from("vw_riesgos_almundo_pagos")
+src/store/riesgosStore.ts:438:      riesgosRes.error ||
+src/store/riesgosStore.ts:448:        canManageRiesgos,
+src/store/riesgosStore.ts:458:      canManageRiesgos,
+src/store/riesgosStore.ts:459:      riesgos: (riesgosRes.data || []) as RiesgoAlmundo[],
+src/store/riesgosStore.ts:460:      pagos: (pagosRes.data || []) as RiesgoPago[],
+src/store/riesgosStore.ts:481:      set({ saving: false, error: "Seleccioná un riesgo." });
+src/store/riesgosStore.ts:491:      set({ saving: false, error: "Seleccioná desde qué caja se pagó a Almundo." });
+src/store/riesgosStore.ts:505:    const riesgo = get().riesgos.find((item) => item.carrito_id === draft.carrito_id);
+src/store/riesgosStore.ts:507:    if (!riesgo) {
+src/store/riesgosStore.ts:508:      set({ saving: false, error: "No se encontró el riesgo seleccionado." });
+src/store/riesgosStore.ts:512:    const saldo = parseMoney(riesgo.saldo_riesgo);
+src/store/riesgosStore.ts:515:      set({ saving: false, error: "El pago no puede superar el saldo pendiente del riesgo." });
+src/store/riesgosStore.ts:521:    if (caja && caja.moneda !== riesgo.moneda) {
+src/store/riesgosStore.ts:524:        error: `La caja seleccionada es ${caja.moneda}, pero el riesgo está en ${riesgo.moneda}.`
+src/store/riesgosStore.ts:529:    const { error } = await supabase.rpc("registrar_pago_riesgo_almundo", {
+src/store/riesgosStore.ts:547:      const syncError = await marcarCarritoRiesgoResuelto({
+src/store/riesgosStore.ts:550:        observaciones: draft.observaciones.trim() || "Riesgo cancelado por pago total a Almundo."
+src/store/riesgosStore.ts:559:    await get().loadRiesgos();
+src/store/riesgosStore.ts:585:    const { error } = await supabase.rpc("anular_pago_riesgo_almundo", {
+src/store/riesgosStore.ts:596:    const syncError = await reabrirCarritoRiesgo({
+src/store/riesgosStore.ts:599:      observaciones: `Riesgo reabierto por anulación de pago. Motivo: ${motivo.trim()}`
+src/store/riesgosStore.ts:607:    await get().loadRiesgos();
+src/store/riesgosStore.ts:624:      set({ saving: false, error: "Seleccioná un riesgo." });
+src/store/riesgosStore.ts:631:        error: "La observación es obligatoria para resolver un riesgo sin pago."
+src/store/riesgosStore.ts:636:    const { error } = await supabase.rpc("resolver_riesgo_almundo_sin_pago", {
+src/store/riesgosStore.ts:647:    const syncError = await marcarCarritoRiesgoResuelto({
+src/store/riesgosStore.ts:658:    await get().loadRiesgos();
+src/store/riesgosStore.ts:677:  selectRiesgo: (carritoId) => {
+src/store/riesgosStore.ts:678:    set({ selectedRiesgoId: carritoId });
+src/store/riesgosStore.ts:685:  getFilteredRiesgos: () => {
+src/store/riesgosStore.ts:686:    const { riesgos, filters } = get();
+src/store/riesgosStore.ts:689:    return riesgos.filter((riesgo) => {
+src/store/riesgosStore.ts:693:            riesgo.numero_carrito,
+src/store/riesgosStore.ts:694:            riesgo.pasajero,
+src/store/riesgosStore.ts:695:            riesgo.telefono,
+src/store/riesgosStore.ts:696:            riesgo.email,
+src/store/riesgosStore.ts:697:            riesgo.destino,
+src/store/riesgosStore.ts:698:            riesgo.servicio,
+src/store/riesgosStore.ts:699:            riesgo.vendedor,
+src/store/riesgosStore.ts:700:            riesgo.sucursal,
+src/store/riesgosStore.ts:701:            riesgo.riesgo_motivo,
+src/store/riesgosStore.ts:702:            riesgo.estado_riesgo,
+src/store/riesgosStore.ts:703:            riesgo.moneda
+src/store/riesgosStore.ts:714:  getSelectedRiesgo: () => {
+src/store/riesgosStore.ts:715:    const riesgos = get().getFilteredRiesgos();
+src/store/riesgosStore.ts:716:    const selectedRiesgoId = get().selectedRiesgoId;
+src/store/riesgosStore.ts:718:    if (!selectedRiesgoId) return riesgos[0] || null;
+src/store/riesgosStore.ts:720:    return riesgos.find((item) => item.carrito_id === selectedRiesgoId) || riesgos[0] || null;
+src/store/riesgosStore.ts:724:    const selected = get().getSelectedRiesgo();
+src/store/riesgosStore.ts:732:    const riesgos = get().getFilteredRiesgos();
+src/store/riesgosStore.ts:735:      total: riesgos.length,
+src/store/riesgosStore.ts:736:      activos: riesgos.filter((item) => item.estado_riesgo !== "RESUELTO").length,
+src/store/riesgosStore.ts:737:      resueltos: riesgos.filter((item) => item.estado_riesgo === "RESUELTO").length,
+src/store/riesgosStore.ts:738:      vencidos: riesgos.filter((item) => item.estado_riesgo === "VENCIDO").length,
+src/store/riesgosStore.ts:739:      proximos: riesgos.filter((item) => item.estado_riesgo === "PROXIMO").length,
+src/store/riesgosStore.ts:740:      enPlazo: riesgos.filter((item) => item.estado_riesgo === "EN_PLAZO").length,
+src/store/riesgosStore.ts:741:      saldoArs: riesgos
+src/store/riesgosStore.ts:742:        .filter((item) => item.moneda === "ARS" && item.estado_riesgo !== "RESUELTO")
+src/store/riesgosStore.ts:743:        .reduce((total, item) => total + parseMoney(item.saldo_riesgo), 0),
+src/store/riesgosStore.ts:744:      saldoUsd: riesgos
+src/store/riesgosStore.ts:745:        .filter((item) => item.moneda === "USD" && item.estado_riesgo !== "RESUELTO")
+src/store/riesgosStore.ts:746:        .reduce((total, item) => total + parseMoney(item.saldo_riesgo), 0),
+src/store/riesgosStore.ts:747:      pagadoArs: riesgos
+src/store/riesgosStore.ts:749:        .reduce((total, item) => total + parseMoney(item.total_pagado_riesgo), 0),
+src/store/riesgosStore.ts:750:      pagadoUsd: riesgos
+src/store/riesgosStore.ts:752:        .reduce((total, item) => total + parseMoney(item.total_pagado_riesgo), 0)
+src/store/riesgosStore.ts:757:export function createInitialPagoRiesgoDraft(
+src/store/riesgosStore.ts:758:  riesgo?: RiesgoAlmundo | null,
+src/store/riesgosStore.ts:760:): PagoRiesgoDraft {
+src/store/riesgosStore.ts:761:  const cajasCompatibles = caja && riesgo ? caja.moneda === riesgo.moneda : Boolean(caja);
+src/store/riesgosStore.ts:764:    carrito_id: riesgo?.carrito_id || "",
+src/store/riesgosStore.ts:766:    importe: riesgo ? String(riesgo.saldo_riesgo || "").replace(".", ",") : "",
+src/store/riesgosStore.ts:773:export function createInitialResolverSinPagoDraft(riesgo?: RiesgoAlmundo | null): ResolverSinPagoDraft {
+src/store/riesgosStore.ts:775:    carrito_id: riesgo?.carrito_id || "",
+src/store/riesgosStore.ts:780:export function getRiesgoEstadoLabel(estado: string): string {
+src/store/riesgosStore.ts:791:export function getRiesgoEstadoTone(estado: string): "ok" | "warning" | "danger" | "neutral" {
+src/store/filesStore.ts:30:export type Operador = {
+src/store/filesStore.ts:68:  operador_id: string | null;
+src/store/filesStore.ts:69:  operador: string | null;
+src/store/filesStore.ts:81:  neto_operador: string | number;
+src/store/filesStore.ts:89:  fecha_vencimiento_operador?: string | null;
+src/store/filesStore.ts:90:  saldo_pendiente_operador?: string | number | null;
+src/store/filesStore.ts:91:  estado_pago_operador?: string | null;
+src/store/filesStore.ts:100:  riesgo?: boolean;
+src/store/filesStore.ts:101:  importe_riesgo?: string | number;
+src/store/filesStore.ts:102:  riesgo_motivo?: string | null;
+src/store/filesStore.ts:185:    operador_id?: string | null;
+src/store/filesStore.ts:186:    operador?: string | null;
+src/store/filesStore.ts:197:    neto_operador: number;
+src/store/filesStore.ts:202:    riesgo?: boolean;
+src/store/filesStore.ts:203:    importe_riesgo?: number;
+src/store/filesStore.ts:204:    riesgo_motivo?: string | null;
+src/store/filesStore.ts:216:  operador_id?: string | null;
+src/store/filesStore.ts:217:  operador?: string | null;
+src/store/filesStore.ts:227:  neto_operador: number;
+src/store/filesStore.ts:230:  riesgo?: boolean;
+src/store/filesStore.ts:231:  importe_riesgo?: number;
+src/store/filesStore.ts:232:  riesgo_motivo?: string | null;
+src/store/filesStore.ts:233:  fecha_vencimiento_operador?: string | null;
+src/store/filesStore.ts:234:  saldo_pendiente_operador?: number;
+src/store/filesStore.ts:235:  estado_pago_operador?: string | null;
+src/store/filesStore.ts:243:  operadorId: string;
+src/store/filesStore.ts:255:  netoOperador: number;
+src/store/filesStore.ts:257:  riesgos: number;
+src/store/filesStore.ts:258:  importeRiesgo: number;
+src/store/filesStore.ts:279:    operadores: Operador[];
+src/store/filesStore.ts:359:    operadorId: "todos",
+src/store/filesStore.ts:474:    operadores: [],
+src/store/filesStore.ts:577:    if (effectiveFilters.operadorId !== "todos") {
+src/store/filesStore.ts:578:      filesQuery = filesQuery.eq("operador_id", effectiveFilters.operadorId);
+src/store/filesStore.ts:599:      operadoresRes,
+src/store/filesStore.ts:609:      supabase.from("operadores").select("*").eq("activo", true).order("nombre"),
+src/store/filesStore.ts:618:        .neq("tipo", "ALMUNDO")
+src/store/filesStore.ts:631:      operadoresRes.error ||
+src/store/filesStore.ts:718:        operadores: (operadoresRes.data || []) as Operador[],
+src/store/filesStore.ts:864:    const operador = get().catalogos.operadores.find(
+src/store/filesStore.ts:865:      (item) => item.id === input.file.operador_id
+src/store/filesStore.ts:867:    const importeRiesgo = getNumber(input.file.importe_riesgo);
+src/store/filesStore.ts:874:        operador_id: input.file.operador_id || null,
+src/store/filesStore.ts:875:        operador: input.file.operador || operador?.nombre || null,
+src/store/filesStore.ts:890:        neto_operador: input.file.neto_operador,
+src/store/filesStore.ts:898:        riesgo: Boolean(input.file.riesgo),
+src/store/filesStore.ts:899:        importe_riesgo: Boolean(input.file.riesgo) ? importeRiesgo : 0,
+src/store/filesStore.ts:900:        riesgo_motivo: nullableText(input.file.riesgo_motivo),
+src/store/filesStore.ts:1036:    if (input.file.riesgo) {
+src/store/filesStore.ts:1037:      const riesgoRes = await supabase.from("file_riesgos").insert({
+src/store/filesStore.ts:1039:        operador_id: input.file.operador_id || null,
+src/store/filesStore.ts:1040:        operador: input.file.operador || operador?.nombre || null,
+src/store/filesStore.ts:1041:        importe_riesgo: importeRiesgo,
+src/store/filesStore.ts:1043:        motivo: nullableText(input.file.riesgo_motivo),
+src/store/filesStore.ts:1048:      if (riesgoRes.error) {
+src/store/filesStore.ts:1049:        set({ saving: false, error: normalizeError(riesgoRes.error) });
+src/store/filesStore.ts:1196:    const operador = input.operador_id
+src/store/filesStore.ts:1197:      ? get().catalogos.operadores.find((item) => item.id === input.operador_id)
+src/store/filesStore.ts:1205:      operador_id: input.operador_id || null,
+src/store/filesStore.ts:1206:      operador: input.operador || operador?.nombre || null,
+src/store/filesStore.ts:1219:      neto_operador: getNumber(input.neto_operador),
+src/store/filesStore.ts:1227:      riesgo: Boolean(input.riesgo),
+src/store/filesStore.ts:1228:      importe_riesgo: Boolean(input.riesgo) ? getNumber(input.importe_riesgo) : 0,
+src/store/filesStore.ts:1229:      riesgo_motivo: Boolean(input.riesgo) ? nullableText(input.riesgo_motivo) : null,
+src/store/filesStore.ts:1231:      fecha_vencimiento_operador: input.fecha_vencimiento_operador || null,
+src/store/filesStore.ts:1232:      saldo_pendiente_operador: getNumber(input.saldo_pendiente_operador),
+src/store/filesStore.ts:1233:      estado_pago_operador: nullableText(input.estado_pago_operador),
+src/store/filesStore.ts:1328:          file.operador,
+src/store/filesStore.ts:1330:          file.riesgo ? "riesgo" : "",
+src/store/filesStore.ts:1360:    const netoOperador = files.reduce(
+src/store/filesStore.ts:1361:      (total, file) => total + getNumber(file.neto_operador),
+src/store/filesStore.ts:1365:    const importeRiesgo = files.reduce(
+src/store/filesStore.ts:1366:      (total, file) => total + getNumber(file.importe_riesgo),
+src/store/filesStore.ts:1375:      netoOperador,
+src/store/filesStore.ts:1376:      margenEstimado: totalVenta - netoOperador,
+src/store/filesStore.ts:1377:      riesgos: files.filter((file) => file.riesgo).length,
+src/store/filesStore.ts:1378:      importeRiesgo
+supabase/migrations/20260731_carritos_pago_oficina_markup.sql:91:  'Indica que la forma de pago real recibida en la oficina difiere de la informada en ALMUNDO.';
+supabase/migrations/20260731_carritos_pago_oficina_markup.sql:100:  'Detalle opcional sobre la diferencia entre el pago informado en ALMUNDO y el recibido en oficina.';
+supabase/functions/customer-assistant-reply/index.ts:483:    "operador",
+supabase/functions/cande-v2-analyze/index.ts:1549:RIESGO DE REPETICIÓN
+supabase/functions/analyze-conversation-ai/index.ts:978:Sos el Asistente Comercial interno de NOSSIX Travel / ALMUNDO Córdoba.
+supabase/functions/parse-vuelos/index.ts:28:- ALMUNDO
+supabase/functions/nia-chat/index.ts:1751:    "Si el pedido es ambiguo o riesgoso, devolvé needs_confirmation true.",
+supabase/functions/cande-reply/index.ts:59:Sos Cande, asistente comercial de pasajeros de ALMUNDO Franquicia Córdoba.
+supabase/functions/cande-reply/index.ts:254:  return getConfigValue(config, "marca_visible", "ALMUNDO Franquicia Córdoba");
+supabase/functions/commercial-assistant-chat/index.ts:335:Sos el Asistente Comercial interno de NOSSIX / ALMUNDO Franquicia Córdoba.

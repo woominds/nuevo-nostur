@@ -1,0 +1,19 @@
+{
+  "name": "NOSTUR Travel",
+  "short_name": "NOSTUR",
+  "description": "Sistema operativo y comercial de NOSTUR Travel",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff634a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/brand/NOSSTOUR_favicon_256_transparente.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

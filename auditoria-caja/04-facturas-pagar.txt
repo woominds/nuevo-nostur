@@ -1,0 +1,127 @@
+src/components/Shell.tsx:47:  FacturasPagarPanel,
+src/components/Shell.tsx:311:    return <FacturasPagarPanel />;
+src/components/Home.tsx:103:  facturasPagar: {
+src/components/Home.tsx:1851:        value={formatAdminDualMonto(adminResumen.facturasPagar.proximos5Dias)}
+src/components/Home.tsx:1852:        detail={`${adminResumen.facturasPagar.proximos5Dias.cantidad} vencen hasta +5 días · ${adminResumen.facturasPagar.vencidas.cantidad} vencidas`}
+src/components/Home.tsx:1853:        tone={adminResumen.facturasPagar.vencidas.cantidad > 0 ? "red" : "amber"}
+src/components/DashboardHome.tsx:1210:        summary.facturasPagar
+src/components/DashboardHome.tsx:1213:      secondary: `${summary.facturasPagar.proximos5Dias.cantidad} en próximos 5 días`,
+src/components/cashflow/CashflowPanel.tsx:2194:  const registrarPagoFromCashflow = useCashflowStore((state) => state.registrarPagoFromCashflow);
+src/components/cashflow/CashflowPanel.tsx:2254:    const ok = await registrarPagoFromCashflow(draft);
+src/components/comisiones/components/LiquidacionesComisionesSection.tsx:449:      ? "Marcar liquidación como pagada"
+src/components/comisiones/components/LiquidacionesComisionesSection.tsx:551:  const marcarLiquidacionPagada = useComisionesStore(
+src/components/comisiones/components/LiquidacionesComisionesSection.tsx:552:    (state) => state.marcarLiquidacionPagada
+src/components/comisiones/components/LiquidacionesComisionesSection.tsx:611:      await marcarLiquidacionPagada(
+src/components/lazySections.tsx:115:export const FacturasPagarPanel = lazy(
+src/components/lazySections.tsx:118:      "./facturas-pagar/FacturasPagarPanel"
+src/components/lazySections.tsx:122:          module.FacturasPagarPanel
+src/components/riesgos/RiesgosPanel.tsx:795:  const registrarPago = useRiesgosStore((state) => state.registrarPago);
+src/components/riesgos/RiesgosPanel.tsx:831:  async function handleRegistrarPago(draft: PagoRiesgoDraft) {
+src/components/riesgos/RiesgosPanel.tsx:832:    const ok = await registrarPago(draft);
+src/components/riesgos/RiesgosPanel.tsx:1314:          onSave={handleRegistrarPago}
+src/components/facturas-pagar/FacturasPagarPanel.tsx:1:// src/components/facturas/FacturasPagarPanel.tsx
+src/components/facturas-pagar/FacturasPagarPanel.tsx:29:  useFacturasPagarStore,
+src/components/facturas-pagar/FacturasPagarPanel.tsx:40:} from "../../store/facturasPagarStore";
+src/components/facturas-pagar/FacturasPagarPanel.tsx:43:type FacturasPagarState = ReturnType<typeof useFacturasPagarStore.getState>;
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2385:export function FacturasPagarPanel() {
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2386:  const loading = useFacturasPagarStore((state: FacturasPagarState) => state.loading);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2387:  const saving = useFacturasPagarStore((state: FacturasPagarState) => state.saving);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2388:  const error = useFacturasPagarStore((state: FacturasPagarState) => state.error);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2389:  const currentProfile = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2390:    (state: FacturasPagarState) => state.currentProfile
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2392:  const canManageFacturas = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2393:    (state: FacturasPagarState) => state.canManageFacturas
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2396:  const pagos = useFacturasPagarStore((state: FacturasPagarState) => state.pagos);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2397:  const cuotas = useFacturasPagarStore((state: FacturasPagarState) => state.cuotas);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2398:  const recurrentes = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2399:    (state: FacturasPagarState) => state.recurrentes
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2401:  const catalogos = useFacturasPagarStore((state: FacturasPagarState) => state.catalogos);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2402:  const filters = useFacturasPagarStore((state: FacturasPagarState) => state.filters);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2403:  const selectedFacturaId = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2404:    (state: FacturasPagarState) => state.selectedFacturaId
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2407:  const loadFacturas = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2408:    (state: FacturasPagarState) => state.loadFacturas
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2410:  const saveFactura = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2411:    (state: FacturasPagarState) => state.saveFactura
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2413:  const registrarPago = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2414:    (state: FacturasPagarState) => state.registrarPago
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2416:  const anularPago = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2417:    (state: FacturasPagarState) => state.anularPago
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2419:  const saveRecurrente = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2420:    (state: FacturasPagarState) => state.saveRecurrente
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2422:  const createProveedorInline = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2423:    (state: FacturasPagarState) => state.createProveedorInline
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2425:  const generarRecurrentesMes = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2426:    (state: FacturasPagarState) => state.generarRecurrentesMes
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2429:  const setFilter = useFacturasPagarStore((state: FacturasPagarState) => state.setFilter);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2430:  const resetFilters = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2431:    (state: FacturasPagarState) => state.resetFilters
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2433:  const selectFactura = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2434:    (state: FacturasPagarState) => state.selectFactura
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2436:  const clearError = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2437:    (state: FacturasPagarState) => state.clearError
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2440:  const getFilteredFacturas = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2441:    (state: FacturasPagarState) => state.getFilteredFacturas
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2443:  const getMetrics = useFacturasPagarStore(
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2444:    (state: FacturasPagarState) => state.getMetrics
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2535:  async function handleRegistrarPago(draft: FacturaPagarPagoDraft) {
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2536:    const ok = await registrarPago(draft);
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2723:                      setFilter("estado", value as FacturasPagarState["filters"]["estado"])
+src/components/facturas-pagar/FacturasPagarPanel.tsx:2735:                      setFilter("moneda", value as FacturasPagarState["filters"]["moneda"])
+src/components/facturas-pagar/FacturasPagarPanel.tsx:3037:          onSave={handleRegistrarPago}
+src/components/facturas-pagar/FacturasPagarPanel.tsx:3092:export default FacturasPagarPanel;
+src/components/ctas-ctes/CtasCtesPanel.tsx:944:  const registrarPago = useCtasCtesStore((state) => state.registrarPago);
+src/components/ctas-ctes/CtasCtesPanel.tsx:992:    const ok = await registrarPago(pagoItem, draft);
+src/store/ctasCtesStore.ts:164:  registrarPago: (item: CtaCteItem, draft: PagoCtaCteDraft) => Promise<boolean>;
+src/store/ctasCtesStore.ts:513:  registrarPago: async (item, draft) => {
+src/store/cashflowStore.ts:269:  registrarPagoFromCashflow: (draft: CashflowPagoDraft) => Promise<boolean>;
+src/store/cashflowStore.ts:860:        .from("facturas_pagar")
+src/store/cashflowStore.ts:870:        .from("facturas_pagar")
+src/store/cashflowStore.ts:895:        .from("facturas_pagar_cuotas")
+src/store/cashflowStore.ts:907:          .from("facturas_pagar_cuotas")
+src/store/cashflowStore.ts:926:          .from("facturas_pagar_cuotas")
+src/store/cashflowStore.ts:966:  registrarPagoFromCashflow: async (draft) => {
+src/store/cashflowStore.ts:1064:      .from("facturas_pagar_pagos")
+src/store/cashflowStore.ts:1141:      .from("facturas_pagar_recurrentes")
+src/store/tableroDeControlStore.ts:159:  facturasPagar: {
+src/store/tableroDeControlStore.ts:327:  facturasPagar: {
+src/store/tableroDeControlStore.ts:1003:  facturasPagarRes,
+src/store/tableroDeControlStore.ts:1077:        .from("v_facturas_pagar_resumen")
+src/store/tableroDeControlStore.ts:1105:  facturasPagarRes.error ||
+src/store/tableroDeControlStore.ts:1136:const facturasPagarRows = (facturasPagarRes.data || []) as Record<string, unknown>[];
+src/store/tableroDeControlStore.ts:1146:  facturasPagar: {
+src/store/tableroDeControlStore.ts:1191:  facturasPagarRows.forEach((row) => {
+src/store/tableroDeControlStore.ts:1215:      adminResumen.facturasPagar.vencidas = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1216:        adminResumen.facturasPagar.vencidas,
+src/store/tableroDeControlStore.ts:1223:      adminResumen.facturasPagar.proximos5Dias = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1224:        adminResumen.facturasPagar.proximos5Dias,
+src/store/riesgosStore.ts:186:  registrarPago: (draft: PagoRiesgoDraft) => Promise<boolean>;
+src/store/riesgosStore.ts:469:  registrarPago: async (draft) => {
+src/store/facturasPagarStore.ts:224:export type FacturasPagarFilters = {
+src/store/facturasPagarStore.ts:234:type FacturasPagarMetrics = {
+src/store/facturasPagarStore.ts:243:type FacturasPagarState = {
+src/store/facturasPagarStore.ts:262:  filters: FacturasPagarFilters;
+src/store/facturasPagarStore.ts:268:  registrarPago: (draft: FacturaPagarPagoDraft) => Promise<boolean>;
+src/store/facturasPagarStore.ts:274:  setFilter: <K extends keyof FacturasPagarFilters>(key: K, value: FacturasPagarFilters[K]) => void;
+src/store/facturasPagarStore.ts:283:  getMetrics: () => FacturasPagarMetrics;
+src/store/facturasPagarStore.ts:303:function getDefaultFilters(): FacturasPagarFilters {
+src/store/facturasPagarStore.ts:561:export const useFacturasPagarStore = create<FacturasPagarState>((set, get) => ({
+src/store/facturasPagarStore.ts:639:      .from("v_facturas_pagar_resumen")
+src/store/facturasPagarStore.ts:688:      supabase.from("facturas_pagar_recurrentes").select("*").order("created_at", { ascending: false })
+src/store/facturasPagarStore.ts:718:          .from("facturas_pagar_cuotas")
+src/store/facturasPagarStore.ts:723:          .from("facturas_pagar_pagos")
+src/store/facturasPagarStore.ts:858:        .from("facturas_pagar")
+src/store/facturasPagarStore.ts:868:        .from("facturas_pagar")
+src/store/facturasPagarStore.ts:905:          .from("facturas_pagar_cuotas")
+src/store/facturasPagarStore.ts:916:        .from("facturas_pagar_cuotas")
+src/store/facturasPagarStore.ts:925:        .from("facturas_pagar_cuotas")
+src/store/facturasPagarStore.ts:935:        .from("facturas_pagar_cuotas")
+src/store/facturasPagarStore.ts:975:      .from("facturas_pagar")
+src/store/facturasPagarStore.ts:994:  registrarPago: async (draft) => {
+src/store/facturasPagarStore.ts:1064:      .from("facturas_pagar_pagos")
+src/store/facturasPagarStore.ts:1115:      .from("facturas_pagar_pagos")
+src/store/facturasPagarStore.ts:1200:        .from("facturas_pagar_recurrentes")
+src/store/facturasPagarStore.ts:1210:        .from("facturas_pagar_recurrentes")
+src/store/comisionesStore.ts:293:  marcarLiquidacionPagada: (
+src/store/comisionesStore.ts:1002:  marcarLiquidacionPagada: async (
+src/store/comisionesStore.ts:1012:      "marcar_liquidacion_comision_pagada",

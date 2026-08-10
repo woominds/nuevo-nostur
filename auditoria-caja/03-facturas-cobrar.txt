@@ -1,0 +1,92 @@
+src/components/Shell.tsx:46:  FacturasCobrarPanel,
+src/components/Shell.tsx:304:    return <FacturasCobrarPanel />;
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1:// src/components/facturas/FacturasCobrarPanel.tsx
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:21:  useFacturasCobrarStore,
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:28:} from "../../store/facturasCobrarStore";
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:463:  const saving = useFacturasCobrarStore((state) => state.saving);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:464:  const catalogos = useFacturasCobrarStore((state) => state.catalogos);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:465:  const createDocumento = useFacturasCobrarStore((state) => state.createDocumento);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:466:  const getCarritosDisponiblesForDraft = useFacturasCobrarStore(
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1076:  const saving = useFacturasCobrarStore((state) => state.saving);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1077:  const catalogos = useFacturasCobrarStore((state) => state.catalogos);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1079:  const getSelectedFacturas = useFacturasCobrarStore((state) => state.getSelectedFacturas);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1080:  const getSelectedTotal = useFacturasCobrarStore((state) => state.getSelectedTotal);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1081:  const getSelectedMoneda = useFacturasCobrarStore((state) => state.getSelectedMoneda);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1082:  const cobrarFacturasSeleccionadas = useFacturasCobrarStore(
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1424:        {factura.facturas_cobrar_carritos && factura.facturas_cobrar_carritos.length > 0 ? (
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1429:              {factura.facturas_cobrar_carritos.map((item) => (
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1508:  const selectedFacturaIds = useFacturasCobrarStore((state) => state.selectedFacturaIds);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1509:  const toggleFacturaSelection = useFacturasCobrarStore((state) => state.toggleFacturaSelection);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1510:  const selectFactura = useFacturasCobrarStore((state) => state.selectFactura);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1627:export function FacturasCobrarPanel() {
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1628:  const loading = useFacturasCobrarStore((state) => state.loading);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1629:  const saving = useFacturasCobrarStore((state) => state.saving);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1631:  const error = useFacturasCobrarStore((state) => state.error);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1632:  const filters = useFacturasCobrarStore((state) => state.filters);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1633:  const selectedTab = useFacturasCobrarStore((state) => state.selectedTab);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1634:  const selectedFacturaId = useFacturasCobrarStore((state) => state.selectedFacturaId);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1635:  const selectedFacturaIds = useFacturasCobrarStore((state) => state.selectedFacturaIds);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1636:  const catalogos = useFacturasCobrarStore((state) => state.catalogos);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1637:  const retenciones = useFacturasCobrarStore((state) => state.retenciones);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1638:    const loadFacturas = useFacturasCobrarStore((state) => state.loadFacturas);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1640:   const adjuntarArchivoFactura = useFacturasCobrarStore(
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1643:  const setTab = useFacturasCobrarStore((state) => state.setTab);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1644:  const setFilter = useFacturasCobrarStore((state) => state.setFilter);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1645:  const clearError = useFacturasCobrarStore((state) => state.clearError);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1646:  const clearSelection = useFacturasCobrarStore((state) => state.clearSelection);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1647:  const selectFactura = useFacturasCobrarStore((state) => state.selectFactura);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1648:  const selectOnlyFactura = useFacturasCobrarStore((state) => state.selectOnlyFactura);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1649:  const goToPreviousMonth = useFacturasCobrarStore((state) => state.goToPreviousMonth);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1650:  const goToNextMonth = useFacturasCobrarStore((state) => state.goToNextMonth);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1651:  const goToCurrentMonth = useFacturasCobrarStore((state) => state.goToCurrentMonth);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1653:  const getFilteredFacturas = useFacturasCobrarStore((state) => state.getFilteredFacturas);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:1654:  const getFacturasAgrupadas = useFacturasCobrarStore((state) => state.getFacturasAgrupadas);
+src/components/facturas-cobrar/FacturasCobrarPanel.tsx:2152:export default FacturasCobrarPanel;
+src/components/Home.tsx:107:  facturasCobrar: {
+src/components/Home.tsx:1858:        value={formatAdminDualMonto(adminResumen.facturasCobrar.totalPendiente)}
+src/components/Home.tsx:1859:        detail={`${adminResumen.facturasCobrar.vencidas.cantidad} vencidas · ${adminResumen.facturasCobrar.proximos5Dias.cantidad} próximos 5 días`}
+src/components/Home.tsx:1860:        tone={adminResumen.facturasCobrar.vencidas.cantidad > 0 ? "red" : "blue"}
+src/components/DashboardHome.tsx:1199:        summary.facturasCobrar
+src/components/DashboardHome.tsx:1202:      secondary: `${summary.facturasCobrar.totalPendiente.cantidad} pendientes`,
+src/components/lazySections.tsx:103:export const FacturasCobrarPanel = lazy(
+src/components/lazySections.tsx:106:      "./facturas-cobrar/FacturasCobrarPanel"
+src/components/lazySections.tsx:110:          module.FacturasCobrarPanel
+src/store/tableroDeControlStore.ts:163:  facturasCobrar: {
+src/store/tableroDeControlStore.ts:331:  facturasCobrar: {
+src/store/tableroDeControlStore.ts:1004:  facturasCobrarRes,
+src/store/tableroDeControlStore.ts:1083:        .from("facturas_cobrar")
+src/store/tableroDeControlStore.ts:1106:  facturasCobrarRes.error ||
+src/store/tableroDeControlStore.ts:1137:const facturasCobrarRows = (facturasCobrarRes.data || []) as Record<string, unknown>[];
+src/store/tableroDeControlStore.ts:1150:  facturasCobrar: {
+src/store/tableroDeControlStore.ts:1231:  facturasCobrarRows.forEach((row) => {
+src/store/tableroDeControlStore.ts:1254:    adminResumen.facturasCobrar.totalPendiente = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1255:      adminResumen.facturasCobrar.totalPendiente,
+src/store/tableroDeControlStore.ts:1261:      adminResumen.facturasCobrar.vencidas = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1262:        adminResumen.facturasCobrar.vencidas,
+src/store/tableroDeControlStore.ts:1269:      adminResumen.facturasCobrar.proximos5Dias = addToAdminMonto(
+src/store/tableroDeControlStore.ts:1270:        adminResumen.facturasCobrar.proximos5Dias,
+src/store/facturasCobrarStore.ts:62: facturas_cobrar_carritos?: FacturaCobrarCarrito[] | null;
+src/store/facturasCobrarStore.ts:123:  facturas_cobrar_carritos?: FacturaCobrarCarrito[];
+src/store/facturasCobrarStore.ts:124:  facturas_cobrar_retenciones?: FacturaCobrarRetencion[];
+src/store/facturasCobrarStore.ts:169:export type FacturasCobrarFilters = {
+src/store/facturasCobrarStore.ts:235:type FacturasCobrarState = {
+src/store/facturasCobrarStore.ts:256:  filters: FacturasCobrarFilters;
+src/store/facturasCobrarStore.ts:265:  setFilter: <K extends keyof FacturasCobrarFilters>(
+src/store/facturasCobrarStore.ts:267:    value: FacturasCobrarFilters[K]
+src/store/facturasCobrarStore.ts:317:function getDefaultFilters(): FacturasCobrarFilters {
+src/store/facturasCobrarStore.ts:549:export const useFacturasCobrarStore = create<FacturasCobrarState>((set, get) => ({
+src/store/facturasCobrarStore.ts:623:      .from("facturas_cobrar")
+src/store/facturasCobrarStore.ts:624:      .select("*, facturas_cobrar_carritos(*), facturas_cobrar_retenciones(*)")
+src/store/facturasCobrarStore.ts:654:      .from("v_facturas_cobrar_retenciones")
+src/store/facturasCobrarStore.ts:671:  .select("*, clientes:cliente_id(*), facturas_cobrar_carritos(*)")
+src/store/facturasCobrarStore.ts:710:      Array.isArray(carrito.facturas_cobrar_carritos) &&
+src/store/facturasCobrarStore.ts:711:      carrito.facturas_cobrar_carritos.length > 0;
+src/store/facturasCobrarStore.ts:850:      .from("facturas_cobrar")
+src/store/facturasCobrarStore.ts:878:      const relacionesRes = await supabase.from("facturas_cobrar_carritos").insert(relaciones);
+src/store/facturasCobrarStore.ts:929:        .from("facturas_cobrar")
+src/store/facturasCobrarStore.ts:1053:      .from("facturas_cobrar_cobros")
+src/store/facturasCobrarStore.ts:1108:    const itemsRes = await supabase.from("facturas_cobrar_cobros_items").insert(items);
+src/store/facturasCobrarStore.ts:1118:      .from("facturas_cobrar")
+src/store/facturasCobrarStore.ts:1140:      .flatMap((factura) => factura.facturas_cobrar_carritos || [])
+src/store/facturasCobrarStore.ts:1358:  Array.isArray(carrito.facturas_cobrar_carritos) &&
+src/store/facturasCobrarStore.ts:1359:  carrito.facturas_cobrar_carritos.length > 0;
