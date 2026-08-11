@@ -2,10 +2,15 @@ name: Deploy NOSTUR Web
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Versión a publicar"
+        required: true
+        type: string
 
 jobs:
   deploy:
-    name: Publicar gestion.nossix.com.ar
+    name: Publicar NOSTUR ${{ inputs.version }}
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +30,21 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_APP_VERSION: ${{ inputs.version }}
         run: npm run build
+
+      - name: Crear información de versión
+        env:
+          APP_VERSION: ${{ inputs.version }}
+          GIT_COMMIT: ${{ github.sha }}
+        run: |
+          cat > dist/version.json <<EOF_VERSION
+          {
+            "version": "$APP_VERSION",
+            "commit": "$GIT_COMMIT",
+            "publishedAt": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          }
+          EOF_VERSION
 
       - name: Preparar rutas SPA
         run: |
