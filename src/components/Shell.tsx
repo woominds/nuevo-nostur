@@ -545,7 +545,9 @@ export function Shell() {
     "livenos";
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#eef1f6] text-[#172033]">
+    <div
+      className="flex h-[100dvh] w-screen overflow-hidden bg-[#eef1f6] pt-[env(safe-area-inset-top)] text-[#172033]"
+    >
       <Sidebar
         activeSection={
           activeSection
@@ -559,10 +561,11 @@ export function Shell() {
         <main
           className={[
             "min-h-0 flex-1 overflow-x-hidden",
-            editorActive ||
-            liveNosActive
+            editorActive
               ? "overflow-hidden"
-              : "overflow-y-auto overscroll-contain pb-[72px] md:pb-0"
+              : liveNosActive
+                ? "overflow-hidden pb-[calc(72px+env(safe-area-inset-bottom))] md:pb-0"
+                : "overflow-y-auto overscroll-contain pb-[calc(72px+env(safe-area-inset-bottom))] md:pb-0"
           ].join(" ")}
         >
           {visitedSections.map(
@@ -594,8 +597,7 @@ export function Shell() {
         </main>
       </div>
 
-      {!editorActive &&
-      !liveNosActive ? (
+      {!editorActive ? (
         <nav
           aria-label="Navegación principal"
           className="fixed inset-x-0 bottom-0 z-[120] border-t border-black/10 bg-white/95 px-2 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-10px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl md:hidden"
