@@ -78,7 +78,6 @@ jobs:
         run: |
           rsync \
             -az \
-            --delete \
             -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
             dist/ \
             "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
