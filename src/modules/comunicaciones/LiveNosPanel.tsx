@@ -6,13 +6,16 @@ import { LiveNosAutomationsModal } from "./LiveNosAutomationsModal";
 import { NiaInternalChat } from "./liveNos/NiaInternalChat";
 import {
  Archive,
+ Bell,
  Bot,
+ ChevronLeft,
  CheckCircle2,
  Download,
  Eye,
  FileText,
  Image,
  Loader2,
+ LogOut,
  MessageCircle,
  Mic,
  MoreVertical,
@@ -31,6 +34,11 @@ import {
  XCircle
 } from "lucide-react";
 import { supabase } from "../../lib/supabase";
+
+import {
+  deactivateCurrentLiveNosPushSubscription,
+  enableLiveNosPushNotifications
+} from "./notifications/liveNosPushSubscriptionService";
 import { transcodeAudioToMp3 } from "../../lib/audioTranscode";
 import { EmptyState, Pill } from "./comunicacionesShared";
 
@@ -509,6 +517,282 @@ const [rightPanelWidth, setRightPanelWidth] = useState(() =>
 );
 
 const compactLiveNos = liveNosWidth < 980;
+
+const [
+  mobileLiveNos,
+  setMobileLiveNos
+] = useState(
+  () =>
+    typeof window !== "undefined" &&
+    window.innerWidth < 768
+);
+
+useEffect(() => {
+  const updateMobileLiveNos = () => {
+    setMobileLiveNos(
+      window.innerWidth < 768
+    );
+  };
+
+  updateMobileLiveNos();
+
+  window.addEventListener(
+    "resize",
+    updateMobileLiveNos
+  );
+
+  window.addEventListener(
+    "orientationchange",
+    updateMobileLiveNos
+  );
+
+  return () => {
+    window.removeEventListener(
+      "resize",
+      updateMobileLiveNos
+    );
+
+    window.removeEventListener(
+      "orientationchange",
+      updateMobileLiveNos
+    );
+  };
+}, []);
+
+const [
+  mobileActionsOpen,
+  setMobileActionsOpen
+] = useState(false);
+
+const [
+  mobileComposerMode,
+  setMobileComposerMode
+] = useState<
+  "client" | "internal"
+>("client");
+
+const [
+  mobileMainMenuOpen,
+  setMobileMainMenuOpen
+] = useState(false);
+
+const [
+  mobilePushBusy,
+  setMobilePushBusy
+] = useState(false);
+
+const [
+  mobilePushState,
+  setMobilePushState
+] = useState<
+  | "checking"
+  | "unsupported"
+  | "permission"
+  | "not_registered"
+  | "registered"
+  | "error"
+>("checking");
+
+const refreshMobilePushState =
+  useCallback(async () => {
+    if (
+      !currentUserId ||
+      !window.isSecureContext ||
+      !("Notification" in window) ||
+      !("serviceWorker" in navigator) ||
+      !("PushManager" in window)
+    ) {
+      setMobilePushState(
+        "unsupported"
+      );
+
+      return;
+    }
+
+    if (
+      Notification.permission !==
+      "granted"
+    ) {
+      setMobilePushState(
+        "permission"
+      );
+
+      return;
+    }
+
+    try {
+      const registration =
+        await navigator.serviceWorker.getRegistration(
+          "/"
+        );
+
+      if (!registration) {
+        setMobilePushState(
+          "not_registered"
+        );
+
+        return;
+      }
+
+      const subscription =
+        await registration.pushManager.getSubscription();
+
+      if (!subscription) {
+        setMobilePushState(
+          "not_registered"
+        );
+
+        return;
+      }
+
+      const {
+        data,
+        error
+      } = await supabase
+        .from(
+          "livenos_push_subscriptions"
+        )
+        .select(
+          "id, active"
+        )
+        .eq(
+          "user_id",
+          currentUserId
+        )
+        .eq(
+          "endpoint",
+          subscription.endpoint
+        )
+        .maybeSingle();
+
+      if (error) {
+        console.warn(
+          "[LiveNosPush] No se pudo verificar el dispositivo.",
+          error.message
+        );
+
+        setMobilePushState(
+          "error"
+        );
+
+        return;
+      }
+
+      setMobilePushState(
+        data?.active === true
+          ? "registered"
+          : "not_registered"
+      );
+    } catch (error) {
+      console.warn(
+        "[LiveNosPush] Error verificando el dispositivo.",
+        error
+      );
+
+      setMobilePushState(
+        "error"
+      );
+    }
+  }, [
+    currentUserId
+  ]);
+
+const handleEnableMobilePush =
+  useCallback(async () => {
+    if (
+      !currentUserId ||
+      mobilePushBusy
+    ) {
+      return;
+    }
+
+    setMobilePushBusy(true);
+
+    try {
+      const enabled =
+        await enableLiveNosPushNotifications(
+          currentUserId
+        );
+
+      await refreshMobilePushState();
+
+      if (enabled) {
+        setStatus(
+          "Este dispositivo quedó registrado para recibir notificaciones de LiveNos."
+        );
+      } else if (
+        "Notification" in window &&
+        Notification.permission ===
+          "denied"
+      ) {
+        setStatus(
+          "Las notificaciones están bloqueadas en este dispositivo."
+        );
+      }
+    } finally {
+      setMobilePushBusy(false);
+    }
+  }, [
+    currentUserId,
+    mobilePushBusy,
+    refreshMobilePushState
+  ]);
+
+const handleMobileLogout =
+  useCallback(async () => {
+    setMobileMainMenuOpen(
+      false
+    );
+
+    try {
+      if (currentUserId) {
+        await deactivateCurrentLiveNosPushSubscription(
+          currentUserId
+        );
+      }
+
+      const {
+        error
+      } =
+        await supabase.auth.signOut({
+          scope:
+            "local"
+        });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error(
+        "[LiveNos] No se pudo cerrar la sesión.",
+        error
+      );
+
+      setError(
+        error instanceof Error
+          ? error.message
+          : "No se pudo cerrar la sesión."
+      );
+    }
+  }, [
+    currentUserId
+  ]);
+
+useEffect(() => {
+  if (
+    !mobileLiveNos ||
+    !mobileMainMenuOpen
+  ) {
+    return;
+  }
+
+  void refreshMobilePushState();
+}, [
+  mobileLiveNos,
+  mobileMainMenuOpen,
+  refreshMobilePushState
+]);
+
 const liveNosRootRef = useRef<HTMLDivElement | null>(null);
 const fileInputRef = useRef<HTMLInputElement | null>(null);
 const imageInputRef = useRef<HTMLInputElement | null>(null);
@@ -4928,18 +5212,64 @@ function renderWhatsappWindowCountdown() {
  }
 
  function renderCompactInboxTabs() {
- const tabs: Array<{ key: InboxKey; label: string }> = [
-   { key: "sin_atender", label: "Sin atender" },
-   { key: "en_gestion", label: "En gestión" },
-   { key: "cande", label: "CANDE" },
-   { key: "colaboracion", label: "Colab." },
-   { key: "cerradas", label: "Cerradas" },
-   { key: "archivadas", label: "Archiv." },
-   { key: "eliminadas", label: "Elim." }
- ];
+ const tabs: Array<{
+   key: InboxKey;
+   label: string;
+ }> = mobileLiveNos
+   ? [
+       {
+         key: "sin_atender",
+         label: "Sin atender"
+       },
+       {
+         key: "en_gestion",
+         label: "En gestión"
+       },
+       {
+         key: "colaboracion",
+         label: "Colaboración"
+       }
+     ]
+   : [
+       {
+         key: "sin_atender",
+         label: "Sin atender"
+       },
+       {
+         key: "en_gestion",
+         label: "En gestión"
+       },
+       {
+         key: "cande",
+         label: "CANDE"
+       },
+       {
+         key: "colaboracion",
+         label: "Colab."
+       },
+       {
+         key: "cerradas",
+         label: "Cerradas"
+       },
+       {
+         key: "archivadas",
+         label: "Archiv."
+       },
+       {
+         key: "eliminadas",
+         label: "Elim."
+       }
+     ];
 
  return (
-   <div className="flex min-w-0 gap-1 overflow-x-auto rounded-2xl border border-black/10 bg-white/90 p-1 shadow-sm">
+   <div
+     className={[
+       "min-w-0 gap-1",
+       mobileLiveNos
+         ? "grid grid-cols-3 rounded-none border-x-0 border-b border-t-0 border-black/10 bg-white p-1.5 shadow-none"
+         : "flex overflow-x-auto rounded-2xl border border-black/10 bg-white/90 p-1 shadow-sm"
+     ].join(" ")}
+   >
      {tabs.map((tab) => {
        const active = activeInbox === tab.key;
        const count = inboxCounts[tab.key] || 0;
@@ -4953,7 +5283,10 @@ function renderWhatsappWindowCountdown() {
              setSelectedId(null);
            }}
            className={[
-             "flex shrink-0 items-center gap-1 rounded-xl px-2.5 py-1.5 text-[11px] font-medium transition",
+             "items-center justify-center gap-1 rounded-xl text-[11px] font-medium transition",
+             mobileLiveNos
+               ? "flex min-w-0 px-1.5 py-2"
+               : "flex shrink-0 px-2.5 py-1.5",
              active
                ? "bg-[#4f7c90] text-white shadow-sm"
                : "bg-transparent text-[#64748b] hover:bg-[#f1f5f9] hover:text-[#142033]"
@@ -5445,6 +5778,349 @@ function renderWhatsappWindowCountdown() {
      {renderMediaPreviewModal()}
      {renderCandeFeedbackModal()}
 
+     {mobileLiveNos &&
+     mobileMainMenuOpen ? (
+       <div
+         className="fixed inset-0 z-[145] flex items-end bg-[#0f172a]/45"
+         onClick={() =>
+           setMobileMainMenuOpen(
+             false
+           )
+         }
+       >
+         <div
+           className="w-full rounded-t-[22px] bg-white px-4 pb-[calc(16px+env(safe-area-inset-bottom))] pt-3 shadow-2xl"
+           onClick={(event) =>
+             event.stopPropagation()
+           }
+         >
+           <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#cbd5e1]" />
+
+           <div className="flex items-center justify-between gap-3">
+             <div>
+               <div className="text-[15px] font-semibold text-[#142033]">
+                 LiveNos
+               </div>
+
+               <div className="mt-0.5 text-[11px] text-[#64748b]">
+                 Opciones del dispositivo
+               </div>
+             </div>
+
+             <button
+               type="button"
+               onClick={() =>
+                 setMobileMainMenuOpen(
+                   false
+                 )
+               }
+               className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f1f5f9] text-[#64748b]"
+               aria-label="Cerrar menú"
+             >
+               <X size={16} />
+             </button>
+           </div>
+
+           <section className="mt-4 rounded-2xl border border-black/10 bg-[#f8fafc] p-3">
+             <div className="flex items-start gap-3">
+               <div
+                 className={[
+                   "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
+                   mobilePushState ===
+                   "registered"
+                     ? "bg-emerald-100 text-emerald-700"
+                     : "bg-[#e8f1f4] text-[#4f7c90]"
+                 ].join(" ")}
+               >
+                 <Bell size={18} />
+               </div>
+
+               <div className="min-w-0 flex-1">
+                 <div className="text-[13px] font-semibold text-[#142033]">
+                   Notificaciones
+                 </div>
+
+                 <div className="mt-1 text-[11px] leading-relaxed text-[#64748b]">
+                   {mobilePushState ===
+                   "checking"
+                     ? "Verificando este dispositivo..."
+                     : mobilePushState ===
+                         "registered"
+                       ? "Este dispositivo está registrado para recibir avisos de LiveNos."
+                       : mobilePushState ===
+                           "permission"
+                         ? "Todavía no autorizaste las notificaciones en este dispositivo."
+                         : mobilePushState ===
+                             "unsupported"
+                           ? "Este navegador o dispositivo no permite Web Push en el modo actual."
+                           : mobilePushState ===
+                               "error"
+                             ? "No se pudo verificar el estado de las notificaciones."
+                             : "El dispositivo todavía no está registrado para recibir avisos."}
+                 </div>
+               </div>
+             </div>
+
+             {mobilePushState !==
+             "registered" ? (
+               <button
+                 type="button"
+                 onClick={
+                   handleEnableMobilePush
+                 }
+                 disabled={
+                   mobilePushBusy ||
+                   mobilePushState ===
+                     "unsupported"
+                 }
+                 className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#4f7c90] text-[12px] font-semibold text-white transition active:scale-[0.99] disabled:opacity-50"
+               >
+                 {mobilePushBusy ? (
+                   <Loader2
+                     size={16}
+                     className="animate-spin"
+                   />
+                 ) : (
+                   <Bell size={16} />
+                 )}
+
+                 {mobilePushState ===
+                 "permission"
+                   ? "Activar notificaciones"
+                   : "Registrar este dispositivo"}
+               </button>
+             ) : (
+               <div className="mt-3 flex h-10 items-center justify-center gap-2 rounded-xl bg-emerald-50 text-[11px] font-semibold text-emerald-700">
+                 <CheckCircle2
+                   size={15}
+                 />
+                 Dispositivo registrado
+               </div>
+             )}
+           </section>
+
+           <button
+             type="button"
+             onClick={
+               handleMobileLogout
+             }
+             className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 text-[12px] font-semibold text-red-700 transition active:scale-[0.99]"
+           >
+             <LogOut size={16} />
+             Cerrar sesión en este dispositivo
+           </button>
+         </div>
+       </div>
+     ) : null}
+
+     {mobileLiveNos &&
+     mobileActionsOpen &&
+     selectedConversation ? (
+       <div
+         className="fixed inset-0 z-[140] flex items-end bg-[#0f172a]/45"
+         onClick={() =>
+           setMobileActionsOpen(false)
+         }
+       >
+         <div
+           className="max-h-[82dvh] w-full overflow-auto rounded-t-[22px] bg-white px-4 pb-[calc(16px+env(safe-area-inset-bottom))] pt-3 shadow-2xl"
+           onClick={(event) =>
+             event.stopPropagation()
+           }
+         >
+           <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#cbd5e1]" />
+
+           <div className="flex items-center justify-between gap-3">
+             <div className="min-w-0">
+               <div className="text-[15px] font-semibold text-[#142033]">
+                 Acciones
+               </div>
+
+               <div className="mt-0.5 truncate text-[11px] text-[#64748b]">
+                 {getDisplayName(
+                   selectedContacto,
+                   selectedConversation
+                 )}
+               </div>
+             </div>
+
+             <button
+               type="button"
+               onClick={() =>
+                 setMobileActionsOpen(false)
+               }
+               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f1f5f9] text-[#64748b]"
+               aria-label="Cerrar acciones"
+             >
+               <X size={16} />
+             </button>
+           </div>
+
+           {canTakeSelectedConversation &&
+           selectedConversation.assigned_to !==
+             currentUserId ? (
+             <button
+               type="button"
+               onClick={async () => {
+                 await takeConversation();
+
+                 setMobileActionsOpen(
+                   false
+                 );
+               }}
+               disabled={actionLoading}
+               className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#4f7c90] text-[13px] font-semibold text-white disabled:opacity-50"
+             >
+               <UserCheck size={16} />
+               Tomar conversación
+             </button>
+           ) : null}
+
+           <section className="mt-4 rounded-2xl border border-black/10 bg-[#f8fafc] p-3">
+             <div className="mb-2 flex items-center gap-2">
+               <UserPlus
+                 size={16}
+                 className="text-[#4f7c90]"
+               />
+
+               <div className="text-[13px] font-semibold text-[#142033]">
+                 Transferir
+               </div>
+             </div>
+
+             <LiveNosProfileSelect
+               value={transferTargetId}
+               placeholder="Elegir vendedor..."
+               profiles={profiles}
+               disabledIds={
+                 selectedConversation.assigned_to
+                   ? [
+                       selectedConversation.assigned_to
+                     ]
+                   : []
+               }
+               onChange={
+                 setTransferTargetId
+               }
+             />
+
+             <textarea
+               value={transferNote}
+               onChange={(event) =>
+                 setTransferNote(
+                   event.target.value
+                 )
+               }
+               placeholder="Aviso interno para el vendedor (opcional)"
+               className="mt-2 min-h-[72px] w-full resize-none rounded-xl border border-black/10 bg-white px-3 py-2 text-[12px] text-[#142033] outline-none"
+             />
+
+             <button
+               type="button"
+               onClick={async () => {
+                 await transferConversationToSeller();
+
+                 setMobileActionsOpen(
+                   false
+                 );
+               }}
+               disabled={
+                 actionLoading ||
+                 !transferTargetId
+               }
+               className="mt-2 h-10 w-full rounded-xl bg-[#4f7c90] text-[12px] font-semibold text-white disabled:opacity-50"
+             >
+               Transferir conversación
+             </button>
+           </section>
+
+           <section className="mt-3 rounded-2xl border border-black/10 bg-[#f8fafc] p-3">
+             <div className="mb-2 flex items-center gap-2">
+               <Users
+                 size={16}
+                 className="text-purple-700"
+               />
+
+               <div className="text-[13px] font-semibold text-[#142033]">
+                 Colaboración
+               </div>
+             </div>
+
+             <LiveNosProfileSelect
+               value={
+                 collaborationTargetId
+               }
+               placeholder="Elegir colaborador..."
+               profiles={profiles}
+               disabledIds={[
+                 selectedConversation.assigned_to ||
+                   "",
+                 ...selectedColaboradores.map(
+                   (item) =>
+                     item.profile_id
+                 )
+               ].filter(Boolean)}
+               onChange={
+                 setCollaborationTargetId
+               }
+             />
+
+             <button
+               type="button"
+               onClick={async () => {
+                 await addConversationCollaborator();
+
+                 setMobileActionsOpen(
+                   false
+                 );
+               }}
+               disabled={
+                 actionLoading ||
+                 !collaborationTargetId
+               }
+               className="mt-2 h-10 w-full rounded-xl bg-purple-600 text-[12px] font-semibold text-white disabled:opacity-50"
+             >
+               Agregar en colaboración
+             </button>
+
+             {selectedColaboradores.length >
+             0 ? (
+               <div className="mt-3 space-y-2">
+                 {selectedColaboradores.map(
+                   (colaborador) => (
+                     <div
+                       key={
+                         colaborador.id
+                       }
+                       className="flex items-center justify-between gap-2 rounded-xl bg-white px-3 py-2 ring-1 ring-black/5"
+                     >
+                       <span className="min-w-0 truncate text-[12px] text-[#475569]">
+                         {getProfileFullName(
+                           colaborador.profile
+                         )}
+                       </span>
+
+                       <button
+                         type="button"
+                         onClick={() =>
+                           void removeConversationCollaborator(
+                             colaborador
+                           )
+                         }
+                         className="shrink-0 rounded-lg px-2 py-1 text-[11px] font-medium text-red-600"
+                       >
+                         Quitar
+                       </button>
+                     </div>
+                   )
+                 )}
+               </div>
+             ) : null}
+           </section>
+         </div>
+       </div>
+     ) : null}
+
      <LiveNosAutomationsModal
        open={automationsOpen}
        onClose={() => setAutomationsOpen(false)}
@@ -5476,7 +6152,15 @@ function renderWhatsappWindowCountdown() {
      <header
  className={[
    "shrink-0 border-b border-black/10 bg-white/86 backdrop-blur-xl",
-   compactLiveNos ? "px-3 py-2" : "px-5 py-3"
+   mobileLiveNos &&
+   selectedConversation
+     ? "hidden"
+     : "block",
+   mobileLiveNos
+     ? "px-3 py-2"
+     : compactLiveNos
+       ? "px-3 py-2"
+       : "px-5 py-3"
  ].join(" ")}
 >
          <div className="flex flex-wrap items-center justify-between gap-3">
@@ -5494,26 +6178,95 @@ function renderWhatsappWindowCountdown() {
              </div>
            </div>
 
-           <div className="flex flex-wrap gap-2">
-             <HeaderButton onClick={loadData} disabled={loading}>
-               {loading ? <Loader2 size={14} className="animate-spin" /> : <RefreshCcw size={14} />}
-               Actualizar
-             </HeaderButton>
+           <div
+             className={
+               mobileLiveNos
+                 ? "flex gap-2"
+                 : "flex flex-wrap gap-2"
+             }
+           >
+             {mobileLiveNos ? (
+               <button
+                 type="button"
+                 onClick={() =>
+                   setMobileMainMenuOpen(
+                     true
+                   )
+                 }
+                 className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f1f5f9] text-[#475569]"
+                 aria-label="Menú de LiveNos"
+               >
+                 <MoreVertical
+                   size={18}
+                 />
+               </button>
+             ) : (
+               <HeaderButton
+                 onClick={loadData}
+                 disabled={loading}
+               >
+                 {loading ? (
+                   <Loader2
+                     size={14}
+                     className="animate-spin"
+                   />
+                 ) : (
+                   <RefreshCcw
+                     size={14}
+                   />
+                 )}
 
-             <HeaderButton onClick={() => setAutomationsOpen(true)}>
-               <Bot size={14} />
-               Automatizaciones
-             </HeaderButton>
+                 Actualizar
+               </HeaderButton>
+             )}
 
-             <HeaderButton onClick={syncWhatsappTemplates} disabled={templateSyncing}>
-               {templateSyncing ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
-               Plantillas
-             </HeaderButton>
+             {!mobileLiveNos ? (
+               <HeaderButton
+                 onClick={() =>
+                   setAutomationsOpen(true)
+                 }
+               >
+                 <Bot size={14} />
+                 Automatizaciones
+               </HeaderButton>
+             ) : null}
 
-             <HeaderButton variant="primary" onClick={openNewConversationModal}>
-               <MessageCircle size={14} />
-               Nueva conversación
-             </HeaderButton>
+             {!mobileLiveNos ? (
+               <HeaderButton
+                 onClick={
+                   syncWhatsappTemplates
+                 }
+                 disabled={
+                   templateSyncing
+                 }
+               >
+                 {templateSyncing ? (
+                   <Loader2
+                     size={14}
+                     className="animate-spin"
+                   />
+                 ) : (
+                   <Sparkles
+                     size={14}
+                   />
+                 )}
+                 Plantillas
+               </HeaderButton>
+             ) : null}
+
+             {!mobileLiveNos ? (
+               <HeaderButton
+                 variant="primary"
+                 onClick={
+                   openNewConversationModal
+                 }
+               >
+                 <MessageCircle
+                   size={14}
+                 />
+                 Nueva conversación
+               </HeaderButton>
+             ) : null}
            </div>
          </div>
 
@@ -5548,12 +6301,19 @@ function renderWhatsappWindowCountdown() {
 
  className={[
    "grid min-h-0 flex-1 overflow-hidden",
-   compactLiveNos ? "gap-2 p-2" : "gap-3 p-3"
+   mobileLiveNos
+     ? "gap-0 p-0"
+     : compactLiveNos
+       ? "gap-2 p-2"
+       : "gap-3 p-3"
  ].join(" ")}
  style={{
-   gridTemplateColumns: compactLiveNos
-     ? "minmax(235px,36%) minmax(0,1fr)"
-     : `${leftSidebarWidth}px ${conversationsColumnWidth}px minmax(0,1fr)`
+   gridTemplateColumns:
+     mobileLiveNos
+       ? "minmax(0,1fr)"
+       : compactLiveNos
+         ? "minmax(235px,36%) minmax(0,1fr)"
+         : `${leftSidebarWidth}px ${conversationsColumnWidth}px minmax(0,1fr)`
  }}
 >
 <aside
@@ -5593,11 +6353,20 @@ function renderWhatsappWindowCountdown() {
  </div>
 ) : null}
          </aside>
-<div className="relative flex min-h-0 flex-col gap-2 overflow-visible">
+<div
+ className={[
+   "relative min-h-0 flex-col gap-2 overflow-visible",
+   mobileLiveNos &&
+   selectedConversation
+     ? "hidden"
+     : "flex"
+ ].join(" ")}
+>
  {compactLiveNos ? renderCompactInboxTabs() : null}
 
  <ConversationsColumn
    loading={loading}
+   mobile={mobileLiveNos}
    search={search}
    activeInbox={activeInbox}
    selectedId={selectedId}
@@ -5618,7 +6387,19 @@ function renderWhatsappWindowCountdown() {
 ) : null}
 </div>
 
-         <section className="flex min-h-0 flex-col overflow-hidden rounded-[22px] border border-black/10 bg-white/86 shadow-sm">
+         <section
+ className={[
+   "min-h-0 flex-col overflow-hidden bg-white/86",
+   mobileLiveNos
+     ? "rounded-none border-0 shadow-none"
+     : "rounded-[22px] border border-black/10 shadow-sm",
+   mobileLiveNos &&
+   !selectedConversation &&
+   !niaInternalSelected
+     ? "hidden"
+     : "flex"
+ ].join(" ")}
+>
            {niaInternalSelected ? (
              <NiaInternalChat
  key={
@@ -5652,8 +6433,69 @@ function renderWhatsappWindowCountdown() {
              </div>
            ) : (
              <>
-               <div className="shrink-0 border-b border-black/10 bg-white px-4 py-3">
-                 <div className="grid items-start gap-3 xl:grid-cols-[minmax(0,1fr)_auto]">
+               <div className="shrink-0 border-b border-black/10 bg-white px-3 py-2.5">
+                 {mobileLiveNos ? (
+                   <div className="flex items-center justify-between gap-2">
+                     <button
+                       type="button"
+                       onClick={() => {
+                         setSelectedId(null);
+
+                         selectedIdRef.current =
+                           null;
+
+                         setMobileActionsOpen(
+                           false
+                         );
+                       }}
+                       className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f1f5f9] text-[#475569]"
+                       aria-label="Volver a conversaciones"
+                     >
+                       <ChevronLeft
+                         size={20}
+                       />
+                     </button>
+
+                     <div className="min-w-0 flex-1 text-center">
+                       <div className="truncate text-[14px] font-semibold text-[#142033]">
+                         {getDisplayName(
+                           selectedContacto,
+                           selectedConversation
+                         )}
+                       </div>
+
+                       <div className="truncate text-[10px] text-[#64748b]">
+                         {
+                           selectedConversation.wa_phone
+                         }
+                       </div>
+                     </div>
+
+                     <button
+                       type="button"
+                       onClick={() =>
+                         setMobileActionsOpen(
+                           true
+                         )
+                       }
+                       className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f1f5f9] text-[#475569]"
+                       aria-label="Acciones de conversación"
+                     >
+                       <MoreVertical
+                         size={18}
+                       />
+                     </button>
+                   </div>
+                 ) : null}
+
+                 <div
+                   className={[
+                     "grid items-start gap-3 xl:grid-cols-[minmax(0,1fr)_auto]",
+                     mobileLiveNos
+                       ? "hidden"
+                       : "grid"
+                   ].join(" ")}
+                 >
                    <div className="min-w-0">
                      <div className="flex min-w-0 items-start gap-3">
                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#4f7c90] text-[12px] font-medium text-white">
@@ -5850,7 +6692,12 @@ function renderWhatsappWindowCountdown() {
                    <div
                      ref={timelineRef}
                      onScroll={updateStickToBottom}
-                     className="min-h-0 flex-1 space-y-3 overflow-auto bg-[linear-gradient(180deg,#eef7f8,#e8f0f2)] px-5 py-4"
+                     className={[
+                       "min-h-0 flex-1 space-y-3 overflow-auto bg-[linear-gradient(180deg,#eef7f8,#e8f0f2)]",
+                       mobileLiveNos
+                         ? "px-2.5 py-3"
+                         : "px-5 py-4"
+                     ].join(" ")}
                      onClick={() => {
                        if (openMessageMenuId) setOpenMessageMenuId(null);
                      }}
@@ -5954,7 +6801,263 @@ function renderWhatsappWindowCountdown() {
                        </div>
                      ) : null}
 
-                     <div className="flex items-center gap-2">
+                     {mobileLiveNos ? (
+                       <div
+                         className={[
+                           "rounded-2xl border p-2 transition",
+                           mobileComposerMode ===
+                           "internal"
+                             ? "border-amber-200 bg-amber-50"
+                             : "border-black/10 bg-[#f8fafc]"
+                         ].join(" ")}
+                         style={{
+                           paddingBottom:
+                             "max(8px, env(safe-area-inset-bottom))"
+                         }}
+                       >
+                         <div className="mb-2 grid grid-cols-2 gap-1 rounded-xl bg-white p-1 ring-1 ring-black/5">
+                           <button
+                             type="button"
+                             onClick={() => {
+                               setMobileComposerMode(
+                                 "client"
+                               );
+
+                               setShowEmojiPanel(
+                                 false
+                               );
+
+                               setShowQuickRepliesPanel(
+                                 false
+                               );
+                             }}
+                             className={[
+                               "h-8 rounded-lg text-[11px] font-semibold transition",
+                               mobileComposerMode ===
+                               "client"
+                                 ? "bg-[#4f7c90] text-white shadow-sm"
+                                 : "text-[#64748b]"
+                             ].join(" ")}
+                           >
+                             Cliente
+                           </button>
+
+                           <button
+                             type="button"
+                             onClick={() => {
+                               setMobileComposerMode(
+                                 "internal"
+                               );
+
+                               setShowEmojiPanel(
+                                 false
+                               );
+
+                               setShowQuickRepliesPanel(
+                                 false
+                               );
+                             }}
+                             className={[
+                               "h-8 rounded-lg text-[11px] font-semibold transition",
+                               mobileComposerMode ===
+                               "internal"
+                                 ? "bg-amber-300 text-amber-950 shadow-sm"
+                                 : "text-[#64748b]"
+                             ].join(" ")}
+                           >
+                             Privado
+                           </button>
+                         </div>
+
+                         {mobileComposerMode ===
+                         "internal" ? (
+                           <>
+                             <div className="mb-1.5 flex items-center gap-1.5 px-1 text-[10px] font-semibold text-amber-700">
+                               <MessageCircle
+                                 size={12}
+                               />
+
+                               Solo lo ve el equipo de NOSTUR
+                             </div>
+
+                             <div className="flex items-end gap-2">
+                               <textarea
+                                 ref={
+                                   internalTextareaRef
+                                 }
+                                 value={
+                                   internalText
+                                 }
+                                 rows={1}
+                                 onChange={(
+                                   event
+                                 ) =>
+                                   setInternalText(
+                                     event.target
+                                       .value
+                                   )
+                                 }
+                                 placeholder="Escribí un mensaje privado al equipo..."
+                                 className="max-h-[120px] min-h-[42px] min-w-0 flex-1 resize-none overflow-y-auto rounded-2xl border border-amber-200 bg-white px-3.5 py-2.5 text-[14px] font-normal leading-relaxed text-[#142033] outline-none placeholder:text-[#b69362] focus:border-amber-400"
+                               />
+
+                               <button
+                                 type="button"
+                                 onClick={
+                                   sendInternalMessage
+                                 }
+                                 disabled={
+                                   actionLoading ||
+                                   !internalText.trim()
+                                 }
+                                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-400 text-amber-950 shadow-sm transition active:scale-95 disabled:opacity-40"
+                                 aria-label="Enviar mensaje privado"
+                               >
+                                 {actionLoading ? (
+                                   <Loader2
+                                     size={18}
+                                     className="animate-spin"
+                                   />
+                                 ) : (
+                                   <Send
+                                     size={18}
+                                   />
+                                 )}
+                               </button>
+                             </div>
+                           </>
+                         ) : (
+                           <>
+                             <div className="mb-1.5 flex items-center justify-between gap-2 px-1">
+                               <div className="text-[10px] font-medium text-[#64748b]">
+                                 Mensaje al cliente
+                               </div>
+
+                               {!canWriteToClient ? (
+                                 <div className="text-[10px] font-semibold text-amber-700">
+                                   Primero tomá la conversación
+                                 </div>
+                               ) : null}
+                             </div>
+
+                             <div className="flex items-end gap-2">
+                               <button
+                                 type="button"
+                                 onClick={() =>
+                                   handleFileButtonClick(
+                                     "file"
+                                   )
+                                 }
+                                 disabled={
+                                   !canWriteToClient ||
+                                   actionLoading
+                                 }
+                                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#64748b] shadow-sm ring-1 ring-black/10 transition active:scale-95 disabled:opacity-40"
+                                 aria-label="Adjuntar archivo"
+                               >
+                                 <Paperclip
+                                   size={19}
+                                 />
+                               </button>
+
+                               <textarea
+                                 ref={
+                                   composerTextareaRef
+                                 }
+                                 value={
+                                   composerText
+                                 }
+                                 disabled={
+                                   !canWriteToClient
+                                 }
+                                 rows={1}
+                                 onPaste={
+                                   handleComposerPaste
+                                 }
+                                 onChange={(
+                                   event
+                                 ) => {
+                                   const value =
+                                     event.target
+                                       .value;
+
+                                   setComposerText(
+                                     value
+                                   );
+                                 }}
+                                 placeholder={
+                                   !canWriteToClient
+                                     ? "Tomá la conversación para responder"
+                                     : pendingAttachment
+                                       ? "Comentario opcional..."
+                                       : "Mensaje..."
+                                 }
+                                 className={[
+                                   "max-h-[120px] min-h-[42px] min-w-0 flex-1 resize-none overflow-y-auto rounded-2xl border px-3.5 py-2.5 text-[14px] font-normal leading-relaxed outline-none",
+                                   canWriteToClient
+                                     ? "border-black/10 bg-white text-[#142033] placeholder:text-[#94a3b8] focus:border-[#4f7c90]"
+                                     : "cursor-not-allowed border-black/5 bg-[#eef2f6] text-[#94a3b8]"
+                                 ].join(" ")}
+                               />
+
+                               <button
+                                 type="button"
+                                 onClick={
+                                   composerText.trim() ||
+                                   pendingAttachment
+                                     ? sendLocalMessage
+                                     : handleMicButtonClick
+                                 }
+                                 disabled={
+                                   actionLoading ||
+                                   !canWriteToClient
+                                 }
+                                 className={[
+                                   "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white shadow-sm transition active:scale-95 disabled:opacity-40",
+                                   audioRecording
+                                     ? "bg-red-500"
+                                     : "bg-[#4f7c90]"
+                                 ].join(" ")}
+                                 aria-label={
+                                   composerText.trim() ||
+                                   pendingAttachment
+                                     ? "Enviar mensaje"
+                                     : audioRecording
+                                       ? "Detener grabación"
+                                       : "Grabar audio"
+                                 }
+                               >
+                                 {actionLoading ? (
+                                   <Loader2
+                                     size={18}
+                                     className="animate-spin"
+                                   />
+                                 ) : composerText.trim() ||
+                                   pendingAttachment ? (
+                                   <Send
+                                     size={19}
+                                   />
+                                 ) : audioRecording ? (
+                                   <span className="h-3 w-3 rounded-sm bg-white" />
+                                 ) : (
+                                   <Mic
+                                     size={19}
+                                   />
+                                 )}
+                               </button>
+                             </div>
+                           </>
+                         )}
+                       </div>
+                     ) : null}
+
+                     <div
+                       className={
+                         mobileLiveNos
+                           ? "hidden"
+                           : "flex items-center gap-2"
+                       }
+                     >
                        <ComposerIconButton
                          title="Emojis"
                          active={showEmojiPanel}
@@ -6208,7 +7311,14 @@ function renderWhatsappWindowCountdown() {
                        </button>
                      </div>
 
-                     <div className="mt-2 flex items-center justify-between gap-2">
+                     <div
+                       className={[
+                         "mt-2 items-center justify-between gap-2",
+                         mobileLiveNos
+                           ? "hidden"
+                           : "flex"
+                       ].join(" ")}
+                     >
                        <button
                          type="button"
                          onClick={handleTemplateButton}
@@ -6232,7 +7342,14 @@ function renderWhatsappWindowCountdown() {
                        </button>
                      </div>
 
-                     <div className="mt-2 border-t border-dashed border-amber-200 pt-2">
+                     <div
+                       className={[
+                         "mt-2 border-t border-dashed border-amber-200 pt-2",
+                         mobileLiveNos
+                           ? "hidden"
+                           : "block"
+                       ].join(" ")}
+                     >
                        <div className="flex items-end gap-2">
  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-amber-700">
                            <MessageCircle size={16} />

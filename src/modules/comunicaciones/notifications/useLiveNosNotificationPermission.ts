@@ -17,7 +17,7 @@ import {
 } from "./liveNosNotificationRuntime";
 
 import {
-  synchronizeLiveNosPushSubscription
+  enableLiveNosPushNotifications
 } from "./liveNosPushSubscriptionService";
 
 import type {
@@ -157,8 +157,41 @@ export function useLiveNosNotificationPermission(
       );
 
       try {
+        if (
+          !(
+            "Notification" in
+            window
+          )
+        ) {
+          setNotificationPermission(
+            "unsupported"
+          );
+
+          setShowPermissionPrompt(
+            false
+          );
+
+          return;
+        }
+
+        const userId =
+          params.currentUserIdRef.current;
+
+        if (!userId) {
+          console.warn(
+            "[LiveNosPush] No se puede habilitar Push porque todavía no hay usuario identificado."
+          );
+
+          return;
+        }
+
+        const enabled =
+          await enableLiveNosPushNotifications(
+            userId
+          );
+
         const permission =
-          await liveNosNotificationRuntime.requestPermission();
+          Notification.permission;
 
         setNotificationPermission(
           permission
@@ -169,7 +202,8 @@ export function useLiveNosNotificationPermission(
         );
 
         if (
-          permission !== "granted"
+          permission !== "granted" ||
+          !enabled
         ) {
           return;
         }
@@ -196,7 +230,7 @@ export function useLiveNosNotificationPermission(
             "LiveNos",
 
           body:
-            "NOSTUR podrá avisarte cuando lleguen nuevos mensajes y la pestaña esté en segundo plano.",
+            "NOSTUR podrá avisarte cuando lleguen nuevos mensajes incluso cuando la aplicación esté en segundo plano.",
 
           createdAt:
             new Date().toISOString()
@@ -218,18 +252,9 @@ export function useLiveNosNotificationPermission(
               "Notificaciones de LiveNos activadas",
 
             body:
-              "Los avisos visuales y sonoros ya están funcionando correctamente."
+              "Este dispositivo quedó registrado para recibir avisos de LiveNos."
           }
         );
-
-        const userId =
-          params.currentUserIdRef.current;
-
-        if (userId) {
-          void synchronizeLiveNosPushSubscription(
-            userId
-          );
-        }
       } finally {
         setRequestingPermission(
           false

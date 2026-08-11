@@ -276,11 +276,13 @@ export function NiaInternalConversationCard({
 export function ConversationCard({
   conv,
   selectedId,
-  onSelect
+  onSelect,
+  mobile = false
 }: {
   conv: ConversationVM;
   selectedId: string | null;
   onSelect: (id: string) => void | Promise<void>;
+  mobile?: boolean;
 }) {
   const name = getDisplayName(conv.contacto, conv);
   const active = conv.id === selectedId;
@@ -296,14 +298,27 @@ export function ConversationCard({
         void onSelect(conv.id);
       }}
       className={[
-        "w-full rounded-[16px] border px-3 py-2.5 text-left transition",
+        "w-full text-left transition",
+        mobile
+          ? "border-b border-black/[0.06] bg-white px-3 py-3 active:bg-[#f1f5f9]"
+          : "rounded-[16px] border px-3 py-2.5",
+        !mobile &&
         active
           ? "border-[#4f7c90]/38 bg-[#eef6f7] shadow-sm"
-          : "border-transparent bg-white hover:border-black/10 hover:bg-[#f8fbfc]"
+          : !mobile
+            ? "border-transparent bg-white hover:border-black/10 hover:bg-[#f8fbfc]"
+            : ""
       ].join(" ")}
     >
       <div className="flex items-start gap-2.5">
-        <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#4f7c90] text-[10.5px] font-semibold text-white">
+        <div
+          className={[
+            "relative flex shrink-0 items-center justify-center rounded-full bg-[#4f7c90] font-semibold text-white",
+            mobile
+              ? "h-11 w-11 text-[12px]"
+              : "h-8 w-8 text-[10.5px]"
+          ].join(" ")}
+        >
           {getInitials(name)}
 
           {conv.unread_count > 0 ? (
@@ -315,7 +330,14 @@ export function ConversationCard({
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <div className="truncate text-[13px] font-semibold leading-tight text-[#172033]">
+            <div
+              className={[
+                "truncate font-semibold leading-tight text-[#172033]",
+                mobile
+                  ? "text-[14px]"
+                  : "text-[13px]"
+              ].join(" ")}
+            >
               {name}
             </div>
 
@@ -324,17 +346,68 @@ export function ConversationCard({
             </div>
           </div>
 
-          <div className="mt-1 line-clamp-2 text-[11.5px] font-normal leading-snug text-[#64748b]">
-            {conv.last_message_preview || "Sin mensajes todavía"}
+          <div
+            className={[
+              "mt-1 font-normal leading-snug",
+              mobile
+                ? "line-clamp-1 text-[12.5px] text-[#64748b]"
+                : "line-clamp-2 text-[11.5px] text-[#64748b]"
+            ].join(" ")}
+          >
+            {conv.last_message_preview ||
+              "Sin mensajes todavía"}
           </div>
 
-          <div className="mt-1.5 flex flex-wrap gap-1">
-            <StatusPill conv={conv} />
-            <Pill>{vendedor}</Pill>
-            {colaboradoresCount > 0 ? <Pill>{colaboradoresCount} colab.</Pill> : null}
-            {score > 0 ? <Pill>Score {score}</Pill> : null}
-            {isWindowOpen(conv) ? <Pill>24h abierta</Pill> : <Pill>24h cerrada</Pill>}
-          </div>
+          {mobile ? (
+            <div className="mt-1.5 flex items-center gap-1.5">
+              {conv.estado_gestion ===
+                "sin_atender" ||
+              !conv.assigned_to ? (
+                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[9.5px] font-semibold text-amber-800">
+                  Sin atender
+                </span>
+              ) : null}
+
+              {colaboradoresCount > 0 ? (
+                <span className="rounded-full bg-purple-100 px-2 py-0.5 text-[9.5px] font-semibold text-purple-700">
+                  Colaboración
+                </span>
+              ) : null}
+            </div>
+          ) : (
+            <div className="mt-1.5 flex flex-wrap gap-1">
+              <StatusPill
+                conv={conv}
+              />
+
+              <Pill>
+                {vendedor}
+              </Pill>
+
+              {colaboradoresCount >
+              0 ? (
+                <Pill>
+                  {colaboradoresCount} colab.
+                </Pill>
+              ) : null}
+
+              {score > 0 ? (
+                <Pill>
+                  Score {score}
+                </Pill>
+              ) : null}
+
+              {isWindowOpen(conv) ? (
+                <Pill>
+                  24h abierta
+                </Pill>
+              ) : (
+                <Pill>
+                  24h cerrada
+                </Pill>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </button>
@@ -554,6 +627,7 @@ export function NiaSidebarCard({ onOpenNia }: { onOpenNia: () => void }) {
 
 export function ConversationsColumn({
   loading,
+  mobile = false,
   search,
   activeInbox,
   selectedId,
@@ -562,6 +636,7 @@ export function ConversationsColumn({
   onSelectConversation
 }: {
   loading: boolean;
+  mobile?: boolean;
   search: string;
   activeInbox: InboxKey;
   selectedId: string | null;
@@ -570,9 +645,30 @@ export function ConversationsColumn({
   onSelectConversation: (id: string) => void | Promise<void>;
 }) {
   return (
-    <section className="flex min-h-0 flex-col overflow-hidden rounded-[18px] border border-black/10 bg-white/78 shadow-sm">
-      <div className="shrink-0 border-b border-black/10 p-2.5">
-        <div className="flex h-8 items-center gap-2 rounded-xl border border-black/10 bg-[#f8fafc] px-2.5">
+    <section
+      className={[
+        "flex min-h-0 flex-col overflow-hidden",
+        mobile
+          ? "bg-white"
+          : "rounded-[18px] border border-black/10 bg-white/78 shadow-sm"
+      ].join(" ")}
+    >
+      <div
+        className={[
+          "shrink-0 border-b border-black/10",
+          mobile
+            ? "px-3 py-2"
+            : "p-2.5"
+        ].join(" ")}
+      >
+        <div
+          className={[
+            "flex items-center gap-2 rounded-xl border border-black/10 bg-[#f8fafc] px-2.5",
+            mobile
+              ? "h-10"
+              : "h-8"
+          ].join(" ")}
+        >
           <Search size={14} className="text-[#94a3b8]" />
 
           <input
@@ -589,11 +685,20 @@ export function ConversationsColumn({
         </div>
       </div>
 
-      <div className="min-h-0 flex-1 space-y-1.5 overflow-auto p-2.5">
-        <NiaInternalConversationCard
-          selectedId={selectedId}
-          onSelect={onSelectConversation}
-        />
+      <div
+        className={[
+          "min-h-0 flex-1 overflow-auto",
+          mobile
+            ? "space-y-0 p-0"
+            : "space-y-1.5 p-2.5"
+        ].join(" ")}
+      >
+        {!mobile ? (
+          <NiaInternalConversationCard
+            selectedId={selectedId}
+            onSelect={onSelectConversation}
+          />
+        ) : null}
 
         {loading ? (
           <div className="flex h-48 items-center justify-center">
@@ -611,6 +716,7 @@ export function ConversationsColumn({
               conv={conv}
               selectedId={selectedId}
               onSelect={onSelectConversation}
+              mobile={mobile}
             />
           ))
         )}
