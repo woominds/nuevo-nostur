@@ -737,49 +737,6 @@ export async function saveCarritoWizardApi({
     importe_final:
       input.carrito.importe_final,
 
-    pago_diferente_oficina:
-      Boolean(
-        input.carrito
-          .pago_diferente_oficina
-      ),
-    forma_pago_oficina_id:
-      input.carrito
-        .pago_diferente_oficina
-        ? input.carrito
-            .forma_pago_oficina_id ||
-          null
-        : null,
-    forma_pago_oficina:
-      input.carrito
-        .pago_diferente_oficina
-        ? nullableText(
-            input.carrito
-              .forma_pago_oficina
-          )
-        : null,
-    observacion_pago_diferente:
-      input.carrito
-        .pago_diferente_oficina
-        ? nullableText(
-            input.carrito
-              .observacion_pago_diferente
-          )
-        : null,
-
-    usa_markup_adicional:
-      Boolean(
-        input.carrito
-          .usa_markup_adicional
-      ),
-    markup_adicional_pct:
-      input.carrito
-        .usa_markup_adicional
-        ? getNumber(
-            input.carrito
-              .markup_adicional_pct
-          )
-        : null,
-
     pago_parcial: vaACuentaCorriente,
     fecha_ingreso_gastos:
       vaACuentaCorriente
@@ -836,12 +793,33 @@ export async function saveCarritoWizardApi({
     activo: true
   };
 
+  /*
+   * Estos campos pertenecen al flujo interno del wizard,
+   * pero NO son columnas físicas de public.carritos.
+   *
+   * La información real de pagos se persiste en
+   * carrito_pagos_comerciales / carrito_movimientos_tesoreria.
+   */
+  const carritoPersistPayload = Object.fromEntries(
+    Object.entries(carritoPayload).filter(
+      ([key]) =>
+        ![
+          "pago_diferente_oficina",
+          "forma_pago_oficina_id",
+          "forma_pago_oficina",
+          "observacion_pago_diferente",
+          "usa_markup_adicional",
+          "markup_adicional_pct"
+        ].includes(key)
+    )
+  );
+
   const {
     data: carritoData,
     error: carritoError
   } = await supabase
     .from("carritos")
-    .insert(carritoPayload)
+    .insert(carritoPersistPayload)
     .select("id")
     .single();
 

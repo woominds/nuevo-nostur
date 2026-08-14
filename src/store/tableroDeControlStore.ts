@@ -1229,49 +1229,60 @@ if (canViewAdminHome) {
   });
 
   facturasCobrarRows.forEach((row) => {
-    const moneda = getRecordText(row, ["moneda"], "ARS");
-    const estado = normalizeText(getRecordText(row, ["estado", "estado_cobro"], ""));
-    const vencimiento = getRecordDate(row, [
-      "fecha_vencimiento",
-      "vencimiento",
-      "fecha_cobro",
-      "fecha_emision"
-    ]);
+    const tipoDocumento =
+      normalizeText(
+        getRecordText(
+          row,
+          ["tipo_documento"],
+          ""
+        )
+      );
 
-    if (estado.includes("cobrad") || estado.includes("cancelad")) return;
+    if (
+      tipoDocumento !==
+      "factura"
+    ) {
+      return;
+    }
+
+    const cobrado =
+      Boolean(row.cobrado);
+
+    const estado =
+      normalizeText(
+        getRecordText(
+          row,
+          ["estado"],
+          ""
+        )
+      );
+
+    if (
+      cobrado ||
+      estado === "cobrada"
+    ) {
+      return;
+    }
+
+    const moneda =
+      getRecordText(
+        row,
+        ["moneda"],
+        "ARS"
+      );
 
     const importe =
-      getRecordNumber(row, [
-        "saldo_pendiente",
-        "saldo",
-        "importe_pendiente",
-        "total_pendiente",
-        "importe_total",
-        "total",
-        "importe"
-      ]) || 0;
+      getRecordNumber(
+        row,
+        ["total"]
+      ) || 0;
 
-    adminResumen.facturasCobrar.totalPendiente = addToAdminMonto(
-      adminResumen.facturasCobrar.totalPendiente,
-      importe,
-      moneda
-    );
-
-    if (vencimiento && vencimiento < today) {
-      adminResumen.facturasCobrar.vencidas = addToAdminMonto(
-        adminResumen.facturasCobrar.vencidas,
+    adminResumen.facturasCobrar.totalPendiente =
+      addToAdminMonto(
+        adminResumen.facturasCobrar.totalPendiente,
         importe,
         moneda
       );
-    }
-
-    if (vencimiento && vencimiento >= today && vencimiento <= adminHasta) {
-      adminResumen.facturasCobrar.proximos5Dias = addToAdminMonto(
-        adminResumen.facturasCobrar.proximos5Dias,
-        importe,
-        moneda
-      );
-    }
   });
 
   cajasRows.forEach((row) => {

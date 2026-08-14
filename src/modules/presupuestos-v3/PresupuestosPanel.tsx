@@ -6,6 +6,7 @@ import {
   Phone,
   Plus,
   Search,
+  Sparkles,
   Trash2,
   UserRound,
 } from "lucide-react";
@@ -27,6 +28,10 @@ import {
 import {
   PresupuestoContactStep,
 } from "./components/PresupuestoContactStep/PresupuestoContactStep";
+
+import {
+  PresupuestoRapidoIAModal,
+} from "./components/PresupuestoRapidoIAModal/PresupuestoRapidoIAModal";
 
 import {
   PresupuestoLiveNosActions,
@@ -223,6 +228,19 @@ const normalizeStoredDocument = (
           ?.telefono ??
         EMPTY_PRESUPUESTO_CONTACTO.telefono,
     },
+
+    vendedor:
+      storedDocument.vendedor
+        ? {
+            ...storedDocument.vendedor,
+          }
+        : null,
+
+    destino:
+      storedDocument.destino ?? "",
+
+    observaciones:
+      storedDocument.observaciones ?? "",
 
     pages,
 
@@ -481,6 +499,18 @@ export function PresupuestosPanel() {
   ] = useState(false);
 
   const [
+    aiModalOpen,
+    setAiModalOpen,
+  ] = useState(false);
+
+  const [
+    creationFlow,
+    setCreationFlow,
+  ] = useState<
+    "normal" | "ai" | null
+  >(null);
+
+  const [
     templateSelectorOpen,
     setTemplateSelectorOpen,
   ] = useState(false);
@@ -630,6 +660,20 @@ export function PresupuestosPanel() {
 
   const handleNewDocument = () => {
     setPendingContacto(null);
+    setCreationFlow("normal");
+
+    setSelectedTemplateId(
+      templateRegistry.getDefault().id,
+    );
+
+    void refreshTemplates();
+
+    setContactStepOpen(true);
+  };
+
+  const handleNewAiDocument = () => {
+    setPendingContacto(null);
+    setCreationFlow("ai");
 
     setSelectedTemplateId(
       templateRegistry.getDefault().id,
@@ -648,6 +692,14 @@ export function PresupuestosPanel() {
     );
 
     setContactStepOpen(false);
+
+    if (
+      creationFlow === "ai"
+    ) {
+      setAiModalOpen(true);
+      return;
+    }
+
     setTemplateSelectorOpen(true);
   };
 
@@ -820,17 +872,31 @@ export function PresupuestosPanel() {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={
-              handleNewDocument
-            }
-            className="flex h-10 items-center justify-center gap-2 rounded-lg bg-[#FF634A] px-4 text-sm font-semibold text-white transition hover:bg-[#f0543d]"
-          >
-            <Plus size={17} />
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={
+                handleNewAiDocument
+              }
+              className="flex h-10 items-center justify-center gap-2 rounded-lg border border-[#FF634A]/30 bg-[#FFF4F1] px-4 text-sm font-semibold text-[#FF634A] transition hover:border-[#FF634A]/50 hover:bg-[#ffe8e2]"
+            >
+              <Sparkles size={17} />
 
-            Nuevo presupuesto
-          </button>
+              Presupuesto rápido IA
+            </button>
+
+            <button
+              type="button"
+              onClick={
+                handleNewDocument
+              }
+              className="flex h-10 items-center justify-center gap-2 rounded-lg bg-[#FF634A] px-4 text-sm font-semibold text-white transition hover:bg-[#f0543d]"
+            >
+              <Plus size={17} />
+
+              Nuevo presupuesto
+            </button>
+          </div>
         </header>
 
         <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -1056,12 +1122,24 @@ export function PresupuestosPanel() {
 
       <PresupuestoContactStep
         open={contactStepOpen}
-        onClose={() =>
-          setContactStepOpen(false)
-        }
+        onClose={() => {
+          setContactStepOpen(false);
+          setPendingContacto(null);
+          setCreationFlow(null);
+        }}
         onContinue={
           handleContactContinue
         }
+      />
+
+      <PresupuestoRapidoIAModal
+        open={aiModalOpen}
+        contacto={pendingContacto}
+        onClose={() => {
+          setAiModalOpen(false);
+          setPendingContacto(null);
+          setCreationFlow(null);
+        }}
       />
 
       <TemplateSelector

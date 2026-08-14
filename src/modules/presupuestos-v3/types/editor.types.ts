@@ -110,6 +110,12 @@ export type PresupuestoContacto = {
   telefono: string;
 };
 
+export type PresupuestoVendedor = {
+  id: string;
+  nombre: string;
+  email: string;
+};
+
 export type PresupuestoPage = {
   id: string;
   name: string;
@@ -127,6 +133,8 @@ export type PresupuestoDocument = {
   status: PresupuestoEstado;
 
   contacto: PresupuestoContacto;
+
+  vendedor?: PresupuestoVendedor | null;
 
   destino?: string;
   observaciones?: string;

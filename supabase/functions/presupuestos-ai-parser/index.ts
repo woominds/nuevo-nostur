@@ -101,6 +101,23 @@ function getBaseJsonExample() {
       "aerolinea": "Copa Airlines",
       "codigo_reserva": "",
       "ruta_resumen": "Córdoba (COR) → Panamá (PTY) → Oranjestad (AUA)",
+      "fecha_salida": "2026-07-10",
+      "hora_salida": "03:33",
+      "origen_iata": "COR",
+      "origen_ciudad": "Córdoba",
+      "fecha_llegada": "2026-07-10",
+      "hora_llegada": "12:11",
+      "destino_iata": "AUA",
+      "destino_ciudad": "Oranjestad",
+      "duracion_total": "8h 38m",
+      "cantidad_escalas": 1,
+      "llega_dia_siguiente": false,
+      "equipaje_incluido": [
+        "Bolso de mano"
+      ],
+      "equipaje_no_incluido": [
+        "Equipaje despachado"
+      ],
       "ida_origen": "Córdoba (COR)",
       "ida_destino": "Oranjestad (AUA)",
       "ida_fecha": "2026-07-10",
@@ -233,6 +250,7 @@ function getBaseJsonExample() {
       "descripcion": "Precio final para todos los pasajeros.",
       "precio_total": 6435,
       "moneda": "USD",
+      "tipo_precio": "TOTAL_PAQUETE",
       "forma_pago_resumen": "",
       "condiciones_pago": "",
       "incluye_resumen": "Vuelos, alojamiento y servicios indicados.",
@@ -318,40 +336,132 @@ IMPORTANTE SOBRE LA CARÁTULA:
 - Si el texto contradice la carátula, agregalo como advertencia en resumen_humano.advertencias.
 
 VUELOS:
-- Separá IDA y VUELTA como vuelos distintos.
-- Si el texto tiene ida y vuelta, el array vuelos debe tener mínimo 2 objetos.
-- Cada vuelo debe tener tipo_tramo: "IDA" o "VUELTA".
-- Cada vuelo debe tener título claro.
-- Completá aerolínea, número de vuelo, ruta, fecha, horario de salida, horario de llegada, duración y escala si aparecen.
-- metadata.tramos debe contener cada tramo real.
-- En metadata.tramos usá esta estructura:
-  {
-    "direccion": "ida" | "vuelta",
-    "indice": number,
-    "aerolinea": string,
-    "codigo_aerolinea": string,
-    "numero_vuelo": string,
-    "clase": string,
-    "fecha_salida": "YYYY-MM-DD",
-    "hora_salida": "HH:mm",
-    "origen": { "iata": string, "ciudad": string, "aeropuerto": string, "terminal": string },
-    "fecha_llegada": "YYYY-MM-DD",
-    "hora_llegada": "HH:mm",
-    "destino": { "iata": string, "ciudad": string, "aeropuerto": string, "terminal": string },
-    "duracion": string,
-    "equipaje": string,
-    "escala_posterior": { "ciudad": string, "iata": string, "espera": string } | null
-  }
-- El último tramo de ida debe tener escala_posterior=null.
-- El último tramo de vuelta debe tener escala_posterior=null.
-- Si hay escala entre dos tramos de la misma dirección, calculá o copiá el tiempo de espera si aparece.
-- No inventes horarios ni números de vuelo.
-- Si aparece "Copa", usar "Copa Airlines".
-- Si aparece CM 789, número de vuelo debe ser "CM 789".
-- Si aparece CM789, número de vuelo debe ser "CM 789".
-- Equipaje debe copiarse comercialmente.
-- Si no aparece selección de asientos, metadata.seleccion_asientos debe decir: "Sujeta a disponibilidad y condiciones de la tarifa."
-- mostrar_precio_en_pdf debe ser false salvo que el precio de aéreo deba mostrarse por separado.
+ESTA SECCIÓN ES CRÍTICA. LOS VUELOS DEBEN INTERPRETARSE CON MÁXIMA PRECISIÓN.
+
+REGLAS GENERALES:
+- Separá siempre IDA y VUELTA como objetos distintos dentro de vuelos.
+- Cada objeto debe tener tipo_tramo: "IDA" o "VUELTA".
+- No mezcles tramos de ida con tramos de regreso.
+- Analizá TODOS los tramos reales, incluso cuando haya conexiones.
+- metadata.tramos debe contener un objeto por cada vuelo físico real.
+- No inventes horarios, fechas, escalas, aeropuertos, números de vuelo ni equipaje.
+- Cuando el proveedor informe una duración total, copiarla exactamente en duracion_total.
+- Si dice "Directo", "Sin escalas" o equivalente:
+  - cantidad_escalas=0
+  - metadata.escalas=[]
+  - normalmente habrá un único metadata.tramos.
+- Si hay conexión:
+  - cantidad_escalas debe reflejar la cantidad real.
+  - indicar ciudad e IATA de cada escala.
+  - indicar duración de cada escala si está informada o puede calcularse inequívocamente.
+- Una escala ocurre ENTRE dos vuelos físicos.
+- El último tramo de cada dirección debe tener escala_posterior=null.
+
+PARA CADA IDA Y VUELTA DETECTAR:
+- aerolínea
+- código de aerolínea
+- número de vuelo
+- fecha de salida
+- hora de salida
+- ciudad de salida
+- código IATA de salida
+- aeropuerto de salida si aparece
+- terminal si aparece
+- fecha de llegada
+- hora de llegada
+- ciudad de llegada
+- código IATA de llegada
+- aeropuerto de llegada si aparece
+- terminal si aparece
+- duración de cada vuelo físico
+- duración total del itinerario
+- clase
+- cantidad de escalas
+- lugar de cada escala
+- duración de cada escala
+- equipaje incluido
+- equipaje no incluido
+
+SIGNIFICADO DE +1 / +2:
+- "+1" junto al horario de llegada significa que llega UN DÍA CALENDARIO DESPUÉS de la fecha de salida correspondiente.
+- "+2" significa DOS DÍAS CALENDARIO DESPUÉS.
+- Nunca elimines esa información.
+- Convertí la fecha de llegada a la fecha calendario correcta.
+- Si existe +1 o +2, llega_dia_siguiente=true.
+Ejemplo:
+  salida: 2026-10-06 17:54
+  llegada: 02:30 +1
+Debe quedar:
+  fecha_llegada="2026-10-07"
+  hora_llegada="02:30"
+  llega_dia_siguiente=true
+
+EQUIPAJE:
+- Separá SIEMPRE equipaje incluido de equipaje no incluido.
+- equipaje_incluido debe ser array de strings.
+- equipaje_no_incluido debe ser array de strings.
+- Si dice "Incluye mochila o bolso de mano":
+  equipaje_incluido=["Mochila o bolso de mano"]
+- Si dice "Carry-on con costo extra":
+  Carry-on va en equipaje_no_incluido.
+- Si dice "Equipaje para despachar con costo extra":
+  Equipaje despachado va en equipaje_no_incluido.
+- "Permite con costo extra" NO significa incluido.
+- No marques equipaje como incluido si el texto solamente dice que puede comprarse.
+- El campo equipaje tradicional puede conservar un resumen comercial legible.
+
+NÚMEROS DE VUELO:
+- Preservar número de vuelo de ida y regreso de manera independiente.
+- Si aparece "DM6427", normalizar a "DM 6427".
+- Si aparece "CM789", normalizar a "CM 789".
+- No intercambiar números de vuelo entre ida y vuelta.
+
+metadata.tramos debe usar:
+{
+  "direccion": "ida" | "vuelta",
+  "indice": number,
+  "aerolinea": string,
+  "codigo_aerolinea": string,
+  "numero_vuelo": string,
+  "clase": string,
+  "fecha_salida": "YYYY-MM-DD",
+  "hora_salida": "HH:mm",
+  "origen": {
+    "iata": string,
+    "ciudad": string,
+    "aeropuerto": string,
+    "terminal": string
+  },
+  "fecha_llegada": "YYYY-MM-DD",
+  "hora_llegada": "HH:mm",
+  "destino": {
+    "iata": string,
+    "ciudad": string,
+    "aeropuerto": string,
+    "terminal": string
+  },
+  "duracion": string,
+  "equipaje": string,
+  "escala_posterior": {
+    "ciudad": string,
+    "iata": string,
+    "espera": string
+  } | null
+}
+
+metadata.escalas debe contener:
+{
+  "ciudad": string,
+  "iata": string,
+  "duracion": string,
+  "observacion": string
+}
+
+Si aparece selección de asientos, copiar la condición real.
+Si no aparece, metadata.seleccion_asientos debe decir:
+"Sujeta a disponibilidad y condiciones de la tarifa."
+
+mostrar_precio_en_pdf=false salvo que el texto indique claramente un precio aéreo separado que deba mostrarse.
 
 HOTELES:
 - Crear un hotel por cada hotel detectado.
@@ -380,14 +490,57 @@ TRASLADO, ASISTENCIA, EXCURSION, EQUIPAJE, SEGURO, CIRCUITO, AUTO, OTRO.
 - mostrar_precio_en_pdf=false por defecto.
 
 PRECIOS / OPCIONES COMERCIALES:
-- El precio final del paquete debe ir en opciones_comerciales.
-- precio_total representa el valor TOTAL DEL PAQUETE para todos los pasajeros.
-- Si detectás "PRECIO POR LOS DOS PASAJEROS USD 6435", entonces precio_total=6435 y moneda="USD".
-- Si detectás "Total paquete", "Precio final", "Tarifa final", "Valor total", "Total por pasajeros", crear opción comercial.
-- No uses separador de miles en números.
-- Si no está claro si un precio es total o por pasajero, agregalo en notas y advertencia.
-- Por defecto visible_en_pdf=true.
-- La primera opción debe destacada=true.
+- Detectá TODOS los precios comerciales presentes en el texto.
+- Puede existir uno o varios precios para el mismo presupuesto.
+- Si existen distintos precios por forma de pago, crear UNA opción comercial por cada precio.
+- NO convertir precios entre sí.
+- NO multiplicar automáticamente por cantidad de pasajeros.
+- NO dividir automáticamente un total por cantidad de pasajeros.
+- Preservar exactamente qué representa el precio informado.
+
+tipo_precio debe ser uno de:
+- "POR_PASAJERO"
+- "TOTAL_PAQUETE"
+- "POR_HABITACION"
+- "NO_DETERMINADO"
+
+EJEMPLOS:
+
+"USD 1310 por pasajero"
+=> precio_total=1310
+=> moneda="USD"
+=> tipo_precio="POR_PASAJERO"
+
+"USD 1310 por pasajero transferencia"
+=> opción:
+   nombre="Transferencia"
+   precio_total=1310
+   moneda="USD"
+   tipo_precio="POR_PASAJERO"
+   forma_pago_resumen="Transferencia"
+
+"Transferencia USD 1310 por pasajero
+Tarjeta USD 1375 por pasajero"
+=> crear DOS opciones comerciales.
+
+"TOTAL POR LOS DOS PASAJEROS USD 2620"
+=> precio_total=2620
+=> moneda="USD"
+=> tipo_precio="TOTAL_PAQUETE"
+
+"USD 1400 por habitación"
+=> tipo_precio="POR_HABITACION"
+
+Si no está claro qué representa el precio:
+=> tipo_precio="NO_DETERMINADO"
+=> conservar el precio
+=> agregar una advertencia.
+
+- No usar separador de miles en números JSON.
+- visible_en_pdf=true por defecto.
+- La primera opción comercial debe ser destacada=true.
+- forma_pago_resumen debe preservar transferencia, efectivo, tarjeta, cuotas u otra modalidad cuando aparezca.
+- condiciones_pago debe conservar cantidad de cuotas, vencimientos, recargos o aclaraciones si aparecen.
 
 INCLUYE / NO INCLUYE:
 - incluye_general debe contener lo incluido general si aparece.
@@ -588,12 +741,56 @@ function asString(value: unknown): string {
   return String(value || "").trim();
 }
 
+function asStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => asString(item))
+    .filter(Boolean);
+}
+
 function asBoolean(value: unknown, fallback: boolean): boolean {
   if (typeof value === "boolean") return value;
   if (value === "true") return true;
   if (value === "false") return false;
   if (value === null || value === undefined || value === "") return fallback;
   return Boolean(value);
+}
+
+function normalizeTipoPrecio(value: unknown): string {
+  const raw = asString(value)
+    .toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  if (
+    raw === "POR_PASAJERO" ||
+    raw.includes("POR PASAJERO") ||
+    raw.includes("POR PERSONA") ||
+    raw.includes("P/P")
+  ) {
+    return "POR_PASAJERO";
+  }
+
+  if (
+    raw === "TOTAL_PAQUETE" ||
+    raw.includes("TOTAL PAQUETE") ||
+    raw.includes("TOTAL POR") ||
+    raw.includes("PRECIO FINAL TOTAL")
+  ) {
+    return "TOTAL_PAQUETE";
+  }
+
+  if (
+    raw === "POR_HABITACION" ||
+    raw.includes("POR HABITACION")
+  ) {
+    return "POR_HABITACION";
+  }
+
+  return "NO_DETERMINADO";
 }
 
 function normalizeServicioTipo(value: unknown): string {
@@ -745,12 +942,157 @@ function normalizeVueloParsed(item: Record<string, unknown>, index: number) {
       ? item.escalas
       : [];
 
+  const firstTramo =
+    tramos[0] || {};
+
+  const lastTramo =
+    tramos.at(-1) || {};
+
+  const firstOrigen =
+    asRecord(
+      firstTramo.origen
+    );
+
+  const lastDestino =
+    asRecord(
+      lastTramo.destino
+    );
+
+  const equipajeIncluido =
+    asStringArray(
+      item.equipaje_incluido
+    ).length
+      ? asStringArray(
+          item.equipaje_incluido
+        )
+      : asStringArray(
+          metadata.equipaje_incluido
+        );
+
+  const equipajeNoIncluido =
+    asStringArray(
+      item.equipaje_no_incluido
+    ).length
+      ? asStringArray(
+          item.equipaje_no_incluido
+        )
+      : asStringArray(
+          metadata.equipaje_no_incluido
+        );
+
+  const cantidadEscalasRaw =
+    safeNumber(
+      item.cantidad_escalas ??
+      metadata.cantidad_escalas
+    );
+
+  const cantidadEscalas =
+    cantidadEscalasRaw !== null
+      ? Math.max(
+          0,
+          Math.trunc(
+            cantidadEscalasRaw
+          )
+        )
+      : Math.max(
+          0,
+          tramos.length - 1
+        );
+
   return {
     titulo,
     tipo_tramo: tipoTramo,
     aerolinea: asString(item.aerolinea),
     codigo_reserva: asString(item.codigo_reserva),
     ruta_resumen: asString(item.ruta_resumen),
+
+    fecha_salida:
+      asString(
+        item.fecha_salida
+      ) ||
+      asString(
+        firstTramo.fecha_salida
+      ),
+
+    hora_salida:
+      asString(
+        item.hora_salida
+      ) ||
+      asString(
+        firstTramo.hora_salida
+      ),
+
+    origen_iata:
+      asString(
+        item.origen_iata
+      ) ||
+      asString(
+        firstOrigen.iata
+      ),
+
+    origen_ciudad:
+      asString(
+        item.origen_ciudad
+      ) ||
+      asString(
+        firstOrigen.ciudad
+      ),
+
+    fecha_llegada:
+      asString(
+        item.fecha_llegada
+      ) ||
+      asString(
+        lastTramo.fecha_llegada
+      ),
+
+    hora_llegada:
+      asString(
+        item.hora_llegada
+      ) ||
+      asString(
+        lastTramo.hora_llegada
+      ),
+
+    destino_iata:
+      asString(
+        item.destino_iata
+      ) ||
+      asString(
+        lastDestino.iata
+      ),
+
+    destino_ciudad:
+      asString(
+        item.destino_ciudad
+      ) ||
+      asString(
+        lastDestino.ciudad
+      ),
+
+    duracion_total:
+      asString(
+        item.duracion_total
+      ) ||
+      asString(
+        metadata.duracion_total
+      ),
+
+    cantidad_escalas:
+      cantidadEscalas,
+
+    llega_dia_siguiente:
+      asBoolean(
+        item.llega_dia_siguiente ??
+        metadata.llega_dia_siguiente,
+        false
+      ),
+
+    equipaje_incluido:
+      equipajeIncluido,
+
+    equipaje_no_incluido:
+      equipajeNoIncluido,
 
     ida_origen: asString(item.ida_origen),
     ida_destino: asString(item.ida_destino),
@@ -784,6 +1126,31 @@ function normalizeVueloParsed(item: Record<string, unknown>, index: number) {
         asString(metadata.seleccion_asientos) ||
         asString(item.seleccion_asientos) ||
         "Sujeta a disponibilidad y condiciones de la tarifa.",
+
+      duracion_total:
+        asString(
+          item.duracion_total
+        ) ||
+        asString(
+          metadata.duracion_total
+        ),
+
+      cantidad_escalas:
+        cantidadEscalas,
+
+      llega_dia_siguiente:
+        asBoolean(
+          item.llega_dia_siguiente ??
+          metadata.llega_dia_siguiente,
+          false
+        ),
+
+      equipaje_incluido:
+        equipajeIncluido,
+
+      equipaje_no_incluido:
+        equipajeNoIncluido,
+
       tramos,
       escalas
     }
@@ -847,23 +1214,101 @@ function normalizeServicioParsed(item: Record<string, unknown>, index: number) {
 function normalizeOpcionParsed(item: Record<string, unknown>, index: number) {
   const metadata = normalizeMetadata(item.metadata);
 
+  const tipoPrecio =
+    normalizeTipoPrecio(
+      item.tipo_precio ||
+      metadata.tipo_precio
+    );
+
   return {
-    nombre: asString(item.nombre) || asString(item.titulo) || `Opción ${index + 1}`,
+    nombre:
+      asString(item.nombre) ||
+      asString(item.titulo) ||
+      `Opción ${index + 1}`,
+
     subtitulo: asString(item.subtitulo),
-    descripcion: asString(item.descripcion),
-    precio_total: safeNumber(item.precio_total ?? item.precio),
-    moneda: normalizeCurrency(item.moneda),
-    forma_pago_resumen: asString(item.forma_pago_resumen) || asString(item.forma_pago),
-    condiciones_pago: asString(item.condiciones_pago),
-    incluye_resumen: asString(item.incluye_resumen) || asString(item.incluye),
-    no_incluye_resumen: asString(item.no_incluye_resumen) || asString(item.no_incluye),
-    notas: asString(item.notas),
-    visible_en_pdf: asBoolean(item.visible_en_pdf, true),
-    destacada: index === 0 ? asBoolean(item.destacada, true) : asBoolean(item.destacada, false),
+
+    descripcion:
+      asString(item.descripcion),
+
+    /*
+     * Se mantiene precio_total por compatibilidad
+     * con el parser existente, pero tipo_precio
+     * indica qué representa realmente el valor.
+     */
+    precio_total:
+      safeNumber(
+        item.precio_total ??
+        item.precio
+      ),
+
+    moneda:
+      normalizeCurrency(
+        item.moneda
+      ),
+
+    tipo_precio: tipoPrecio,
+
+    forma_pago_resumen:
+      asString(
+        item.forma_pago_resumen
+      ) ||
+      asString(
+        item.forma_pago
+      ),
+
+    condiciones_pago:
+      asString(
+        item.condiciones_pago
+      ),
+
+    incluye_resumen:
+      asString(
+        item.incluye_resumen
+      ) ||
+      asString(
+        item.incluye
+      ),
+
+    no_incluye_resumen:
+      asString(
+        item.no_incluye_resumen
+      ) ||
+      asString(
+        item.no_incluye
+      ),
+
+    notas:
+      asString(
+        item.notas
+      ),
+
+    visible_en_pdf:
+      asBoolean(
+        item.visible_en_pdf,
+        true
+      ),
+
+    destacada:
+      index === 0
+        ? asBoolean(
+            item.destacada,
+            true
+          )
+        : asBoolean(
+            item.destacada,
+            false
+          ),
+
     metadata: {
       ...metadata,
-      origen: "PRESUPUESTO_IA",
-      precio_es_total_paquete: true
+      origen:
+        "PRESUPUESTO_IA",
+      tipo_precio:
+        tipoPrecio,
+      precio_es_total_paquete:
+        tipoPrecio ===
+        "TOTAL_PAQUETE"
     }
   };
 }
@@ -941,9 +1386,168 @@ function getTextBasedWarnings(originalText: string, parsed: {
 }
 
 function normalizeParsed(parsed: any, fallbackTipo: ParserEntidadTipo, originalText = "") {
-  const vuelos = asArray(parsed?.vuelos).map(normalizeVueloParsed);
-  const hoteles = asArray(parsed?.hoteles).map(normalizeHotelParsed);
-  const servicios = asArray(parsed?.servicios).map(normalizeServicioParsed);
+  const vuelos = asArray(
+    parsed?.vuelos
+  ).map(
+    normalizeVueloParsed
+  );
+
+  const hoteles = asArray(
+    parsed?.hoteles
+  ).map(
+    normalizeHotelParsed
+  );
+
+  let servicios = asArray(
+    parsed?.servicios
+  ).map(
+    normalizeServicioParsed
+  );
+
+  /*
+   * Red de seguridad determinística.
+   *
+   * Hay servicios comerciales que son demasiado
+   * importantes como para depender únicamente
+   * de que el modelo recuerde crear el objeto.
+   *
+   * Si el texto los declara inequívocamente,
+   * completamos el servicio cuando la IA no
+   * lo haya creado.
+   */
+  if (originalText) {
+    const normalizedOriginalText =
+      normalizePlainTextForDetection(
+        originalText
+      );
+
+    const hasServiceType = (
+      type: string,
+    ) =>
+      servicios.some(
+        (service) =>
+          asString(
+            service.tipo
+          ).toUpperCase() ===
+          type,
+      );
+
+    const trasladoExplicitamenteIncluido =
+      /(?:incluye|incluido|incluidos|incluida|incluidas)[^\n\r]{0,35}traslado/i.test(
+        originalText
+      ) ||
+      /traslado[^\n\r]{0,35}(?:incluye|incluido|incluidos|incluida|incluidas)/i.test(
+        originalText
+      );
+
+    if (
+      normalizedOriginalText.includes(
+        "traslado"
+      ) &&
+      trasladoExplicitamenteIncluido &&
+      !hasServiceType(
+        "TRASLADO"
+      )
+    ) {
+      servicios = [
+        ...servicios,
+        normalizeServicioParsed(
+          {
+            tipo:
+              "TRASLADO",
+            nombre:
+              "Traslado",
+            descripcion:
+              "Traslado incluido según la información proporcionada.",
+            incluido:
+              true,
+            opcional:
+              false,
+            incluir_en_pdf:
+              true,
+            mostrar_precio_en_pdf:
+              false,
+            metadata: {
+              origen:
+                "PRESUPUESTO_IA",
+              inferencia:
+                "DETECCION_TEXTO_EXPLICITA"
+            }
+          },
+          servicios.length
+        )
+      ];
+    }
+
+    const asistenciaExplicitamenteIncluida =
+      /(?:incluye|incluido|incluidos|incluida|incluidas)[^\n\r]{0,35}(?:asistencia|seguro)/i.test(
+        originalText
+      ) ||
+      /(?:asistencia|seguro)[^\n\r]{0,35}(?:incluye|incluido|incluidos|incluida|incluidas)/i.test(
+        originalText
+      );
+
+    if (
+      (
+        normalizedOriginalText.includes(
+          "asistencia"
+        ) ||
+        normalizedOriginalText.includes(
+          "seguro"
+        )
+      ) &&
+      asistenciaExplicitamenteIncluida &&
+      !hasServiceType(
+        "ASISTENCIA"
+      ) &&
+      !hasServiceType(
+        "SEGURO"
+      )
+    ) {
+      const isSeguro =
+        normalizedOriginalText.includes(
+          "seguro"
+        ) &&
+        !normalizedOriginalText.includes(
+          "asistencia"
+        );
+
+      servicios = [
+        ...servicios,
+        normalizeServicioParsed(
+          {
+            tipo:
+              isSeguro
+                ? "SEGURO"
+                : "ASISTENCIA",
+            nombre:
+              isSeguro
+                ? "Seguro de viaje"
+                : "Asistencia al viajero",
+            descripcion:
+              isSeguro
+                ? "Seguro de viaje incluido según la información proporcionada."
+                : "Asistencia al viajero incluida según la información proporcionada.",
+            incluido:
+              true,
+            opcional:
+              false,
+            incluir_en_pdf:
+              true,
+            mostrar_precio_en_pdf:
+              false,
+            metadata: {
+              origen:
+                "PRESUPUESTO_IA",
+              inferencia:
+                "DETECCION_TEXTO_EXPLICITA"
+            }
+          },
+          servicios.length
+        )
+      ];
+    }
+  }
 
   const opcionesRaw = asArray(parsed?.opciones_comerciales).length
     ? asArray(parsed?.opciones_comerciales)
@@ -1161,9 +1765,11 @@ function fallbackParsedFromText(text: string, fallbackTipo: ParserEntidadTipo) {
                 moneda: price.moneda,
                 visible_en_pdf: true,
                 destacada: true,
+                tipo_precio: "NO_DETERMINADO",
                 metadata: {
                   origen: "PRESUPUESTO_IA",
-                  precio_es_total_paquete: true
+                  tipo_precio: "NO_DETERMINADO",
+                  precio_es_total_paquete: false
                 }
               }
             ]
