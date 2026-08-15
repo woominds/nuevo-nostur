@@ -198,18 +198,13 @@ export function FileWizardVenta({
             Fecha de venta
           </FieldLabel>
 
-          <TextInput
-            type="date"
-            value={
-              draft.venta.fecha_venta
-            }
-            onChange={(value) =>
-              onVentaChange(
-                "fecha_venta",
-                value
-              )
-            }
-          />
+          <div className="flex h-8 items-center rounded-[10px] border border-black/10 bg-[#f8fafc] px-3 text-[12px] font-medium text-[#334155]">
+            {draft.venta.fecha_venta}
+          </div>
+
+          <div className="mt-1 text-[10px] font-normal text-[#94a3b8]">
+            Se registra automáticamente al crear el File.
+          </div>
         </div>
 
         <div>

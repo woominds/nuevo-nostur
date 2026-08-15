@@ -2090,8 +2090,7 @@ export function useFileWizard({
             .numero_file,
 
         fecha_venta:
-          draft.venta
-            .fecha_venta,
+          getToday(),
 
         operador_id:
           draft.venta
