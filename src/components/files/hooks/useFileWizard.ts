@@ -633,6 +633,104 @@ export function useFileWizard({
   ]);
 
   /*
+   * FILES:
+   * El usuario carga una sola vez "Cómo lo cobramos".
+   *
+   * movimientosTesoreria es la entrada visible del wizard.
+   * pagosComerciales se mantiene sincronizado internamente
+   * porque continúa formando parte del modelo persistido.
+   */
+  useEffect(() => {
+    setDraft((current) => {
+      const nextPayments =
+        current.movimientosTesoreria.map(
+          (movement) => ({
+            importe:
+              parseMoney(
+                movement.importe
+              ),
+
+            moneda:
+              movement.moneda ||
+              current.venta.moneda,
+
+            forma_pago_id:
+              movement.forma_pago_id ||
+              null,
+
+            forma_pago:
+              movement.forma_pago ||
+              ""
+          })
+        );
+
+      const normalizedPayments =
+        nextPayments.length > 0
+          ? nextPayments
+          : [
+              {
+                importe: 0,
+                moneda:
+                  current.venta.moneda,
+                forma_pago_id: null,
+                forma_pago: ""
+              }
+            ];
+
+      const currentPayments =
+        current.pagosComerciales;
+
+      const equal =
+        currentPayments.length ===
+          normalizedPayments.length &&
+        currentPayments.every(
+          (payment, index) => {
+            const next =
+              normalizedPayments[index];
+
+            return (
+              parseMoney(
+                payment.importe
+              ) ===
+                parseMoney(
+                  next.importe
+                ) &&
+              payment.moneda ===
+                next.moneda &&
+              payment.forma_pago_id ===
+                next.forma_pago_id &&
+              (payment.forma_pago ||
+                "") ===
+                (next.forma_pago ||
+                  "")
+            );
+          }
+        );
+
+      if (
+        equal &&
+        !current
+          .pagoDiferenteOficina
+      ) {
+        return current;
+      }
+
+      return {
+        ...current,
+
+        pagoDiferenteOficina:
+          false,
+
+        pagosComerciales:
+          normalizedPayments
+      };
+    });
+  }, [
+    draft.movimientosTesoreria,
+    draft.venta.moneda
+  ]);
+
+  /*
    * Guardado automático del borrador.
    */
   useEffect(() => {

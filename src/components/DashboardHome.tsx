@@ -721,6 +721,12 @@ function ExchangeRateCard({
             : "Sin tipo de cambio"}
       </span>
 
+      <span className="h-3 w-px bg-[#e0e4ea]" />
+
+      <span className="whitespace-nowrap text-[10px] font-semibold text-[#8b95a5]">
+        NOSTUR v{__APP_VERSION__}
+      </span>
+
       {canManage ? (
         <Pencil
           size={12}
@@ -1199,7 +1205,10 @@ function AdminSummary({
         summary.facturasCobrar
           .totalPendiente.ars
       ),
-      secondary: `${summary.facturasCobrar.totalPendiente.cantidad} pendientes`,
+      secondary: `${formatUsd(
+        summary.facturasCobrar
+          .totalPendiente.usd
+      )} · ${summary.facturasCobrar.totalPendiente.cantidad} pendientes`,
       icon: (
         <TrendingUp size={15} />
       )
@@ -1577,6 +1586,155 @@ export function DashboardHome() {
 
   useEffect(() => {
     void loadTablero();
+  }, [loadTablero]);
+
+  useEffect(() => {
+    let refreshTimer:
+      number | null = null;
+
+    function scheduleRefresh() {
+      if (refreshTimer !== null) {
+        window.clearTimeout(
+          refreshTimer
+        );
+      }
+
+      refreshTimer =
+        window.setTimeout(
+          () => {
+            refreshTimer = null;
+            void loadTablero();
+          },
+          250
+        );
+    }
+
+    function handleSectionChanged(
+      event: Event
+    ) {
+      const customEvent =
+        event as CustomEvent<{
+          section?: string;
+        }>;
+
+      if (
+        customEvent.detail
+          ?.section === "home"
+      ) {
+        scheduleRefresh();
+      }
+    }
+
+    function handleVisibilityChange() {
+      if (
+        document.visibilityState ===
+        "visible"
+      ) {
+        scheduleRefresh();
+      }
+    }
+
+    function handleWindowFocus() {
+      scheduleRefresh();
+    }
+
+    window.addEventListener(
+      "nostur:section-changed",
+      handleSectionChanged
+    );
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange
+    );
+
+    window.addEventListener(
+      "focus",
+      handleWindowFocus
+    );
+
+    const dashboardRealtimeChannel =
+      supabase
+        .channel(
+          "nostur-dashboard-home-realtime"
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "facturas_cobrar"
+          },
+          scheduleRefresh
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table:
+              "facturas_cobrar_cobros"
+          },
+          scheduleRefresh
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "facturas_pagar"
+          },
+          scheduleRefresh
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table:
+              "facturas_pagar_pagos"
+          },
+          scheduleRefresh
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "caja_movimientos"
+          },
+          scheduleRefresh
+        )
+        .subscribe();
+
+    return () => {
+      if (
+        refreshTimer !== null
+      ) {
+        window.clearTimeout(
+          refreshTimer
+        );
+      }
+
+      window.removeEventListener(
+        "nostur:section-changed",
+        handleSectionChanged
+      );
+
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange
+      );
+
+      window.removeEventListener(
+        "focus",
+        handleWindowFocus
+      );
+
+      void supabase.removeChannel(
+        dashboardRealtimeChannel
+      );
+    };
   }, [loadTablero]);
 
   const almundoGoals =

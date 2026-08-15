@@ -432,6 +432,18 @@ export function Shell() {
       "nostur:active-section",
       activeSection
     );
+
+    window.dispatchEvent(
+      new CustomEvent(
+        "nostur:section-changed",
+        {
+          detail: {
+            section:
+              activeSection
+          }
+        }
+      )
+    );
   }, [activeSection]);
 
   useEffect(() => {

@@ -14,6 +14,10 @@ import {
 } from "./FileFormControls";
 
 import {
+  NosturDateInput
+} from "../../ui/NosturDateInput";
+
+import {
   formatMoneyAR
 } from "../../../lib/formatters";
 
@@ -212,8 +216,8 @@ export function FileWizardVenta({
             Fecha IN
           </FieldLabel>
 
-          <TextInput
-            type="date"
+          <NosturDateInput
+            
             value={
               draft.venta.fecha_in
             }
@@ -236,8 +240,8 @@ export function FileWizardVenta({
               Solo ida
             </div>
           ) : (
-            <TextInput
-              type="date"
+            <NosturDateInput
+              
               value={
                 draft.venta.fecha_out
               }
@@ -538,8 +542,8 @@ export function FileWizardVenta({
                             Fecha inicio
                           </FieldLabel>
 
-                          <TextInput
-                            type="date"
+                          <NosturDateInput
+                            
                             value={
                               servicio
                                 .fecha_inicio ||
@@ -562,8 +566,8 @@ export function FileWizardVenta({
                             Fecha fin
                           </FieldLabel>
 
-                          <TextInput
-                            type="date"
+                          <NosturDateInput
+                            
                             value={
                               servicio
                                 .fecha_fin ||

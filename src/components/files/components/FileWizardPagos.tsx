@@ -8,8 +8,11 @@ import {
   LineButton,
   MoneyInput,
   NosturSelect,
-  TextInput
 } from "./FileFormControls";
+
+import {
+  NosturDateInput
+} from "../../ui/NosturDateInput";
 
 import {
   formatMoneyAR
@@ -280,7 +283,7 @@ export function FileWizardPagos({
         Paso 3 · Pagos
       </h3>
 
-      <div className="rounded-xl border border-black/10 p-4">
+      <div className="hidden">
         <div className="mb-3 flex items-center justify-between gap-3">
           <div>
             <h4 className="text-[12px] font-semibold text-[#172033]">
@@ -423,24 +426,26 @@ export function FileWizardPagos({
       </div>
 
       <div className="mt-5 rounded-xl border border-black/10 p-4">
-        <BooleanChip
-          checked={
-            draft.pagoDiferenteOficina
-          }
-          onChange={
-            onSetPagoDiferenteOficina
-          }
-          label="El pago recibido fue diferente al informado comercialmente"
-        />
+        <div className="hidden">
+          <BooleanChip
+            checked={
+              draft.pagoDiferenteOficina
+            }
+            onChange={
+              onSetPagoDiferenteOficina
+            }
+            label="El pago recibido fue diferente al informado comercialmente"
+          />
+        </div>
 
-        <div className="mb-3 mt-4 flex items-center justify-between gap-3">
+        <div className="mb-3 flex items-center justify-between gap-3">
           <div>
             <h4 className="text-[12px] font-semibold text-[#172033]">
-              Pagos recibidos
+              Cómo lo cobramos
             </h4>
 
             <p className="mt-0.5 text-[10.5px] text-[#64748b]">
-              Caja y forma de pago real recibida por NOSSIX.
+              Indicá la caja, forma de pago, importe y moneda del cobro.
             </p>
           </div>
 
@@ -449,7 +454,7 @@ export function FileWizardPagos({
               onAddMovimiento
             }
           >
-            Agregar ingreso
+            Agregar cobro
           </LineButton>
         </div>
 
@@ -488,7 +493,7 @@ export function FileWizardPagos({
 
                 <div>
                   <FieldLabel>
-                    Forma real
+                    Forma de pago
                   </FieldLabel>
 
                   <NosturSelect
@@ -654,7 +659,7 @@ export function FileWizardPagos({
                       )
                     }
                     className="flex h-9 w-9 items-center justify-center rounded-lg border border-red-200 text-red-600 hover:bg-red-50"
-                    aria-label="Eliminar pago recibido"
+                    aria-label="Eliminar cobro"
                   >
                     <Trash2 size={16} />
                   </button>
@@ -691,8 +696,8 @@ export function FileWizardPagos({
             Fecha de ingreso a gastos
           </FieldLabel>
 
-          <TextInput
-            type="date"
+          <NosturDateInput
+            
             value={
               draft.fechaIngresoGastos
             }
@@ -722,7 +727,7 @@ export function FileWizardPagos({
       ) : null}
 
       <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="grid gap-3 md:grid-cols-3">
           <div>
             <div className="text-xs text-slate-500">
               Venta
@@ -736,7 +741,7 @@ export function FileWizardPagos({
             </div>
           </div>
 
-          <div>
+          <div className="hidden">
             <div className="text-xs text-slate-500">
               Comercial
             </div>

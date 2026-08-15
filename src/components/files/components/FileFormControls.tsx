@@ -188,6 +188,15 @@ export function NosturSelect({
       ? [value]
       : [];
 
+  const selectedLabels = selected.map(
+    (selectedValue) =>
+      options.find(
+        (option) =>
+          option.value === selectedValue
+      )?.label ||
+      selectedValue
+  );
+
   const filtered = useMemo(() => {
     const q = normalizeText(search);
 
@@ -209,6 +218,7 @@ export function NosturSelect({
 
     if (multiple) {
       onChange([...selected, name]);
+      setOpen(false);
     } else {
       onChange(name);
       setOpen(false);
@@ -226,8 +236,8 @@ export function NosturSelect({
         className="flex h-8 w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-3 text-xs"
       >
         <span className="truncate">
-          {selected.length
-            ? selected.join(", ")
+          {selectedLabels.length
+            ? selectedLabels.join(", ")
             : placeholder}
         </span>
 
@@ -274,6 +284,9 @@ export function NosturSelect({
                           option.value
                         ]);
                       }
+
+                      setSearch("");
+                      setOpen(false);
 
                     } else {
 
