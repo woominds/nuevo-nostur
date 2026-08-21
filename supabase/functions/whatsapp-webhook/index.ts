@@ -1763,6 +1763,80 @@ function mapMessageType(
   return "unsupported";
 }
 
+function getContactMediaData(
+  message: any
+): Record<string, unknown> | null {
+  const type =
+    cleanText(message?.type)
+      .toLowerCase();
+
+  if (type !== "contacts") {
+    return null;
+  }
+
+  const contacts =
+    Array.isArray(message?.contacts)
+      ? message.contacts
+      : [];
+
+  if (contacts.length === 0) {
+    return null;
+  }
+
+  return {
+    contacts: contacts.map(
+      (contact: any) => ({
+        name: {
+          formatted_name:
+            cleanText(
+              contact?.name
+                ?.formatted_name
+            ) || null,
+          first_name:
+            cleanText(
+              contact?.name
+                ?.first_name
+            ) || null,
+          last_name:
+            cleanText(
+              contact?.name
+                ?.last_name
+            ) || null
+        },
+        phones:
+          Array.isArray(
+            contact?.phones
+          )
+            ? contact.phones.map(
+                (phone: any) => ({
+                  phone:
+                    cleanText(
+                      phone?.phone
+                    ) || null,
+                  wa_id:
+                    cleanText(
+                      phone?.wa_id
+                    ) || null,
+                  type:
+                    cleanText(
+                      phone?.type
+                    ) || null
+                })
+              )
+            : [],
+        vcard:
+          cleanText(
+            contact?.vcard
+          ) || null,
+        origin:
+          cleanText(
+            contact?.origin
+          ) || null
+      })
+    )
+  };
+}
+
 function getMediaData(
   message: any
 ): {
@@ -2814,6 +2888,15 @@ async function insertIncomingMessage(
         params.message
     });
 
+  const contactMedia =
+    getContactMediaData(
+      params.message
+    );
+
+  const persistedMedia =
+    contactMedia ||
+    downloadedMedia;
+
   const whatsappTimestamp =
     params.message?.timestamp
       ? new Date(
@@ -2837,7 +2920,7 @@ async function insertIncomingMessage(
         text:
           content,
         media:
-          downloadedMedia,
+          persistedMedia,
         reply_to_id:
           null,
         forwarded:

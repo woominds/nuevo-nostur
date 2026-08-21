@@ -4665,6 +4665,26 @@ function renderWhatsappWindowCountdown() {
    const isAudio = isAudioMessage(message);
    const isAi = role === "cande" || role === "nia";
    const menuOpen = openMessageMenuId === message.id;
+   const messageType = String(message.type || "").toLowerCase();
+
+   const contactItems =
+     messageType === "contacts" &&
+     Array.isArray(message.media?.contacts)
+       ? (message.media.contacts as Array<{
+           name?: {
+             formatted_name?: string | null;
+             first_name?: string | null;
+             last_name?: string | null;
+           };
+           phones?: Array<{
+             phone?: string | null;
+             wa_id?: string | null;
+             type?: string | null;
+           }>;
+           vcard?: string | null;
+           origin?: string | null;
+         }>)
+       : [];
 
    const bubbleClass =
      role === "cande"
@@ -4785,7 +4805,96 @@ function renderWhatsappWindowCountdown() {
            </div>
          ) : null}
 
-         <div className="whitespace-pre-wrap break-words">{message.text || `[${message.type}]`}</div>
+         {messageType === "contacts" && contactItems.length > 0 ? (
+           <div className="space-y-2">
+             {contactItems.map((contact, index) => {
+               const contactName =
+                 contact.name?.formatted_name ||
+                 contact.name?.first_name ||
+                 "Contacto";
+
+               const phones =
+                 Array.isArray(contact.phones)
+                   ? contact.phones
+                   : [];
+
+               return (
+                 <div
+                   key={`${message.id}-contact-${index}`}
+                   className="min-w-[230px] rounded-xl border border-black/5 bg-white/70 p-3 shadow-sm"
+                 >
+                   <div className="flex items-start gap-3">
+                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eef6f7] text-[16px] font-semibold text-[#4f7c90]">
+                       {contactName
+                         .trim()
+                         .charAt(0)
+                         .toUpperCase() || "?"}
+                     </div>
+
+                     <div className="min-w-0 flex-1">
+                       <div className="break-words text-[13px] font-semibold text-[#172033]">
+                         {contactName}
+                       </div>
+
+                       {phones.length > 0 ? (
+                         <div className="mt-1.5 space-y-1.5">
+                           {phones.map((phone, phoneIndex) => {
+                             const phoneLabel =
+                               phone.phone ||
+                               phone.wa_id ||
+                               "";
+
+                             const waId =
+                               String(
+                                 phone.wa_id ||
+                                 phone.phone ||
+                                 ""
+                               ).replace(/\D/g, "");
+
+                             return (
+                               <div
+                                 key={`${message.id}-contact-${index}-phone-${phoneIndex}`}
+                                 className="flex items-center justify-between gap-3"
+                               >
+                                 <span className="text-[12px] text-[#64748b]">
+                                   {phoneLabel}
+                                 </span>
+
+                                 {waId ? (
+                                   <button
+                                     type="button"
+                                     onClick={() => {
+                                       window.open(
+                                         `https://wa.me/${waId}`,
+                                         "_blank",
+                                         "noopener,noreferrer"
+                                       );
+                                     }}
+                                     className="shrink-0 rounded-lg border border-[#d8e5e8] bg-white px-2.5 py-1 text-[11px] font-medium text-[#4f7c90] transition hover:bg-[#eef6f7]"
+                                   >
+                                     WhatsApp
+                                   </button>
+                                 ) : null}
+                               </div>
+                             );
+                           })}
+                         </div>
+                       ) : (
+                         <div className="mt-1 text-[11px] text-[#94a3b8]">
+                           Sin teléfono
+                         </div>
+                       )}
+                     </div>
+                   </div>
+                 </div>
+               );
+             })}
+           </div>
+         ) : (
+           <div className="whitespace-pre-wrap break-words">
+             {message.text || `[${message.type}]`}
+           </div>
+         )}
 
          <div
            className={[
