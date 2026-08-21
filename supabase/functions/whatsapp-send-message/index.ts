@@ -123,15 +123,25 @@ function normalizePhone(value: unknown): string {
 
   if (!phone) return "";
 
-  if (phone.startsWith("+")) return phone.replace("+", "");
-  if (phone.startsWith("549")) return phone;
+  if (phone.startsWith("+")) {
+    return phone.slice(1);
+  }
+
+  if (phone.startsWith("549")) {
+    return phone;
+  }
 
   if (phone.startsWith("54")) {
     const rest = phone.slice(2);
-    return rest.startsWith("9") ? phone : `549${rest}`;
+
+    return rest.startsWith("9")
+      ? phone
+      : `549${rest}`;
   }
 
-  if (phone.startsWith("9")) return `54${phone}`;
+  if (phone.length >= 11) {
+    return phone;
+  }
 
   return `549${phone}`;
 }
