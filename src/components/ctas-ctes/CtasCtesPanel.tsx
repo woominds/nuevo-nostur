@@ -25,6 +25,7 @@ import {
   type CajaLite,
   type CtaCteItem,
   type CtaCtePago,
+  type FormaPagoLite,
   type PagoCtaCteDraft
 } from "../../store/ctasCtesStore";
 import { IconButton } from "../ui/IconButton";
@@ -50,14 +51,6 @@ const MONEDA_OPTIONS: SelectOption[] = [
   { value: "todos", label: "Todas" },
   { value: "ARS", label: "Pesos" },
   { value: "USD", label: "Dólares" }
-];
-
-const METODO_PAGO_OPTIONS: SelectOption[] = [
-  { value: "Transferencia bancaria", label: "Transferencia bancaria" },
-  { value: "Efectivo", label: "Efectivo" },
-  { value: "Tarjeta", label: "Tarjeta" },
-  { value: "Mercado Pago", label: "Mercado Pago" },
-  { value: "Otro", label: "Otro" }
 ];
 
 const MONTH_NAMES = [
@@ -573,24 +566,39 @@ function PagoModal({
   item,
   saving,
   cajas,
+  formasPago,
   onClose,
   onSave
 }: {
   item: CtaCteItem;
   saving: boolean;
   cajas: CajaLite[];
+  formasPago: FormaPagoLite[];
   onClose: () => void;
   onSave: (draft: PagoCtaCteDraft) => Promise<void>;
 }) {
   const [draft, setDraft] = useState<PagoCtaCteDraft>(() => createInitialPagoDraft(item));
 
-  const cajaOptions: SelectOption[] = [
-    { value: "", label: "Sin caja" },
-    ...cajas.map((caja) => ({
+  const selectedFormaPago =
+    formasPago.find((item) => item.id === draft.forma_pago_id) || null;
+
+  const impactaTesoreria = Boolean(
+    selectedFormaPago?.impacta_tesoreria
+  );
+
+  const formaPagoOptions: SelectOption[] = formasPago.map((item) => ({
+    value: item.id,
+    label: item.nombre
+  }));
+
+  const cajaOptions: SelectOption[] = cajas
+    .filter((caja) => !caja.moneda || caja.moneda === item.moneda)
+    .map((caja) => ({
       value: caja.id,
-      label: caja.nombre
-    }))
-  ];
+      label: caja.moneda
+        ? `${caja.nombre} · ${caja.moneda}`
+        : caja.nombre
+    }));
 
   function setField<K extends keyof PagoCtaCteDraft>(key: K, value: PagoCtaCteDraft[K]) {
     setDraft((current) => ({ ...current, [key]: value }));
@@ -671,24 +679,43 @@ function PagoModal({
           </div>
 
           <div>
-            <FieldLabel>Método de pago</FieldLabel>
+            <FieldLabel>Forma de pago</FieldLabel>
             <NosturSelect
-              value={draft.metodo_pago}
-              onChange={(value) => setField("metodo_pago", value)}
-              options={METODO_PAGO_OPTIONS}
-              placeholder="Seleccionar método"
+              value={draft.forma_pago_id}
+              onChange={(value) => {
+                const formaPago =
+                  formasPago.find((item) => item.id === value) || null;
+
+                setDraft((current) => ({
+                  ...current,
+                  forma_pago_id: value,
+                  caja_id: formaPago?.impacta_tesoreria
+                    ? current.caja_id
+                    : ""
+                }));
+              }}
+              options={formaPagoOptions}
+              placeholder="Seleccionar forma de pago"
             />
           </div>
 
-          <div>
-            <FieldLabel>Caja / banco destino</FieldLabel>
-            <NosturSelect
-              value={draft.caja_id}
-              onChange={(value) => setField("caja_id", value)}
-              options={cajaOptions}
-              placeholder="Seleccionar caja"
-            />
-          </div>
+          {impactaTesoreria ? (
+            <div>
+              <FieldLabel>Caja / banco destino</FieldLabel>
+              <NosturSelect
+                value={draft.caja_id}
+                onChange={(value) => setField("caja_id", value)}
+                options={cajaOptions}
+                placeholder="Seleccionar caja"
+              />
+            </div>
+          ) : (
+            <div className="flex items-end">
+              <div className="w-full rounded-[10px] border border-black/10 bg-[#f8fafc] px-3 py-2 text-[11px] font-medium text-[#64748b]">
+                Esta forma de pago no impacta Tesorería.
+              </div>
+            </div>
+          )}
 
           <div className="md:col-span-2">
             <FieldLabel>Observaciones</FieldLabel>
@@ -1400,6 +1427,7 @@ export function CtasCtesPanel() {
           item={pagoItem}
           saving={saving}
           cajas={catalogos.cajas}
+          formasPago={catalogos.formasPago}
           onClose={() => setPagoItem(null)}
           onSave={handleSavePago}
         />

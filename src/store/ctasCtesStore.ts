@@ -38,8 +38,17 @@ export type SucursalLite = {
 export type CajaLite = {
   id: string;
   nombre: string;
+  moneda?: string | null;
+  sucursal_id?: string | null;
   activo?: boolean;
   activa?: boolean;
+};
+
+export type FormaPagoLite = {
+  id: string;
+  nombre: string;
+  impacta_tesoreria: boolean;
+  activo: boolean;
 };
 
 export type CtaCteItem = {
@@ -112,7 +121,7 @@ export type CtaCtePago = {
 export type PagoCtaCteDraft = {
   fecha_pago: string;
   importe: string;
-  metodo_pago: string;
+  forma_pago_id: string;
   caja_id: string;
   entrega_efectivo: boolean;
   observaciones: string;
@@ -154,6 +163,7 @@ type CtasCtesState = {
     vendedores: VendedorLite[];
     sucursales: SucursalLite[];
     cajas: CajaLite[];
+    formasPago: FormaPagoLite[];
   };
 
   filters: CtasCtesFilters;
@@ -356,7 +366,8 @@ export const useCtasCtesStore = create<CtasCtesState>((set, get) => ({
   catalogos: {
     vendedores: [],
     sucursales: [],
-    cajas: []
+    cajas: [],
+    formasPago: []
   },
 
   filters: getDefaultFilters(),
@@ -377,7 +388,8 @@ export const useCtasCtesStore = create<CtasCtesState>((set, get) => ({
         catalogos: {
           vendedores: [],
           sucursales: [],
-          cajas: []
+          cajas: [],
+          formasPago: []
         },
         error: "No hay usuario autenticado."
       });
@@ -408,7 +420,8 @@ export const useCtasCtesStore = create<CtasCtesState>((set, get) => ({
         catalogos: {
           vendedores: [],
           sucursales: [],
-          cajas: []
+          cajas: [],
+          formasPago: []
         },
         error: "Tu usuario no tiene acceso al módulo Ctas Ctes."
       });
@@ -433,19 +446,36 @@ export const useCtasCtesStore = create<CtasCtesState>((set, get) => ({
 
     const cajasQuery = supabase
       .from("cajas")
-      .select("id, nombre, activo, activa")
+      .select("id, nombre, moneda, sucursal_id, activo, activa")
       .or("activo.eq.true,activa.eq.true")
       .order("nombre", { ascending: true });
 
-    const [itemsRes, vendedoresRes, sucursalesRes, cajasRes] = await Promise.all([
+    const formasPagoQuery = supabase
+      .from("formas_pago")
+      .select("id, nombre, impacta_tesoreria, activo")
+      .eq("activo", true)
+      .order("nombre", { ascending: true });
+
+    const [
+      itemsRes,
+      vendedoresRes,
+      sucursalesRes,
+      cajasRes,
+      formasPagoRes
+    ] = await Promise.all([
       itemsQuery,
       vendedoresQuery,
       sucursalesQuery,
-      cajasQuery
+      cajasQuery,
+      formasPagoQuery
     ]);
 
     const firstError =
-      itemsRes.error || vendedoresRes.error || sucursalesRes.error || cajasRes.error;
+      itemsRes.error ||
+      vendedoresRes.error ||
+      sucursalesRes.error ||
+      cajasRes.error ||
+      formasPagoRes.error;
 
     if (firstError) {
       set({
@@ -473,8 +503,11 @@ export const useCtasCtesStore = create<CtasCtesState>((set, get) => ({
         items,
         catalogos: {
           vendedores: (vendedoresRes.data || []) as VendedorLite[],
-          sucursales: filtrarSucursalesActivas((sucursalesRes.data || []) as SucursalLite[]),
-          cajas: (cajasRes.data || []) as CajaLite[]
+          sucursales: filtrarSucursalesActivas(
+            (sucursalesRes.data || []) as SucursalLite[]
+          ),
+          cajas: (cajasRes.data || []) as CajaLite[],
+          formasPago: (formasPagoRes.data || []) as FormaPagoLite[]
         },
         filters: shouldApplySellerDefault
           ? {
@@ -535,8 +568,28 @@ export const useCtasCtesStore = create<CtasCtesState>((set, get) => ({
       return false;
     }
 
-    if (!draft.metodo_pago.trim()) {
-      set({ saving: false, error: "Seleccioná o escribí el método de pago." });
+    if (!draft.forma_pago_id) {
+      set({ saving: false, error: "Seleccioná una forma de pago." });
+      return false;
+    }
+
+    const formaPago = get().catalogos.formasPago.find(
+      (item) => item.id === draft.forma_pago_id
+    );
+
+    if (!formaPago) {
+      set({
+        saving: false,
+        error: "La forma de pago seleccionada no es válida."
+      });
+      return false;
+    }
+
+    if (formaPago.impacta_tesoreria && !draft.caja_id) {
+      set({
+        saving: false,
+        error: "Esta forma de pago requiere seleccionar una caja."
+      });
       return false;
     }
 
@@ -545,8 +598,11 @@ export const useCtasCtesStore = create<CtasCtesState>((set, get) => ({
       p_origen_id: item.origen_id,
       p_fecha_pago: draft.fecha_pago,
       p_importe: importe,
-      p_metodo_pago: draft.metodo_pago.trim(),
-      p_caja_id: draft.caja_id || null,
+      p_forma_pago_id: formaPago.id,
+      p_metodo_pago: formaPago.nombre,
+      p_caja_id: formaPago.impacta_tesoreria
+        ? draft.caja_id || null
+        : null,
       p_entrega_efectivo: draft.entrega_efectivo,
       p_observaciones: draft.observaciones.trim() || null
     });
@@ -698,7 +754,7 @@ export function createInitialPagoDraft(item?: CtaCteItem | null): PagoCtaCteDraf
   return {
     fecha_pago: getToday(),
     importe: item ? String(item.saldo_cta_cte || "").replace(".", ",") : "",
-    metodo_pago: "",
+    forma_pago_id: "",
     caja_id: "",
     entrega_efectivo: false,
     observaciones: ""
